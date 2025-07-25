@@ -148,7 +148,7 @@ set positionlog
 # set rawsequences
 
 ## Fix Backspace/Delete confusion problem.
-# set rebinddelete
+set rebinddelete
 
 ## Do regular-expression searches by default.
 ## Regular expressions are of the extended type (ERE).
