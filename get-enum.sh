@@ -6,7 +6,7 @@ if [ -z "$SUDO_USER" ]; then
     exit 1
 fi
 
-set -exuo pipefail
+set -euo pipefail
 DIR=/home/$SUDO_USER/enum-scripts
 mkdir -p "$DIR"
 
