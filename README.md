@@ -1,87 +1,156 @@
-# WSL Setup and Maintenance Scripts
-=====================================
+# Kali-Linux-Setup
+==================
 
-This repository contains a set of scripts designed to set up, update, and maintain a Windows Subsystem for Linux (WSL) environment. The scripts should be run with root privileges to ensure proper configuration.
+This repository contains a comprehensive set of scripts to automate the setup, update, customization, and maintenance of a **Kali Linux** environment, tailored for penetration testing and red teaming purposes.
 
-### `install.sh`
+---
 
-This script performs a comprehensive setup of a WSL2 environment, including:
+## 📜 Contents
 
-- **System Update and Upgrade**: Updates and upgrades the system packages.
-- **Package Installation**: Installs a wide range of tools and utilities for security, networking, development, and more.
-    - _NOTE:_ To find the full list, please review the code of `install.sh`.
-- **Python Packages**: Installs various Python packages using `pip` for additional functionalities.
-- **GIT Configuration**: Configures Git settings if the specified to do so when running the `install.sh` script.
-    - _NOTE:_ Make sure to configure your Git username and email in the script code.
-- **Configure Systemd**: Configures the `systemd` to `true` in `wsl.conf` and prompts the user to restart WSL.
-- **Database Updates**: Updates several important databases used for security tools.
-- **Updated Nano Config**: Makes your nano shortcuts and interface more Windows-like and easier to use.
-- **Updated Bash Config**: Makes the bash terminal more minimal and compact.
-    - _NOTE:_ (Can be reverted by copying the content of `bashrc-backup` into `.bashrc` file)
-- **Additional Tools**: Installs various tools from GitHub repositories, such as Nessus, Volatility3, Radare2, and more.
-- **Final System Update**: Performs a final update, upgrade, and cleanup of unused packages.
+- [`install.sh`](#installsh) – Complete environment setup
+- [`update.sh`](#updatesh) – System and tool updates
+- [`croncreator.sh`](#croncreatorsh) – Automate monthly updates
+- [`get-tools.sh`](#get-toolssh) – Download additional red team/CTF tools
+- [`bashrc`](#bashrc) – Custom Bash configuration
+- [`nanorc`](#nanorc) – Improved Nano syntax and usability
+- [`LICENSE.md`](LICENSE.md) – License file
 
-**Usage**:
-- Setting up Permissions:
+> **This repository was previously named WSL2-Setup and focused on Kali Linux within WSL2. It is now focused on Kali Linux as a standalone environment.**
+
+---
+
+## `install.sh`
+
+This is the **main setup script**, intended to bootstrap a full-featured Kali Linux environment for penetration testing and security research.
+
+### Key Features:
+
+- **System Update & Upgrade**
+- **Installs Over 100 Security Tools** across categories:
+  - Reconnaissance
+  - Web & Network Scanners
+  - Exploitation
+  - Privilege Escalation
+  - Active Directory Attacks
+  - Wireless Hacking
+  - Binary & APK Analysis
+  - Tunneling & Pivoting
+- **Python 3 Libraries** (optionally installs Python 2 & pip2)
+- **Pipx Tools** (e.g., pwntools, ropgadget, ipython, impacket)
+- **Optional Customizations:**
+  - Global Git configuration
+  - Enhanced `.bashrc`
+  - Updated `nanorc` with syntax highlighting
+- **Docker & Wine32** support for running various environments
+- **Updates security databases**: `searchsploit`, `nmap`, `greenbone`, etc.
+
+### Usage:
+
 ```bash
-sudo chmod +x build.sh
-./build.sh
-```
-- Setting up WSL:
+sudo chmod +x install.sh
+sudo ./install.sh
+````
+
+> _**Make sure to updated the Git Configurations in the Code as need.**_
+
+> _**You may get prompted for restart of service by apt-get if using first time.**_
+
+---
+
+## `update.sh`
+
+Performs a clean and efficient system update to keep tools and packages current. Here are the actions it takes:
+
+* Performs System package update
+* Performs Full-upgrade
+* Performs Autoremove
+* Updates:
+
+  * Searchsploit Local DB `searchsploit -u`
+  * Nmap NSE scripts `nmap --script-updatedb`
+  * Local Filesystem location DB `updatedb`
+
+### Usage:
+
 ```bash
-./install.sh
+sudo ./update.sh
 ```
-- Setting up WSL with Git Global Configurations (Make sure to change your username and email in the code):
+
+---
+
+## `croncreator.sh`
+
+Sets up a **monthly cron job** to auto-run `update.sh`. Here is what it does:
+
+1. Verifies `root` permissions
+2. Copies `update.sh` to `/root/.update.sh`
+3. Sets correct file permissions
+4. Creates a cronjob to run it monthly:
+
+   * **Schedule**: `0 0 1 * *`
+   * **Log Output**: `/var/log/update.log`
+
+### Usage:
+
 ```bash
-./install.sh git
+sudo ./croncreator.sh
 ```
 
-### `update.sh`
+---
 
-This script is designed to update and upgrade the WSL2 environment:
+## `get-tools.sh`
 
-- **System Update and Upgrade**: Updates and upgrades the system packages.
-- **Package Installation**: Installs essential packages and tools for various functions.
-- **Database Updates**: Updates important security tool databases.
-- **Final System Update**: Performs a final update, upgrade, and cleanup.
+Downloads an arsenal of **additional Linux and Windows post-exploitation tools** into a structured directory for CTFs, assessments, and real-world ops.
 
-**Usage**:
+### Toolsets:
+
+* `linux` – PEAS, LinEnum, pspy, GTFOBins, and more
+* `windows` – Sysinternals, winPEAS, PowerSploit, Rubeus, etc.
+* `misc` – BloodHound, DNSCat2, SharpHound, Chisel, Ligolo
+* `all` – Runs all three above
+
+### Usage:
+
 ```bash
-./update.sh
+sudo ./get-tools.sh [linux|windows|misc|all]
 ```
 
-### `croncreator.sh`
+---
 
-This script sets up a cron job for automatic updates:
+## `bashrc`
 
-- **Root Check**: Ensures the script is run as root.
-- **Script Copy**: Copies the `update.sh` script to a secure location.
-- **Permissions**: Sets appropriate permissions for the script.
-- **Cron Job Setup**: Adds a cron job to run `update.sh` on the 1st day of every month at midnight, logging output to `/var/log/update.log`.
+Custom Bash configuration that:
 
-**Usage**:
-```bash
-./croncreator.sh
-```
+* Improves prompt visibility
+* Enables color and shortcuts
+* Can be optionally applied via `install.sh`
 
-### `build.sh`
+*The original is available as `bashrc-backup` in case of any issues.*
 
-This script simplifies the process of setting up the environment by:
+---
 
-- **Setting SUID Permissions**: Sets SUID permissions on the `install.sh`, `update.sh`, and `croncreator.sh` scripts.
-- **Changing Ownership**: Changes the ownership of the scripts to `root:root`.
-- **Listing Files**: Verifies and lists the permission settings of the files.
+## `nanorc`
 
-**Usage**:
-```bash
-./build.sh
-```
+* Improves the default Nano experience and UI.
+* Enable better Mouse and Keyboard Control.
+* Enables syntax highlighting for many file types
+* Can be installed automatically via `install.sh`
+
+---
 
 ## Requirements
 
-- The scripts must be executed with root privileges. Use `sudo` to run them.
-- Ensure that you have WSL2 installed and configured before running these scripts.
+* **Root Privileges**: All scripts must be run with `sudo` privileges or as root user.
+* **OS**: Kali/Ubuntu Linux (bare-metal, Virtual-Machine, or WSL2 if desired)
+* **Internet Access**: Required for fetching tools from GitHub and external sources.
+
+---
 
 ## Disclaimer
 
-These scripts are provided as-is, without any warranty. While efforts have been made to ensure these scripts are secure and functional, use them at your own risk. Ensure that they are compatible with your system and its requirements. If you find any vulnerabilities or weaknesses in the scripts, please report them.
+- These scripts are provided **as-is** with no guarantees. **Use responsibly and legally.**
+- They are powerful and designed for advanced users, pentesters, and red teamers.
+- Always inspect and review scripts before running them on critical environments.
+
+
+---

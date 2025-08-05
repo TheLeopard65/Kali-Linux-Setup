@@ -52,65 +52,65 @@ apt-get -qq update && apt-get -qq upgrade -y
 
 # ------------------------------------- TOOLS INSTALLATION --------------------
 
-info "[##] Installing Compulsory/Required Tools"
+info "[##] Installing Compulsory/Required Tools --------------- [ TOTAL = 34 ]"
 apt-get -qq install -y wget curl whois openvpn wordlists seclists webshells exploitdb nmap dpkg python3 python3-dev netcat-traditional ncat plocate git eog tor \
 metasploit-framework powershell git-all git-lfs build-essential firefox-esr python3-pip pipx docker.io docker-compose libssl-dev net-tools libffi-dev snapd \
 torbrowser-launcher
 
-info "[##] Installing Language & Support Tools"
-apt-get -qq install -y npm nodejs postgresql libwine openjdk-11-jdk golang golang-go python3-requests  python3-pwntools scapy bash-completion python3-pycryptodome
+info "[##] Installing Language & Support Tools ---------------- [ TOTAL = 12 ]"
+apt-get -qq install -y npm nodejs postgresql libwine openjdk-11-jdk golang golang-go python3-requests python3-pwntools scapy bash-completion python3-pycryptodome
 
-info "[##] Installing Service-Specific Tools"
+info "[##] Installing Service-Specific Tools ------------------ [ TOTAL = 13 ]"
 apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 evil-winrm sqlite3 default-mysql-server sqsh odat smbmap smtp-user-enum sqlmap nbtscan
 
-info "[##] Installing Miscellaneous Tools"
+info "[##] Installing Miscellaneous Tools --------------------- [ TOTAL = 16 ]"
 apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish clamav \
 autopsy powershell-empire
 
-info "[##] Installing Web Application Scanners"
+info "[##] Installing Web Application Scanners ---------------- [ TOTAL = 19 ]"
 apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner sslyze nikto wfuzz davtest cadaver dirb evilginx2 \
 xsser burpsuite beef
 
-info "[##] Installing Port & Network Scanners"
+info "[##] Installing Port & Network Scanners ----------------- [ TOTAL = 11 ]"
 apt-get -qq install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe
 
-info "[##] Installing Host-Specific Tools"
+info "[##] Installing Host-Specific Tools ---------------------- [ TOTAL = 6 ]"
 apt-get -qq install -y windows-binaries mimikatz rubeus nishang powersploit laudanum
 
-info "[##] Installing Active Directory Tools"
+info "[##] Installing Active Directory Tools ------------------- [ TOTAL = 4 ]"
 apt-get -qq install -y bloodhound bloodhound.py certipy-ad responder
 
-info "[##] Installing Exploitation Tools"
+info "[##] Installing Exploitation Tools ----------------------- [ TOTAL = 4 ]"
 apt-get -qq install -y netexec crackmapexec impacket-scripts pompem
 
-info "[##] Installing Creds & Cloud Scan Tools"
+info "[##] Installing Creds & Cloud Scan Tools ------------------ [ TOTAL = 3 ]"
 apt-get -qq install -y trufflehog trivy pacu
 
-info "[##] Installing Network Traffic Tools"
+info "[##] Installing Network Traffic Tools -------------------- [ TOTAL = 4 ]"
 apt-get -qq install -y wireshark tshark sniffglue tcpdump
 
-info "[##] Installing Password Cracking Tools"
+info "[##] Installing Password Cracking Tools ------------------ [ TOOLS = 5 ]"
 apt-get -qq install -y hashid john hashcat hydra medusa cewl
 
-info "[##] Installing Binary Exploitation Tools"
+info "[##] Installing Binary Exploitation Tools ---------------- [ TOOLS = 8 ]"
 apt-get -qq install -y checksec ghidra pwncat radare2 gdb ltrace strace ollydbg
 
-info "[##] Installing Pivoting & Tunneling Tools"
+info "[##] Installing Pivoting & Tunneling Tools --------------- [ TOOLS = 6 ]"
 apt-get -qq install -y chisel ligolo-ng socat dnscat2 ptunnel sshuttle proxychains
 
-info "[##] Installing Mobile APK Analysis Tools"
+info "[##] Installing Mobile APK Analysis Tools ---------------- [ TOOLS = 3 ]"
 apt-get -qq install -y jadx apktool adb
 
-info "[##] Installing Reconnaissance Tools"
+info "[##] Installing Reconnaissance Tools --------------------- [ TOOLS = 3 ]"
 apt-get -qq install -y recon-ng sherlock theharvester
 
-info "[##] Installing Wireless Pentest Tools"
+info "[##] Installing Wireless Pentest Tools ------------------- [ TOOLS = 4 ]"
 apt-get -qq install -y aircrack-ng reaver wifite kismet-core
 
 # ------------------------------------- PYTHON3 LIBRARIES ---------------------
 
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
-info "[##] Installing Important Python3 Libraries"
+info "[##] Installing Important Python3 Libraries ------------- [ TOOLS = 36 ]"
 apt-get -qq install -y python3-flask python3-flask-socketio python3-bcrypt python3-flask-restful python3-bs4 python3-numpy python3-pandas python3-pyqt5 python3-tk \
 python3-matplotlib python3-paramiko python3-socketio python3-nmap python3-lxml python3-selenium python3-yaml python3-geopy python3-colormap python3-termcolor \
 python3-pydantic python3-cryptography python3-sqlalchemy python3-opencv python3-pil python3-pyautogui python3-soundfile python3-pynput python3-capstone \
@@ -119,7 +119,7 @@ python3-corepywrap python3-impacket python3-ropgadget python3-scapy python3-shod
 # ------------------------------------- PIPX TOOLS ----------------------------
 
 if [[ "$pipt" == "y" ]]; then
-	info "[##] Installing Important PIPX Tools"
+	info "[##] Installing Important PIPX Tools ---------------- [ TOOLS = 19 ]"
     pipx --quiet install websocket-client pwnedpasswords geocoder ipython impacket tqdm pytesseract pytest pyinstaller ropgadget pwntools flask pypykat > /dev/null
     pipx --quiet defaultcreds-cheat-sheet kerbrute > /dev/null
     pipx ensurepath > /dev/null
@@ -128,7 +128,7 @@ fi
 # ------------------------------------- PYTHON2 & PIP2 ------------------------
 
 if [[ "$pyp2" == "y" ]]; then
-	info "[##] Installing Python2 & its Libraries"
+	info "[##] Installing Python2 & its Libraries -------------- [ TOOLS = 3 ]"
     apt-get -qq install -y python2 python2-dev python2-minimal
     curl -s https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip2.py && python2 get-pip2.py > /dev/null
 fi
