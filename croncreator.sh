@@ -1,5 +1,10 @@
 #!/bin/bash
 
+clear
+echo "[###] STARTING THE PENTESTER'S KALI - LINUX UPDATE SETUP [###]"
+figlet "PENTESTER'S KALI - LINUX"
+echo "[###] -------------------------------------------------- [###]"
+
 # Check if the User is Root
 echo "[1/7] CHECKING IF YOU HAVE ROOT PRIVILEGES!!"
 if [ "$(whoami)" != "root" ]; then
@@ -8,13 +13,13 @@ if [ "$(whoami)" != "root" ]; then
 fi
 
 # Define paths
-echo "[2/7] DEFINING REQUIRED FILE PATHs !!"
+echo "[2/7] DEFINING REQUIRED FILE PATH VARIABLES !!"
 SCRIPT_SRC="./update.sh"
 SCRIPT_DEST="/root/.update.sh"
 LOG_FILE="/var/log/update.log"
 
 # Copy the script
-echo "[3/7] COPYING THE SCRIPT TO THE ROOT'S DIRECTORY!!"
+echo "[3/7] COPYING SCRIPT TO ROOT DIRECTORY!!"
 cp "$SCRIPT_SRC" "$SCRIPT_DEST"
 if [ $? -ne 0 ]; then
     echo "ERROR: Failed to copy $SCRIPT_SRC to $SCRIPT_DEST"
@@ -30,7 +35,7 @@ echo "[5/7] DEFINING THE CRONJOB !!"
 JOB="0 0 1 * * $SCRIPT_DEST >> $LOG_FILE 2>&1"
 
 # Check if the script file exists
-echo "[6/7] PERFORMING THE FINAL CHECK IF FILE EXISTS!!"
+echo "[6/7] PERFORMING FINAL CHECK ON FILE !!"
 if [ ! -f "$SCRIPT_DEST" ]; then
     echo "ERROR: File not found: $SCRIPT_DEST"
     exit 1
@@ -50,4 +55,4 @@ fi
 rm "$TMP"
 
 # Final Echo
-echo "[###] SUCCESS: CRON-JOB ADDED SUCCSSFULLY: $JOB"
+echo "[###] SUCCESS: CRON-JOB ADDED SUCCSSFULLY!"

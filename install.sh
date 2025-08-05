@@ -1,216 +1,188 @@
 #!/bin/bash
-#Author: TheLeopard65
+# Author: TheLeopard65
 
-# Checking if user is root
-if [ $(whoami) != "root" ]; then
-    echo "SYNTAX: PLEASE RUN THIS SCRIPT WITH SUDO PRIVILEGES !!"
+# ------------------------------------- COLORS --------------------------------
+
+GREEN="\033[0;32m"
+YELLOW="\033[1;33m"
+RED="\033[0;31m"
+BLUE="\033[0;34m"
+NC="\033[0m" # No Color
+
+# ------------------------------------- INFO LEVELS ---------------------------
+
+info() { echo -e "${BLUE}[INFO]${NC} $1"; }
+warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
+error() { echo -e "${RED}[ERROR]${NC} $1"; }
+success() { echo -e "${GREEN}[ OK ]${NC} $1"; }
+
+# ------------------------------------- HEADER/TITLE --------------------------
+
+clear
+echo -e "${GREEN}[###] STARTING THE PENTESTER'S KALI LINUX INSTALL SCRIPT [###]${NC}"
+figlet "PENTESTER'S KALI - LINUX" || echo -e "${YELLOW}(Install 'figlet' to see ASCII banners)${NC}"
+echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
+
+# ------------------------------------- PRIVILEGE CHECK -----------------------
+
+if [[ "$(whoami)" != "root" ]] || [[ -z "$SUDO_USER" ]]; then
+    error "Please run this script using sudo, not directly as root (e.g., 'sudo ./install.sh')!"
     exit 1
 fi
 
-if [ -z "$SUDO_USER" ]; then
-    echo "Error: This script must be run using sudo (not directly as root)."
-    exit 1
-fi
+# ------------------------------------- USER PROMPTS --------------------------
 
-echo "[###@] STARTING WSL2 KALI-LINUX SETUP (DEVELOPED BY @TheLeopard65) [@###]"
-echo "[#] BEFORE PROCEEDING FURTHER, MAKE SURE TO THOROUGHLY ANALYZE THE CODE [#]"
+prompt_yes_no() {
+    read -p "[#] $1 (Y/N) [default: N]: " reply
+    reply=${reply:-N}
+    echo "${reply,,}"
+}
 
-# Prompting for user input with default as "N" (No) and case-insensitive comparison
-read -p "[#] DO YOU WANT TO INSTALL OPTIONAL TOOLS? (Y/N) [default: N] : " optx
-optx=${optx:-N}  # Default to "N" if no input is provided
-optx=$(echo "$optx" | tr '[:upper:]' '[:lower:]')  # Convert to lowercase
+pipt=$(prompt_yes_no "Install pip3 & pipx tools?")
+pyp2=$(prompt_yes_no "Install Python2 & pip2 tools?")
+gitx=$(prompt_yes_no "Add global Git configurations?")
+bashrc_change=$(prompt_yes_no "Modify .bashrc for better UX?")
+nanorc_change=$(prompt_yes_no "Modify nanorc for enhanced usage?")
+echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
 
-read -p "[#] DO YOU WANT TO INSTALL GUI-BASED TOOLS? (Y/N) [default: N] : " guix
-guix=${guix:-N}
-guix=$(echo "$guix" | tr '[:upper:]' '[:lower:]')
+# ------------------------------------- SYSTEM UPDATES ------------------------
 
-read -p "[#] DO YOU WANT TO INSTALL PIP3 & PIPX TOOLS? (Y/N) [default: N] : " pipt
-pipt=${pipt:-N}
-pipt=$(echo "$pipt" | tr '[:upper:]' '[:lower:]')
+info "[###] Updating & upgrading system..."
+apt-get -qq update && apt-get -qq upgrade -y
 
-read -p "[#] DO YOU WANT TO INSTALL PYTHON2 & PIP2 TOOLS? (Y/N) [default: N] : " pyp2
-pyp2=${pyp2:-N}
-pyp2=$(echo "$pyp2" | tr '[:upper:]' '[:lower:]')
+# ------------------------------------- TOOLS INSTALLATION --------------------
 
-read -p "[#] DO YOU WANT TO INSTALL NON-APT REPO TOOLS? (Y/N) [default: N] : " napt
-napt=${napt:-N}
-napt=$(echo "$napt" | tr '[:upper:]' '[:lower:]')
+info "[##] Installing Compulsory/Required Tools"
+apt-get -qq install -y wget curl whois openvpn wordlists seclists webshells exploitdb nmap dpkg python3 python3-dev netcat-traditional ncat plocate git eog tor \
+metasploit-framework powershell git-all git-lfs build-essential firefox-esr python3-pip pipx docker.io docker-compose libssl-dev net-tools libffi-dev snapd \
+torbrowser-launcher
 
-read -p "[#] DO YOU WANT TO INSTALL DOCKER MANAGER TOOLS? (Y/N) [default: N] : " dock
-dock=${dock:-N}
-dock=$(echo "$dock" | tr '[:upper:]' '[:lower:]')
+info "[##] Installing Language & Support Tools"
+apt-get -qq install -y npm nodejs postgresql libwine openjdk-11-jdk golang golang-go python3-requests  python3-pwntools scapy bash-completion python3-pycryptodome
 
-read -p "[#] DO YOU WANT TO ADD GLOBAL LEVEL GIT CONFIGURATIONS? (Y/N) [default: N] : " gitx
-gitx=${gitx:-N}
-gitx=$(echo "$gitx" | tr '[:upper:]' '[:lower:]')
+info "[##] Installing Service-Specific Tools"
+apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 evil-winrm sqlite3 default-mysql-server sqsh odat smbmap smtp-user-enum sqlmap nbtscan
 
-read -p "[#] DO YOU WANT TO ENABLE THE SYSTEMD (DAEMON) FOR SERVICES? (Y/N) [default: N] : " sysd
-sysd=${sysd:-N}
-sysd=$(echo "$sysd" | tr '[:upper:]' '[:lower:]')
+info "[##] Installing Miscellaneous Tools"
+apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish clamav \
+autopsy powershell-empire
 
-read -p "[#] DO YOU WANT TO CHANGE BASHRC FILE FOR BETTER USAGE WITH MOUSE? (Y/N) [default: N] : " bashrc_change
-bashrc_change=${bashrc_change:-N}
-bashrc_change=$(echo "$bashrc_change" | tr '[:upper:]' '[:lower:]')
+info "[##] Installing Web Application Scanners"
+apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner sslyze nikto wfuzz davtest cadaver dirb evilginx2 \
+xsser burpsuite beef
 
-read -p "[#] DO YOU WANT TO CHANGE NANORC FILE FOR BETTER & EASIER USAGE? (Y/N) [default: N] : " nanorc_change
-nanorc_change=${nanorc_change:-N}
-nanorc_change=$(echo "$nanorc_change" | tr '[:upper:]' '[:lower:]')
+info "[##] Installing Port & Network Scanners"
+apt-get -qq install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe
 
-# Updating and Upgrading for the WSL2 & Installing Normal CLI Kali specific Tools Installed for Pentesting and PWN/BIN/Reverse/WEB
-apt-get update -y && apt-get upgrade -y
-apt install -y wget curl whois openvpn wordlists webshells seclists exploitdb nmap dpkg gobuster john hydra hashcat python3 sqlmap netcat-traditional metasploit-framework nikto checksec git git-all plocate build-essential bloodhound wpscan hashid powershell smbclient pwncat enum4linux freerdp3-x11 npm nodejs postgresql crackmapexec impacket-scripts evil-winrm firefox-esr
-apt install -y windows-binaries netdiscover chisel ncat git-lfs python3-dev libssl-dev libwine cewl radare2 mimikatz wfuzz ffuf jadx apktool faketime binwalk steghide sublist3r feroxbuster libimage-exiftool-perl openjdk-11-jdk zbar-tools pdf-parser foremost ffmpeg iptables cme python3-pip pipx davtest cadaver sqlite3 default-mysql-server ltrace strace dirbuster
-apt install -y python3-requests python3-pycryptodome python3-pwntools bloodhound.py powersploit ligolo-ng socat net-tools scapy smbmap certipy-ad rubeus docker.io docker-compose golang golang-go
+info "[##] Installing Host-Specific Tools"
+apt-get -qq install -y windows-binaries mimikatz rubeus nishang powersploit laudanum
 
-# OPTIONAL: Installing The tools are not necessarily used every day
-if [[ "$optx" == "y" ]]; then
-    apt install -y libffi-dev amass openvas-scanner trufflehog trivy responder pacu evilginx2 adb dnsenum sniffglue rizin sslh dnsrecon httprobe sslyze unicornscan pompem pftools bash-completion snapd nbtscan tshark shellter xsser wafw00f recon-ng aircrack-ng sherlock theharvester hping3 dirsearch masscan reaver wifite
-fi
+info "[##] Installing Active Directory Tools"
+apt-get -qq install -y bloodhound bloodhound.py certipy-ad responder
 
-# OPTIONAL: Installing GUI-Based Tools (These should be installed on Windows itself for better performance)
-if [[ "$guix" == "y" ]]; then
-    apt install -y terminator burpsuite ghidra wireshark tor torbrowser-launcher clamav eog autopsy maltego ollydbg kismet-core beef gophish powershell-empire
-    greenbone-nvt-sync
-    freshclam
-fi
+info "[##] Installing Exploitation Tools"
+apt-get -qq install -y netexec crackmapexec impacket-scripts pompem
 
-# OPTIONAL: Installing important pips
+info "[##] Installing Creds & Cloud Scan Tools"
+apt-get -qq install -y trufflehog trivy pacu
+
+info "[##] Installing Network Traffic Tools"
+apt-get -qq install -y wireshark tshark sniffglue tcpdump
+
+info "[##] Installing Password Cracking Tools"
+apt-get -qq install -y hashid john hashcat hydra medusa cewl
+
+info "[##] Installing Binary Exploitation Tools"
+apt-get -qq install -y checksec ghidra pwncat radare2 gdb ltrace strace ollydbg
+
+info "[##] Installing Pivoting & Tunneling Tools"
+apt-get -qq install -y chisel ligolo-ng socat dnscat2 ptunnel sshuttle proxychains
+
+info "[##] Installing Mobile APK Analysis Tools"
+apt-get -qq install -y jadx apktool adb
+
+info "[##] Installing Reconnaissance Tools"
+apt-get -qq install -y recon-ng sherlock theharvester
+
+info "[##] Installing Wireless Pentest Tools"
+apt-get -qq install -y aircrack-ng reaver wifite kismet-core
+
+# ------------------------------------- PYTHON3 LIBRARIES ---------------------
+
+echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
+info "[##] Installing Important Python3 Libraries"
+apt-get -qq install -y python3-flask python3-flask-socketio python3-bcrypt python3-flask-restful python3-bs4 python3-numpy python3-pandas python3-pyqt5 python3-tk \
+python3-matplotlib python3-paramiko python3-socketio python3-nmap python3-lxml python3-selenium python3-yaml python3-geopy python3-colormap python3-termcolor \
+python3-pydantic python3-cryptography python3-sqlalchemy python3-opencv python3-pil python3-pyautogui python3-soundfile python3-pynput python3-capstone \
+python3-corepywrap python3-impacket python3-ropgadget python3-scapy python3-shodan python3-pyqt5
+
+# ------------------------------------- PIPX TOOLS ----------------------------
+
 if [[ "$pipt" == "y" ]]; then
-    apt install -y python3-flask python3-flask-socketio python3-bcrypt python3-flask-restful python3-bs4 python3-numpy python3-pandas python3-matplotlib python3-paramiko python3-socketio python3-nmap python3-lxml python3-selenium python3-yaml python3-geopy python3-colormap python3-termcolor
-    apt install -y python3-tk python3-pydantic python3-cryptography python3-sqlalchemy python3-opencv python3-pil python3-pyautogui python3-soundfile python3-pynput python3-capstone python3-corepywrap python3-impacket python3-ropgadget python3-scapy python3-shodan python3-pyqt5
-    pipx install websocket-client pwnedpasswords geocoder ipython impacket tqdm pytesseract pytest pyinstaller ropgadget pwntools flask kerbrute
+	info "[##] Installing Important PIPX Tools"
+    pipx --quiet install websocket-client pwnedpasswords geocoder ipython impacket tqdm pytesseract pytest pyinstaller ropgadget pwntools flask pypykat > /dev/null
+    pipx --quiet defaultcreds-cheat-sheet kerbrute > /dev/null
+    pipx ensurepath > /dev/null
 fi
+
+# ------------------------------------- PYTHON2 & PIP2 ------------------------
 
 if [[ "$pyp2" == "y" ]]; then
-	apt install -y python2 python2-dev python2-minimal
-	python2 ./get-pip2.py
+	info "[##] Installing Python2 & its Libraries"
+    apt-get -qq install -y python2 python2-dev python2-minimal
+    curl -s https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip2.py && python2 get-pip2.py > /dev/null
 fi
 
-# OPTIONAL: Setting up your Git and Github Configurations Globally. (MAKE SURE TO CHANGE THE CONFIGURATIONS BELOW)
+# ------------------------------------- DOCKER & WINE32 CONFIG ----------------
+
+usermod -aG docker "$SUDO_USER"
+dpkg --add-architecture i386 && apt-get -qq update && apt-get -qq install -y wine32
+
+# ------------------------------------- GLOBAL GIT CONFIG ---------------------
+
 if [[ "$gitx" == "y" ]]; then
-    git config --global user.name "<GITHUB-USERNAME>"
-    git config --global user.email "<GITHUB-USED-EMAIL@gmail.com>"
-    git config --global init.defaultBranch main
+	info "[##] Configuring GIT Configurations"
+    git config --global user.name "Your Name"
+    git config --global user.email "you@example.com"
+    git config --global color.ui auto
 fi
 
-if [[ "$sysd" == "y" ]]; then
-    # ADD-ON: Setting Up Systemd for service controls & snapd
-    if [ ! -f /etc/wsl.conf ] || ! grep -q "systemd=true" /etc/wsl.conf; then
-        if [ ! -f /etc/wsl.conf ]; then
-            touch /etc/wsl.conf
-        fi
-        echo "[boot]" >> /etc/wsl.conf
-        echo "systemd=true" >> /etc/wsl.conf
-        systemctl enable snapd
-        echo "[#] Please Exit the WSL and the Following Commands on the CMD."
-        echo "powershell.exe wsl --update"
-        echo "powershell.exe wsl --shutdown"
-        echo "[#] Then, Restart WSL and re-run \"setupmywsl.sh\" script."
-        exit 0
-    fi
-    systemctl enable snapd
-    systemctl enable postgresql
+# ------------------------------------- NANORC MODIFICATIONS ------------------
+
+if [[ "$nanorc_change" == "y" ]]; then
+	info "[##] Performing NANO Configurations"
+    [[ -f ./nanorc ]] && cp ./nanorc /etc/nanorc
+    wget -q https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh -O- | sh > /dev/null
 fi
 
-# OPTIONAL: INSTALLING DOCKER ON THE WSL2 KALI-LINUX SYSTEM
-if [[ "$dock" == "y" ]]; then
-    for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do apt --purge remove -y $pkg; done
-    apt update -y && apt upgrade -y && apt install ca-certificates curl
-    install -m 0755 -d /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-    chmod a+r /etc/apt/keyrings/docker.asc
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian bookworm stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-    apt update -y && apt upgrade -y
-    apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+# ------------------------------------- BASHRC CUSTOMIZATION ------------------
+
+if [[ "$bashrc_change" == "y" ]]; then
+	info "[##] Performing BASH Configurations"
+    cp ./bashrc "/home/$SUDO_USER/.bashrc"
+    cp ./bashrc /root/.bashrc
+    warn "[#] Manual action needed: Please run 'source ~/.bashrc' after this script."
 fi
 
-# Enabling 32-Bit Packages
-dpkg --add-architecture i386
-apt update
-apt -y install wine32
+# ------------------------------------- POST SETUP COMMMANDS ------------------
 
-# COMPULSORY: UPDATING SOME IMPORTANT DATABASES
-gzip -d /usr/share/wordlists/rockyou.txt.gz
+info "[###] Finalizing the PENTESTER'S KALI - LINUX Setup"
+gzip -d /usr/share/wordlists/rockyou.txt.gz 2>/dev/null
 searchsploit -u
 nmap --script-updatedb
-pipx ensurepath
-usermod -aG docker $SUDO_USER
-
-# Making Nano shortcuts and experience more windows-like:
-if [[ "$nanorc_change" == "y" ]]; then
-    cp ./nanorc /etc/nanorc
-fi
-
-# Enabling Syntax Highlighting in Nano
-wget https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh -O- | sh
-
-# Making Terminal like compact and custom:
-if [[ "$bashrc_change" == "y" ]]; then
-    cp ./bashrc /home/$SUDO_USER/.bashrc
-    cp ./bashrc /root/.bashrc
-    source ~/.bashrc      # This won't work. You might have to source it manually after script finihes.
-fi
-
-if [[ "$napt" == "y" ]]; then
-	mkdir -p /opt
-	chown -R $SUDO_USER /opt
-    apt-get update -y && apt-get upgrade -y
-
-    # Installing GDB-GEF for GDB
-    bash -c "$(curl -fsSL https://gef.blah.cat/sh)"
-
-	# Installing Sysrepter
-	bash <(curl -s https://docs.sysreptor.com/install.sh)
-
-    # Installing Ipinfo-CLI && Wayback-Curls
-    cd /opt
-    curl -Ls https://github.com/ipinfo/cli/releases/download/ipinfo-3.3.1/deb.sh | sh
-    go install github.com/tomnomnom/waybackurls@latest
-
-    # Installing CloudSploit
-    cd /opt
-    git clone https://github.com/aquasecurity/cloudsploit.git
-    cd cloudsploit
-    npm install
-    ./index.js -h
-
-    # Installing LinkFinder
-    cd /opt
-    git clone https://github.com/GerbenJavado/LinkFinder.git
-    cd LinkFinder
-    python setup.py install
-
-    # Installing NESSUS
-    cd /var/cache/apt/archive/
-    wget -O nessus.deb https://www.tenable.com/downloads/api/v1/public/pages/nessus/downloads/11671/download?i_agree_to_tenable_license_agreement=true
-    dpkg -i nessus.deb
-
-    # Installing DEEPSOUND
-    cd /opt
-    wget -O /opt/deepsound.msi http://jpinsoft.net/DeepSound/Download.aspx?Download=LastVersion
-    wine msiexec /i /opt/deepsound.msi
-
-    # Installing SSTV Decoder
-    cd /opt
-    git clone https://github.com/colaclanth/sstv.git
-    cd sstv
-    python3 setup.py install
-
-    # Installing Volatility3
-    cd /opt
-    git clone https://github.com/volatilityfoundation/volatility3.git
-    cd volatility3
-    python3 setup.py build
-    python3 setup.py install
-fi
-
-# Final Update and Upgrade
-apt-get update -y && apt-get upgrade -y
-apt-get full-upgrade -y
-apt-get autoremove -y
+greenbone-nvt-sync
+freshclam
+apt-get -qq update
+apt-get -qq upgrade -y
+apt-get -qq full-upgrade -y
+apt-get -qq autoremove -y
 updatedb
 
-# Move to Home Directory
-clear
-cd
-echo "[#] Please restart your terminal or manually source ~/.bashrc to apply changes."
+# ------------------------------------- COMPLETION ----------------------------
+
+echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
+echo -e "${GREEN}[###] Kali-Linux Pentest environment setup is finally complete!${NC}"
+if [[ "$bashrc_change" == "y" ]]; then
+	echo -e "${YELLOW}[###] Restart your terminal or run 'source ~/.bashrc' to apply all changes.${NC}"
+fi
+echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
