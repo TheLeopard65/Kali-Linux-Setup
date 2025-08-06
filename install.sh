@@ -60,8 +60,9 @@ torbrowser-launcher
 info "[##] Installing Language & Support Tools ---------------- [ TOTAL = 12 ]"
 apt-get -qq install -y npm nodejs postgresql libwine openjdk-11-jdk golang golang-go python3-requests python3-pwntools scapy bash-completion python3-pycryptodome
 
-info "[##] Installing Service-Specific Tools ------------------ [ TOTAL = 13 ]"
-apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 evil-winrm sqlite3 default-mysql-server sqsh odat smbmap smtp-user-enum sqlmap nbtscan
+info "[##] Installing Service-Specific Tools ------------------ [ TOTAL = 20 ]"
+apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 evil-winrm sqlite3 default-mysql-server sqsh odat smbmap smtp-user-enum sqlmap onesixtyone \
+nbtscan snmpwalk snmp-check snmpget samba-common-bin rpcbind rpcclient
 
 info "[##] Installing Miscellaneous Tools --------------------- [ TOTAL = 16 ]"
 apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish clamav \
@@ -71,14 +72,14 @@ info "[##] Installing Web Application Scanners ---------------- [ TOTAL = 19 ]"
 apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner sslyze nikto wfuzz davtest cadaver dirb evilginx2 \
 xsser burpsuite beef
 
-info "[##] Installing Port & Network Scanners ----------------- [ TOTAL = 11 ]"
-apt-get -qq install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe
+info "[##] Installing Port & Network Scanners ----------------- [ TOTAL = 12 ]"
+apt-get -qq install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe fping
 
 info "[##] Installing Host-Specific Tools ---------------------- [ TOTAL = 6 ]"
 apt-get -qq install -y windows-binaries mimikatz rubeus nishang powersploit laudanum
 
-info "[##] Installing Active Directory Tools ------------------- [ TOTAL = 4 ]"
-apt-get -qq install -y bloodhound bloodhound.py certipy-ad responder
+info "[##] Installing Active Directory Tools ------------------- [ TOTAL = 7 ]"
+apt-get -qq install -y bloodhound bloodhound.py certipy-ad responder ldap-utils lapsdumper gpp-decrypt
 
 info "[##] Installing Exploitation Tools ----------------------- [ TOTAL = 4 ]"
 apt-get -qq install -y netexec crackmapexec impacket-scripts pompem
@@ -101,8 +102,8 @@ apt-get -qq install -y chisel ligolo-ng socat dnscat2 ptunnel sshuttle proxychai
 info "[##] Installing Mobile APK Analysis Tools ---------------- [ TOOLS = 3 ]"
 apt-get -qq install -y jadx apktool adb
 
-info "[##] Installing Reconnaissance Tools --------------------- [ TOOLS = 3 ]"
-apt-get -qq install -y recon-ng sherlock theharvester
+info "[##] Installing Reconnaissance Tools --------------------- [ TOOLS = 4 ]"
+apt-get -qq install -y recon-ng sherlock theharvester linkedin2username
 
 info "[##] Installing Wireless Pentest Tools ------------------- [ TOOLS = 4 ]"
 apt-get -qq install -y aircrack-ng reaver wifite kismet-core
@@ -110,11 +111,11 @@ apt-get -qq install -y aircrack-ng reaver wifite kismet-core
 # ------------------------------------- PYTHON3 LIBRARIES ---------------------
 
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
-info "[##] Installing Important Python3 Libraries ------------- [ TOOLS = 36 ]"
+info "[##] Installing Important Python3 Libraries ------------- [ TOOLS = 37 ]"
 apt-get -qq install -y python3-flask python3-flask-socketio python3-bcrypt python3-flask-restful python3-bs4 python3-numpy python3-pandas python3-pyqt5 python3-tk \
 python3-matplotlib python3-paramiko python3-socketio python3-nmap python3-lxml python3-selenium python3-yaml python3-geopy python3-colormap python3-termcolor \
 python3-pydantic python3-cryptography python3-sqlalchemy python3-opencv python3-pil python3-pyautogui python3-soundfile python3-pynput python3-capstone \
-python3-corepywrap python3-impacket python3-ropgadget python3-scapy python3-shodan python3-pyqt5
+python3-corepywrap python3-impacket python3-ropgadget python3-scapy python3-shodan python3-pyqt5 python-ldap
 
 # ------------------------------------- PIPX TOOLS ----------------------------
 

@@ -1,5 +1,4 @@
 # Kali-Linux-Setup
-==================
 
 This repository contains a comprehensive set of scripts to automate the setup, update, customization, and maintenance of a **Kali Linux** environment, tailored for penetration testing and red teaming purposes.
 
