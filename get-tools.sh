@@ -66,7 +66,7 @@ windows_tools() {
     wget -q --show-progress https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_windows_amd64.zip -O ligolo-Agent-Windows-0.8.2.zip
 	unzip ligolo-Agent-Windows-0.8.2.zip && rm ligolo-Agent-Windows-0.8.2.zip && cd ..
 
-	git clone --quiet git clone https://github.com/dirkjanm/PKINITtools.git
+	git clone --quiet https://github.com/dirkjanm/PKINITtools.git
 
     echo "[###] WINDOWS TOOLS DOWNLOAD COMPLETE [###]"
 }
@@ -77,7 +77,7 @@ misc_tools(){
 
     wget -q --show-progress https://raw.githubusercontent.com/SpecterOps/BloodHound/main/examples/docker-compose/docker-compose.yml -O docker-compose.yml
 	echo "Cloning the DNSCat2 Repository" && git clone --quiet https://github.com/iagox86/dnscat2.git
-	echo "Cloning the pTunnel Repository" && git clone --quiet https://github.com/utoni/ptunnel-ng.git && cd ptunnel-ng && ./autogen.sh > /dev/null && cd ..
+	echo "Cloning the pTunnel Repository" && git clone --quiet https://github.com/utoni/ptunnel-ng.git && cd ptunnel-ng && ./autogen.sh 2>&1 /dev/null && cd ..
 	echo "Cloning the SocksOverRDP Repository" && git clone --quiet https://github.com/nccgroup/SocksOverRDP.git
 	echo "Cloning the Dehashed Repository" && git clone --quiet https://github.com/sm00v/Dehashed.git
 
@@ -121,4 +121,5 @@ esac
 
 cd "$DIR"
 echo "[###] All selected tools downloaded to: $DIR"
+echo "[###] Changing Ownership of $DIR to: $SUDO_USER"
 chown "$SUDO_USER:$SUDO_USER" -R "$DIR"
