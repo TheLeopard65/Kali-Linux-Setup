@@ -68,9 +68,9 @@ info "[##] Installing Miscellaneous Tools --------------------- [ TOTAL = 16 ]"
 apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish clamav \
 autopsy powershell-empire
 
-info "[##] Installing Web Application Scanners ---------------- [ TOTAL = 19 ]"
+info "[##] Installing Web Application Scanners ---------------- [ TOTAL = 20 ]"
 apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner sslyze nikto wfuzz davtest cadaver dirb evilginx2 \
-xsser burpsuite beef
+xsser burpsuite beef zaproxy
 
 info "[##] Installing Port & Network Scanners ----------------- [ TOTAL = 12 ]"
 apt-get -qq install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe fping
