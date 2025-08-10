@@ -133,7 +133,7 @@ fi
 if [[ "$pyp2" == "y" ]]; then
 	info "[##] Installing Python2 & its Libraries ------------------ [ TOOLS = 3 ]"
 	apt-get -qq install -y python2 python2-dev python2-minimal
-	curl -s https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip2.py && python2 get-pip2.py 2>&1 /dev/null
+	curl -s https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip2.py && python2 get-pip2.py > /dev/null
 fi
 
 # ------------------------------------- ENABLE SNAPD --------------------------
