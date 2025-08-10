@@ -116,8 +116,8 @@ echo -e "${GREEN}[###] -------------------------------------------------- [###]$
 info "[##] Installing Important Python3 Libraries ------------- [ TOOLS = 37 ]"
 apt-get -qq install -y python3-flask python3-flask-socketio python3-bcrypt python3-flask-restful python3-bs4 python3-numpy python3-pandas python3-pyqt5 python3-tk \
 python3-matplotlib python3-paramiko python3-socketio python3-nmap python3-lxml python3-selenium python3-yaml python3-geopy python3-colormap python3-termcolor \
-python3-pydantic python3-cryptography python3-sqlalchemy python3-opencv python3-pil python3-pyautogui python3-soundfile python3-pynput python3-pyqt5 python3-ldap \
-python3-capstone python3-corepywrap python3-impacket python3-ropgadget python3-scapy python3-shodan
+python3-pydantic python3-cryptography python3-sqlalchemy python3-opencv python3-pil python3-pyautogui python3-soundfile python3-capstone python3-corepywrap \
+python3-ldap python3-impacket python3-ropgadget python3-scapy python3-shodan python3-pynput
 
 # ------------------------------------- PIPX TOOLS ----------------------------
 
@@ -198,7 +198,7 @@ updatedb
 
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
 echo -e "${GREEN}[###] Kali-Linux Pentest environment setup is finally complete!${NC}"
-if [[ "$bashrc_change" == "y" ]]; then
+if [[ "$barc" == "y" ]]; then
 	echo -e "${YELLOW}[###] Restart your terminal or run 'source ~/.bashrc' to apply all changes.${NC}"
 fi
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
