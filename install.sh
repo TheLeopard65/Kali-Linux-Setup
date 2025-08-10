@@ -142,7 +142,7 @@ if [[ "$snpd" == "y" ]]; then
 	info "[##] Installing Snapd & its packages --------------------- [ TOOLS = 4 ]"
 	systemctl enable snapd > /dev/null
 	systemctl start snapd > /dev/null
-	snap install cutter ngrok > /dev/null
+	snap install ngrok > /dev/null
 	snap install --classic code > /dev/null
 	snap install --edge bashfuscator > /dev/null
 fi
@@ -184,7 +184,7 @@ fi
 
 info "[###] Finalizing the PENTESTER'S KALI - LINUX Setup ------------- [ MANUAL ]"
 gzip -d /usr/share/wordlists/rockyou.txt.gz 2>/dev/null
-searchsploit -u
+searchsploit -u > /dev/null
 nmap --script-updatedb > /dev/null
 greenbone-nvt-sync --quiet
 freshclam --quiet
