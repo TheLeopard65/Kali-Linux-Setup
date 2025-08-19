@@ -6,13 +6,14 @@ if [ -z "$SUDO_USER" ]; then
     exit 1
 fi
 
+apt-get -qq install figlet -y
 clear
 echo "[###] STARTING THE PENTESTER'S KALI - LINUX UPDATE SETUP [###]"
 figlet "PENTESTER'S KALI - LINUX"
 echo "[###] -------------------------------------------------- [###]"
 
 set -euo pipefail
-DIR=/home/$SUDO_USER/IMP-TOOLS
+DIR=$(eval echo "~$SUDO_USER")/IMP-TOOLS
 mkdir -p "$DIR"
 apt-get -qq install -y git zip unzip wget ruby-dev make golang-go golang npm python3
 
@@ -20,19 +21,19 @@ linux_scripts() {
     echo "[###] DOWNLOADING LINUX SCRIPTS ------------------------------------------------------ ( Total Tools = 16 ) [###]"
     cd "$DIR" && mkdir -p linux-scripts && cd linux-scripts
 
-    wget -q --show-progress https://raw.githubusercontent.com/urbanadventurer/username-anarchy/refs/heads/master/username-anarchy && chmod +x username-anarchy && cp ./username-anarchy /usr/bin/username-anarchy
     wget -q --show-progress https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh -O LinEnum.sh && chmod +x LinEnum.sh
+    wget -q --show-progress https://raw.githubusercontent.com/redcode-labs/Bashark/refs/heads/master/bashark.sh -O bashark.sh && chmod +x bashark.sh
+    wget -q --show-progress https://raw.githubusercontent.com/Pwnistry/Windows-Exploit-Suggester-python3/refs/heads/master/windows-exploit-suggester.py -O windows-exploit-suggester.py && chmod +x ./windows-exploit-suggester.py
+    wget -q --show-progress https://raw.githubusercontent.com/sosdave/KeyTabExtract/refs/heads/master/keytabextract.py -O keytabextract.py && chmod +x keytabextract.py
+    wget -q --show-progress https://raw.githubusercontent.com/enjoiz/XXEinjector/refs/heads/master/XXEinjector.rb && chmod +x XXEinjector.rb && ln -s ./XXEinjector.rb /usr/local/bin/XXEinjector
     wget -q --show-progress https://raw.githubusercontent.com/mzet-/linux-exploit-suggester/master/linux-exploit-suggester.sh -O linux-exploit-suggester.sh && chmod +x linux-exploit-suggester.sh
     wget -q --show-progress https://raw.githubusercontent.com/jondonas/linux-exploit-suggester-2/master/linux-exploit-suggester-2.pl -O linux-exploit-suggester-2.pl && chmod +x linux-exploit-suggester-2.pl
-    wget -q --show-progress https://raw.githubusercontent.com/sosdave/KeyTabExtract/refs/heads/master/keytabextract.py -O keytabextract.py && chmod +x keytabextract.py
-    wget -q --show-progress https://raw.githubusercontent.com/enjoiz/XXEinjector/refs/heads/master/XXEinjector.rb && chmod +x XXEinjector.rb && cp ./XXEinjector.rb /usr/bin/XXEinjector
-    wget -q --show-progress https://raw.githubusercontent.com/redcode-labs/Bashark/refs/heads/master/bashark.sh -O bashark.sh && chmod +x bashark.sh
-    wget -q --show-progress https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz -O mimipenguin-2.0.tar.gz && tar -xzf mimipenguin-2.0.tar.gz && mv mimipenguin_2.0-release mimipenguin-2.0 && rm -f mimipenguin-2.0.tar.gz
+    wget -q --show-progress https://raw.githubusercontent.com/urbanadventurer/username-anarchy/refs/heads/master/username-anarchy && chmod +x username-anarchy && ln -s ./username-anarchy /usr/local/bin/username-anarchy
     wget -q --show-progress https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64 -O pspy64 && chmod +x pspy64
-    wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_linux_amd64.gz -O chisel-linux-1.10.1.gz && gunzip chisel-linux-1.10.1.gz
-    wget -q --show-progress https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64 -O kerbrute && chmod +x ./kerbrute && cp ./kerbrute /usr/bin/kerbrute
     wget -q --show-progress https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -O linpeas.sh && chmod +x linpeas.sh
-    wget -q --show-progress https://raw.githubusercontent.com/Pwnistry/Windows-Exploit-Suggester-python3/refs/heads/master/windows-exploit-suggester.py -O windows-exploit-suggester.py && chmod +x ./windows-exploit-suggester.py
+    wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_linux_amd64.gz -O chisel-linux-1.10.1.gz && gunzip chisel-linux-1.10.1.gz
+    wget -q --show-progress https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64 -O kerbrute && chmod +x ./kerbrute && ln -s ./kerbrute /usr/local/bin/kerbrute
+    wget -q --show-progress https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz -O mimipenguin-2.0.tar.gz && tar -xzf mimipenguin-2.0.tar.gz && mv mimipenguin_2.0-release mimipenguin-2.0 && rm -f mimipenguin-2.0.tar.gz
     echo "Cloning the Linux Kernel Exploits Repository" && git clone --quiet https://github.com/JlSakuya/Linux-Privilege-Escalation-Exploits.git
     echo "Cloning the SUDO_KILLER Repository" && git clone --quiet https://github.com/TH3xACE/SUDO_KILLER.git
     echo "Cloning the Rpivot Repository" && git clone --quiet https://github.com/klsecservices/rpivot.git
@@ -56,14 +57,14 @@ windows_scripts() {
     wget -q --show-progress https://github.com/klsecservices/rpivot/releases/download/v1.0/client.exe -O rpivot-client.exe
     wget -q --show-progress https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASany.exe -O winPEASany.exe
     wget -q --show-progress https://github.com/tevora-threat/SharpView/raw/refs/heads/master/Compiled/SharpView.exe -O SharpView.exe
-    wget -q --show-progress https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_windows_amd64.zip -O ligolo-Agent.zip && unzip ligolo-Agent.zip 2>&1 > /dev/null && rm ligolo-Agent.zip LICENSE README.md
+    wget -q --show-progress https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_windows_amd64.zip -O ligolo-Agent.zip && unzip -qq ligolo-Agent.zip && rm -f ligolo-Agent.zip LICENSE README.md
     wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_windows_amd64.gz -O chisel-windows.1.10.1.gz && gunzip chisel-windows.1.10.1.gz && mv chisel-windows.1.10.1 chisel-windows-1.10.1.exe
-    wget -q --show-progress https://github.com/SpecterOps/SharpHound/releases/download/v2.7.0/SharpHound_v2.7.0_windows_x86.zip -O SharpHound-2.7.0-X86.zip && unzip SharpHound-2.7.0-X86.zip && rm SharpHound-2.7.0-X86.zip SharpHound.exe.config SharpHound.pdb
-    wget -q --show-progress https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.11/Inveigh-net8.0-win-x64-trimmed-single-v2.0.11.zip -O Inveigh-Net8-Win-2.0.11.zip && unzip Inveigh-Net8-Win-2.0.11.zip && rm Inveigh.pdb Inveigh-Net8-Win-2.0.11.zip
+    wget -q --show-progress https://github.com/SpecterOps/SharpHound/releases/download/v2.7.0/SharpHound_v2.7.0_windows_x86.zip -O SharpHound-2.7.0-X86.zip && unzip -qq SharpHound-2.7.0-X86.zip && rm -f SharpHound-2.7.0-X86.zip SharpHound.exe.config SharpHound.pdb
+    wget -q --show-progress https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.11/Inveigh-net8.0-win-x64-trimmed-single-v2.0.11.zip -O Inveigh-Net8-Win-2.0.11.zip && unzip -qq Inveigh-Net8-Win-2.0.11.zip && rm -f Inveigh.pdb Inveigh-Net8-Win-2.0.11.zip
 
     mkdir -p socat-windows && cd socat-windows
     wget -q --show-progress https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx64.exe -O socatx64.exe
-	wget -q --show-progress https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx86.exe -O socatx86.exe
+    wget -q --show-progress https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx86.exe -O socatx86.exe
     cd ..
 
     mkdir -p UACME-Akagi && cd UACME-Akagi

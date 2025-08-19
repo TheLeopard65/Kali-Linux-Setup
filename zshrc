@@ -101,7 +101,7 @@ configure_prompt() {
             #RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
             ;;
         oneline)
-        	PROMPT=$'[${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{blue}%n%F{cyan}@%F{red}%m%b%F{reset}]:[%B%F{%(#.blue.green)}%~%b%F{reset}]%(#.#.$) '
+        	PROMPT=$'[${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#..red)blue}%n%F{cyan}@%F{red}%m%b%F{reset}]:[%B%F{%(#.red.green)}%~%b%F{reset}]%(#.#.$) '
             RPROMPT=
             ;;
         backtrack)
