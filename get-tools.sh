@@ -31,6 +31,7 @@ linux_scripts() {
     wget -q --show-progress https://raw.githubusercontent.com/urbanadventurer/username-anarchy/refs/heads/master/username-anarchy && chmod +x username-anarchy && ln -s ./username-anarchy /usr/local/bin/username-anarchy
     wget -q --show-progress https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64 -O pspy64 && chmod +x pspy64
     wget -q --show-progress https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -O linpeas.sh && chmod +x linpeas.sh
+    wget -q --show-progress https://github.com/assetnote/kiterunner/releases/download/v1.0.2/kiterunner_1.0.2_linux_amd64.tar.gz -O kiterunner-1.0.2.tar.gz && tar -xzf kiterunner-1.0.2.tar.gz && ln -s ./kr /usr/local/bin/kr && rm kiterunner-1.0.2.tar.gz
     wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_linux_amd64.gz -O chisel-linux-1.10.1.gz && gunzip chisel-linux-1.10.1.gz
     wget -q --show-progress https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64 -O kerbrute && chmod +x ./kerbrute && ln -s ./kerbrute /usr/local/bin/kerbrute
     wget -q --show-progress https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz -O mimipenguin-2.0.tar.gz && tar -xzf mimipenguin-2.0.tar.gz && mv mimipenguin_2.0-release mimipenguin-2.0 && rm -f mimipenguin-2.0.tar.gz
@@ -42,7 +43,7 @@ linux_scripts() {
 }
 
 windows_scripts() {
-    echo "[###] DOWNLOADING WINDOWS SCRIPTS ---------------------------------------------------- ( Total Tools = 20 ) [###]"
+    echo "[###] DOWNLOADING WINDOWS SCRIPTS ---------------------------------------------------- ( Total Tools = 19 ) [###]"
     cd "$DIR" && mkdir -p windows-scripts && cd windows-scripts
 
     wget -q --show-progress https://raw.githubusercontent.com/411Hall/JAWS/master/jaws-enum.ps1 -O jaws-enum.ps1
@@ -59,7 +60,6 @@ windows_scripts() {
     wget -q --show-progress https://github.com/tevora-threat/SharpView/raw/refs/heads/master/Compiled/SharpView.exe -O SharpView.exe
     wget -q --show-progress https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_windows_amd64.zip -O ligolo-Agent.zip && unzip -qq ligolo-Agent.zip && rm -f ligolo-Agent.zip LICENSE README.md
     wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_windows_amd64.gz -O chisel-windows.1.10.1.gz && gunzip chisel-windows.1.10.1.gz && mv chisel-windows.1.10.1 chisel-windows-1.10.1.exe
-    wget -q --show-progress https://github.com/SpecterOps/SharpHound/releases/download/v2.7.0/SharpHound_v2.7.0_windows_x86.zip -O SharpHound-2.7.0-X86.zip && unzip -qq SharpHound-2.7.0-X86.zip && rm -f SharpHound-2.7.0-X86.zip SharpHound.exe.config SharpHound.pdb
     wget -q --show-progress https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.11/Inveigh-net8.0-win-x64-trimmed-single-v2.0.11.zip -O Inveigh-Net8-Win-2.0.11.zip && unzip -qq Inveigh-Net8-Win-2.0.11.zip && rm -f Inveigh.pdb Inveigh-Net8-Win-2.0.11.zip
 
     mkdir -p socat-windows && cd socat-windows

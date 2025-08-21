@@ -27,7 +27,7 @@ echo -e "${GREEN}[###] -------------------------------------------------- [###]$
 # ------------------------------------- PRIVILEGE CHECK -----------------------
 
 if [[ "$(id -u)" -ne 0 ]]; then
-    error "Please run this script using ROOT or SUDO. (For example: 'sudo ./$0')!"
+    error "Please run this script using ROOT or SUDO. (For example: 'sudo $0')!"
     exit 1
 fi
 
@@ -68,9 +68,9 @@ info "[##] Installing Web Application Scanners ---------------- [ TOTAL = 21 ]"
 apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner sslyze nikto wfuzz davtest cadaver dirb evilginx2
 apt-get -qq install -y xsser burpsuite beef zaproxy shellfire
 
-info "[##] Installing Miscellaneous Tools --------------------- [ TOTAL = 19 ]"
+info "[##] Installing Miscellaneous Tools --------------------- [ TOTAL = 20 ]"
 apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish clamav jq xxd
-apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis
+apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwrap
 
 info "[##] Installing Language & Support Tools ---------------- [ TOTAL = 16 ]"
 apt-get -qq install -y python3 python3-dev python3-pip pipx npm nodejs postgresql libwine openjdk-11-jdk golang golang-go scapy bash-completion php ruby perl
@@ -102,8 +102,8 @@ apt-get -qq install -y trufflehog trivy pacu
 info "[##] Installing Network Traffic Tools -------------------- [ TOTAL = 4 ]"
 apt-get -qq install -y wireshark tshark sniffglue tcpdump
 
-info "[##] Installing Mobile APK Analysis Tools ---------------- [ TOOLS = 3 ]"
-apt-get -qq install -y jadx apktool adb
+info "[##] Installing Mobile APK Analysis Tools ---------------- [ TOOLS = 4 ]"
+apt-get -qq install -y jadx apktool adb poppler-utils
 
 info "[##] Installing Reconnaissance Tools --------------------- [ TOOLS = 4 ]"
 apt-get -qq install -y recon-ng sherlock theharvester linkedin2username
