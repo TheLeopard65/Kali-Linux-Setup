@@ -24,6 +24,9 @@ echo -e "${GREEN}[###] STARTING THE PENTESTER'S KALI LINUX INSTALL SCRIPT [###]$
 figlet "PENTESTER'S KALI - LINUX" || echo -e "${YELLOW}(Install 'figlet' to see ASCII banners)${NC}"
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
 
+export DEBIAN_FRONTEND=noninteractive
+echo '* libraries/restart-without-asking boolean true' | debconf-set-selections
+
 # ------------------------------------- PRIVILEGE CHECK -----------------------
 
 if [[ "$(id -u)" -ne 0 ]]; then
