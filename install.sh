@@ -233,6 +233,7 @@ apt-get -qq upgrade -y
 apt-get -qq full-upgrade -y
 apt-get -qq autoremove -y
 updatedb
+unset DEBIAN_FRONTEND
 
 # ------------------------------------- COMPLETION ----------------------------
 
