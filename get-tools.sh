@@ -73,8 +73,8 @@ windows_scripts() {
     wget -q --show-progress https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi64.exe
     cd ..
 
-	echo "Cloning the PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
-	echo "Cloning the Sysinternals Repository" && git clone --quiet https://github.com/Sysinternals/sysinternals.git
+    echo "Cloning the PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
+    echo "Cloning the Sysinternals Repository" && git clone --quiet https://github.com/Sysinternals/sysinternals.git
 
     echo "[###] WINDOWS TOOLS DOWNLOAD COMPLETE [###]"
 }
@@ -84,10 +84,10 @@ misc_tools(){
     cd "$DIR"
 
     wget -q --show-progress https://raw.githubusercontent.com/SpecterOps/BloodHound/main/examples/docker-compose/docker-compose.yml -O docker-compose.yml
-	echo "Cloning the DNSCat2 Repository" && git clone --quiet https://github.com/iagox86/dnscat2.git
-	echo "Cloning the pTunnel Repository" && git clone --quiet https://github.com/utoni/ptunnel-ng.git
-	echo "Cloning the SocksOverRDP Repository" && git clone --quiet https://github.com/nccgroup/SocksOverRDP.git
-	echo "Cloning the Dehashed Repository" && git clone --quiet https://github.com/sm00v/Dehashed.git
+    echo "Cloning the DNSCat2 Repository" && git clone --quiet https://github.com/iagox86/dnscat2.git
+    echo "Cloning the pTunnel Repository" && git clone --quiet https://github.com/utoni/ptunnel-ng.git
+    echo "Cloning the SocksOverRDP Repository" && git clone --quiet https://github.com/nccgroup/SocksOverRDP.git
+    echo "Cloning the Dehashed Repository" && git clone --quiet https://github.com/sm00v/Dehashed.git
 
     echo "[###] MISC TOOLS DOWNLOAD COMPLETE [###]"
 }
