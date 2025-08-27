@@ -58,10 +58,10 @@ apt-get -qq update && apt-get -qq upgrade -y
 
 # ------------------------------------- TOOLS INSTALLATION --------------------
 
-info "[##] Installing Compulsory/Required Tools --------------- [ TOTAL = 35 ]"
+info "[##] Installing Compulsory/Required Tools --------------- [ TOTAL = 37 ]"
 apt-get -qq install -y wget curl whois openvpn wordlists seclists webshells exploitdb dpkg netcat-traditional ncat plocate git eog tor libffi-dev snapd git-all
 apt-get -qq install -y metasploit-framework powershell git-lfs build-essential firefox-esr docker.io docker-compose libssl-dev net-tools torbrowser-launcher
-apt-get -qq install -y coreutils uuid ntpsec-ntpdate axel xclip openssl flameshot
+apt-get -qq install -y coreutils uuid ntpsec-ntpdate axel xclip openssl flameshot dkms linux-headers-$(uname -r)
 
 info "[##] Installing Service-Specific Tools ------------------ [ TOTAL = 25 ]"
 apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat smbmap smtp-user-enum
