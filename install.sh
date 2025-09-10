@@ -237,6 +237,10 @@ unset DEBIAN_FRONTEND
 
 # ------------------------------------- COMPLETION ----------------------------
 
+info "[###] Settup up the User's Home Directory ------------------- [ MANUAL ]"
+cd /home/$SUDO_USER/ && mkdir -p {loot,exploits,transfer,creds,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics}}
+sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/{loot,exploits,transfer,tools,misc,creds,CTF}
+
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
 echo -e "${GREEN}[###] Kali-Linux Pentest environment setup is finally complete!${NC}"
 if [[ "$barc" == "y" ]]; then
