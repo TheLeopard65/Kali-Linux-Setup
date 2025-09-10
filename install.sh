@@ -63,17 +63,17 @@ apt-get -qq install -y wget curl whois openvpn wordlists seclists webshells expl
 apt-get -qq install -y metasploit-framework powershell git-lfs build-essential firefox-esr docker.io docker-compose libssl-dev net-tools torbrowser-launcher
 apt-get -qq install -y coreutils uuid ntpsec-ntpdate axel xclip openssl flameshot dkms linux-headers-$(uname -r)
 
-info "[##] Installing Service-Specific Tools ------------------ [ TOTAL = 25 ]"
+info "[##] Installing Service-Specific Tools ------------------ [ TOTAL = 27 ]"
 apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat smbmap smtp-user-enum
-apt-get -qq install -y sqlmap onesixtyone nbtscan snmp snmpcheck samba samba-common-bin rpcbind kubectl mdbtools xtightvncviewer redis
+apt-get -qq install -y sqlmap onesixtyone nbtscan snmp snmpcheck samba samba-common-bin rpcbind kubectl mdbtools xtightvncviewer redis mongodb-clients ansible
 
 info "[##] Installing Web Application Scanners ---------------- [ TOTAL = 21 ]"
 apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner sslyze nikto wfuzz davtest cadaver dirb evilginx2
 apt-get -qq install -y xsser burpsuite beef zaproxy shellfire
 
-info "[##] Installing Miscellaneous Tools --------------------- [ TOTAL = 20 ]"
+info "[##] Installing Miscellaneous Tools --------------------- [ TOTAL = 21 ]"
 apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish clamav jq xxd
-apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwrap
+apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils
 
 info "[##] Installing Language & Support Tools ---------------- [ TOTAL = 16 ]"
 apt-get -qq install -y python3 python3-dev python3-pip pipx npm nodejs postgresql libwine openjdk-11-jdk golang golang-go scapy bash-completion php ruby perl

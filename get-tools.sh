@@ -31,7 +31,7 @@ linux_scripts() {
     wget -q --show-progress https://raw.githubusercontent.com/Pwnistry/Windows-Exploit-Suggester-python3/refs/heads/master/windows-exploit-suggester.py -O windows-exploit-suggester.py && chmod +x ./windows-exploit-suggester.py
     wget -q --show-progress https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64 -O pspy64 && chmod +x pspy64
     wget -q --show-progress https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -O linpeas.sh && chmod +x linpeas.sh
-    wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_linux_amd64.gz -O chisel-linux-1.10.1.gz && gunzip chisel-linux-1.10.1.gz
+    wget -q --show-progress https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_linux_amd64.gz -O chisel-linux.gz && gunzip chisel-linux.gz && chmod +x chisel-linux
     wget -q --show-progress https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64 -O kerbrute && chmod +x ./kerbrute && ln -s $DIR/linux-scripts/kerbrute /usr/local/bin/kerbrute
     wget -q --show-progress https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_proxy_0.8.2_linux_amd64.tar.gz -O ligolo-proxy.tar.gz && tar -xzf ligolo-proxy.tar.gz && rm -rf LICENSE README.md ligolo-proxy.tar.gz && mv proxy ligolo-proxy
     wget -q --show-progress https://github.com/assetnote/kiterunner/releases/download/v1.0.2/kiterunner_1.0.2_linux_amd64.tar.gz -O kiterunner-1.0.2.tar.gz && tar -xzf kiterunner-1.0.2.tar.gz && ln -s $DIR/linux-scripts/kr /usr/local/bin/kr && rm kiterunner-1.0.2.tar.gz
