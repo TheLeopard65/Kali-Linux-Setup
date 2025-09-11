@@ -32,7 +32,7 @@ echo "[###] -------------------------------------------------- [###]"
 set -euo pipefail
 DIR=$(eval echo "~$SUDO_USER")/IMP-TOOLS
 mkdir -p "$DIR"
-apt-get -qq install -y git zip unzip wget ruby-dev make golang-go golang npm python3
+apt-get -qq install -y git zip gzip unzip wget ruby-dev make python3
 
 # ------------------------------------- LINUX TOOLS ---------------------------
 
@@ -55,8 +55,8 @@ linux_scripts() {
 
     info "[13] Installing ligolo-NG Tools"
 	mkdir -p ligolo-tools && cd ligolo-tools
-	wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_proxy_0.8.2_linux_amd64.tar.gz -O ligolo-proxy.tar.gz && tar -xzf ligolo-proxy.tar.gz && rm -rf LICENSE README.md ligolo-proxy.tar.gz && mv proxy ligolo-proxy
-	wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_linux_amd64.tar.gz -O ligolo-agent.tar.gz && tar -xzf ligolo-agent.tar.gz  && rm -rf LICENSE README.md ligolo-agent.tar.gz && mv agent ligolo-agent
+	    wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_proxy_0.8.2_linux_amd64.tar.gz -O ligolo-proxy.tar.gz && tar -xzf ligolo-proxy.tar.gz && rm -rf LICENSE README.md ligolo-proxy.tar.gz && mv proxy ligolo-proxy
+	    wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_linux_amd64.tar.gz -O ligolo-agent.tar.gz && tar -xzf ligolo-agent.tar.gz  && rm -rf LICENSE README.md ligolo-agent.tar.gz && mv agent ligolo-agent
 	cd ..
 
 	info "[14] Installing kiterunner" && wget -q https://github.com/assetnote/kiterunner/releases/download/v1.0.2/kiterunner_1.0.2_linux_amd64.tar.gz -O kiterunner-1.0.2.tar.gz && tar -xzf kiterunner-1.0.2.tar.gz && ln -s $DIR/linux-scripts/kr /usr/local/bin/kr && rm kiterunner-1.0.2.tar.gz
@@ -88,29 +88,35 @@ windows_scripts() {
     info "[12] Installing SharpView.exe" && wget -q https://github.com/tevora-threat/SharpView/raw/refs/heads/master/Compiled/SharpView.exe -O SharpView.exe
     info "[13] Installing chisel-windows" && wget -q https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_windows_amd64.gz -O chisel-windows.1.10.1.gz && gunzip chisel-windows.1.10.1.gz && mv chisel-windows.1.10.1 chisel-windows-1.10.1.exe
     info "[14] Installing ligolo-agent" && wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_windows_amd64.zip -O ligolo-Agent.zip && unzip -qq ligolo-Agent.zip && rm -f ligolo-Agent.zip LICENSE README.md && mv agent.exe ligolo-agent.exe
-    info "[15] Installing Inveigh.exe" && wget -q https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.11/Inveigh-net8.0-win-x64-trimmed-single-v2.0.11.zip -O Inveigh-Net8-Win-2.0.11.zip && unzip -qq Inveigh-Net8-Win-2.0.11.zip && rm -f Inveigh.pdb Inveigh-Net8-Win-2.0.11.zip
+
+    info "[15] Installing Inveigh Tools"
+    mkdir -p inveigh-tools && cd inveigh-tools
+        wget -q https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.11/Inveigh-net8.0-win-x64-trimmed-single-v2.0.11.zip -O Inveigh-Net8-Win-2.0.11.zip
+        unzip -qq Inveigh-Net8-Win-2.0.11.zip && rm -f Inveigh.pdb Inveigh-Net8-Win-2.0.11.zip
+        wget -q https://raw.githubusercontent.com/Kevin-Robertson/Inveigh/refs/heads/master/Inveigh.ps1
+    cd ..
 
     info "[16] Installing socat windows"
     mkdir -p socat-windows && cd socat-windows
-    wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx64.exe -O socatx64.exe
-    wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx86.exe -O socatx86.exe
+        wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx64.exe -O socatx64.exe
+        wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx86.exe -O socatx86.exe
     cd ..
 
-    info "[17] Installing UACME - Akagi" && mkdir -p UACME-Akagi && cd UACME-Akagi
-    wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi32.exe
-    wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi64.exe
+    info "[17] Installing UACME - Akagi"
+    mkdir -p UACME-Akagi && cd UACME-Akagi
+        wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi32.exe
+        wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi64.exe
     cd ..
 
     info "[18] Cloning PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
-    info "[19] Cloning Sysinternals Repository" && git clone --quiet https://github.com/Sysinternals/sysinternals.git
-
+    info "[19] Cloning Sysinternals Repository" && git clone --quiet https://github.com/davehardy20/sysinternals.git
     echo "[###] WINDOWS TOOLS DOWNLOAD COMPLETE [###]"
 }
 
 # ------------------------------------- MISC TOOLS ----------------------------
 
 misc_tools(){
-    echo "[###] DOWNLOADING MISC TOOLS ----------------------------------------------------- ( Total Tools = 5 ) [###]"
+    echo "[###] DOWNLOADING MISC TOOLS ----------------------------------------------------- ( Total Tools = 7 ) [###]"
     cd "$DIR"
 
     info "[1] Downloading BloodHound Docker Compose File" && wget -q https://raw.githubusercontent.com/SpecterOps/BloodHound/main/examples/docker-compose/docker-compose.yml -O docker-compose.yml
@@ -119,6 +125,13 @@ misc_tools(){
     info "[4] Cloning SocksOverRDP Repository" && git clone --quiet https://github.com/nccgroup/SocksOverRDP.git
     info "[5] Cloning Dehashed Repository" && git clone --quiet https://github.com/sm00v/Dehashed.git
     info "[6] Installing GDB-GEF Plugin" && bash -c "$(curl -fsSL https://gef.blah.cat/sh)" > /dev/null
+
+    info "[7] Downloading Nmap Binary"
+    mkdir -p nmap-binary && cd nmap-binary
+        wget -q https://github.com/opsec-infosec/nmap-static-binaries/raw/refs/heads/master/linux/x86_64/nmap && chmod +x ./nmap
+        wget -q https://raw.githubusercontent.com/nmap/nmap/refs/heads/master/nmap-protocols
+        wget -q https://raw.githubusercontent.com/nmap/nmap/refs/heads/master/nmap-services
+    cd ..
 
     echo "[###] MISC TOOLS DOWNLOAD COMPLETE [###]"
 }
