@@ -148,7 +148,7 @@ set positionlog
 # set rawsequences
 
 ## Fix Backspace/Delete confusion problem.
-set rebinddelete
+# set rebinddelete
 
 ## Do regular-expression searches by default.
 ## Regular expressions are of the extended type (ERE).
@@ -167,7 +167,7 @@ set rebinddelete
 ## will jump to that beginning (either forwards or backwards).  If the
 ## cursor is already at that position, it will jump to the true start
 ## of the line (the left edge).
-set smarthome
+# set smarthome
 
 ## Spread overlong lines over multiple screen lines.
 # set softwrap
@@ -187,7 +187,7 @@ set tabsize 4
 # set tabstospaces
 
 ## Snip whitespace at the end of lines when justifying or hard-wrapping.
-# set trimblanks
+set trimblanks
 
 ## Save files by default in Unix format (also when they were DOS or Mac).
 # set unix
@@ -313,13 +313,13 @@ bind ^S savefile main
 # bind ^W writeout main
 # bind ^O insert main
 # set multibuffer
-# bind ^H help all
+bind ^H help all
 # bind ^H exit help
 bind ^F whereis all
 # bind ^G findnext all
 # bind ^B wherewas all
 # bind ^D findprevious all
-# bind ^R replace main
+bind ^R replace main
 # unbind ^U all
 # unbind ^N main
 # unbind ^Y all
@@ -330,7 +330,7 @@ bind ^F whereis all
 # bind ^T gotoline main
 # bind ^T gotodir browser
 # bind ^T cutrestoffile execute
-# bind ^L linter execute
+bind ^L linter execute
 # bind ^E execute main
 # bind ^K "{mark}{end}{zap}" main
 # bind ^U "{mark}{home}{zap}" main
