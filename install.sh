@@ -49,6 +49,7 @@ barc=$(prompt_yes_no "Modify .bashrc for better UX? -----")
 snpd=$(prompt_yes_no "Install Snapd & Snap packages? ----")
 gitx=$(prompt_yes_no "Add global Git configurations? ----")
 narc=$(prompt_yes_no "Modify nanorc for easier usage? ---")
+panl=$(prompt_yes_no "Modify Taskbar/Panel Shortcuts? ---")
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
 
 # ------------------------------------- SYSTEM UPDATES ------------------------
@@ -182,13 +183,13 @@ fi
 
 if [[ "$narc" == "y" ]]; then
     info "[##] Performing NANO Configurations ------------------------- [ MANUAL ]"
-    if [[ -f ./nanorc ]]; then
-        cp ./nanorc /etc/nanorc
+    if [[ -f ./resources/nanorc ]]; then
+        cp ./resources/nanorc /etc/nanorc
     else
         warn "[!!!] nanorc file not found, skipping copy."
     fi
-    if [[ -x ./nano-syntax.sh ]]; then
-        bash ./nano-syntax.sh > /dev/null
+    if [[ -x ./resources/nano-syntax.sh ]]; then
+        bash ./resources/nano-syntax.sh > /dev/null
     else
         warn "[!!!] nano-syntax.sh script missing or not executable, skipping."
     fi
@@ -198,9 +199,9 @@ fi
 
 if [[ "$barc" == "y" ]]; then
     info "[##] Performing BASH Configurations ------------------------- [ MANUAL ]"
-    if [[ -f ./bashrc ]]; then
-        cp ./bashrc "/home/${SUDO_USER}/.bashrc"
-        cp ./bashrc /root/.bashrc
+    if [[ -f ./resources/bashrc ]]; then
+        cp ./resources/bashrc "/home/${SUDO_USER}/.bashrc"
+        cp ./resources/bashrc /root/.bashrc
         warn "[#] Manual action needed: Please run 'source ~/.bashrc' after this script."
     else
         warn "[!!!] bashrc file not found in current directory, skipping copy."
@@ -211,14 +212,28 @@ fi
 
 if [[ "$zshc" == "y" ]]; then
     info "[##] Performing ZSH Configurations -------------------------- [ MANUAL ]"
-    if [[ -f ./zshrc ]]; then
-        cp ./zshrc "/home/${SUDO_USER}/.zshrc"
-        cp ./zshrc /root/.zshrc
+    if [[ -f ./resources/zshrc ]]; then
+        cp ./resources/zshrc "/home/${SUDO_USER}/.zshrc"
+        cp ./resources/zshrc /root/.zshrc
         warn "[#] Manual action needed: Please run 'source ~/.zshrc' after this script."
     else
         warn "[!!!] zshrc file not found in current directory, skipping copy."
     fi
 fi
+
+# ------------------------------------- PANEL CUSTOMIZATION -------------------
+
+if [[ "$panl" == "y" ]]; then
+    info "[##] Performing Panel Configurations ------------------------ [ MANUAL ]"
+    if [[ -f ./resources/xfce4-panel.xml ]]; then
+        cp ./resources/xfce4-panel.xml "/home/${SUDO_USER}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+        cp ./resources/xfce4-panel.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+        cp ./resources/xfce4-panel.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+    else
+        warn "[!!!] Xfce-panel.xml file not found in current directory, skipping copy."
+    fi
+fi
+
 
 # ------------------------------------- POST SETUP COMMANDS -------------------
 
@@ -237,7 +252,7 @@ unset DEBIAN_FRONTEND
 
 # ------------------------------------- COMPLETION ----------------------------
 
-info "[###] Settup up the User's Home Directory ------------------- [ MANUAL ]"
+info "[###] Setting up the User's Home Directory ------------------ [ MANUAL ]"
 cd /home/$SUDO_USER/ && mkdir -p {loot,exploits,transfer,creds,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics}}
 sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/{loot,exploits,transfer,tools,misc,creds,CTF}
 
@@ -246,7 +261,8 @@ echo -e "${GREEN}[###] Kali-Linux Pentest environment setup is finally complete!
 if [[ "$barc" == "y" ]]; then
 	echo -e "${YELLOW}[###] Restart your terminal or run 'source ~/.bashrc' to apply all changes.${NC}"
 fi
-if groups "$SUDO_USER" | grep &>/dev/null '\bdocker\b'; then
+if groups "$SUDO_USER" | grep -q '\bdocker\b'; then
     echo -e "${YELLOW}[###] You may need to LOG OUT and back in to apply DOCKER group membership.${NC}"
 fi
+echo -e "${RED}[###] Please Restart/Reboot your System for some of the changes to take Effect.!!!${NC}"
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
