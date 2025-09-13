@@ -313,7 +313,7 @@ bind ^S savefile main
 # bind ^W writeout main
 # bind ^O insert main
 # set multibuffer
-bind ^H help all
+# bind ^H help all
 # bind ^H exit help
 bind ^F whereis all
 # bind ^G findnext all
