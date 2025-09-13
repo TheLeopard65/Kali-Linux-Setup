@@ -42,14 +42,14 @@ prompt_yes_no() {
     echo "${reply,,}"
 }
 
-pipt=$(prompt_yes_no "Install pip3 & pipx tools? --------")
-pyp2=$(prompt_yes_no "Install Python2 & pip2 tools? -----")
-zshc=$(prompt_yes_no "Modify .zshrc for better UX? ------")
-barc=$(prompt_yes_no "Modify .bashrc for better UX? -----")
-snpd=$(prompt_yes_no "Install Snapd & Snap packages? ----")
-gitx=$(prompt_yes_no "Add global Git configurations? ----")
-narc=$(prompt_yes_no "Modify nanorc for easier usage? ---")
-panl=$(prompt_yes_no "Modify Taskbar/Panel Shortcuts? ---")
+pipt=$(prompt_yes_no "1. Install pip3 & pipx tools? -------")
+pyp2=$(prompt_yes_no "2. Install Python2 & pip2 tools? ----")
+zshc=$(prompt_yes_no "3. Modify .zshrc for better UX? -----")
+barc=$(prompt_yes_no "4. Modify .bashrc for better UX? ----")
+snpd=$(prompt_yes_no "5. Install Snapd & Snap packages? ---")
+gitx=$(prompt_yes_no "6. Add global Git configurations? ---")
+narc=$(prompt_yes_no "7. Modify nanorc for easier usage? --")
+panl=$(prompt_yes_no "8. Modify Taskbar/Panel Shortcuts? --")
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
 
 # ------------------------------------- SYSTEM UPDATES ------------------------
@@ -59,51 +59,51 @@ apt-get -qq update && apt-get -qq upgrade -y
 
 # ------------------------------------- TOOLS INSTALLATION --------------------
 
-info "[##] Installing Compulsory/Required Tools --------------- [ TOTAL = 37 ]"
+info "[##] Installing Compulsory/Required Tools --------------- [ TOOLS = 37 ]"
 apt-get -qq install -y wget curl whois openvpn wordlists seclists webshells exploitdb dpkg netcat-traditional ncat plocate git eog tor libffi-dev snapd git-all
 apt-get -qq install -y metasploit-framework powershell git-lfs build-essential firefox-esr docker.io docker-compose libssl-dev net-tools torbrowser-launcher
 apt-get -qq install -y coreutils uuid ntpsec-ntpdate axel xclip openssl flameshot dkms linux-headers-$(uname -r)
 
-info "[##] Installing Service-Specific Tools ------------------ [ TOTAL = 27 ]"
+info "[##] Installing Service-Specific Tools ------------------ [ TOOLS = 27 ]"
 apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat smbmap smtp-user-enum
 apt-get -qq install -y sqlmap onesixtyone nbtscan snmp snmpcheck samba samba-common-bin rpcbind kubectl mdbtools xtightvncviewer redis mongodb-clients ansible
 
-info "[##] Installing Web Application Scanners ---------------- [ TOTAL = 21 ]"
+info "[##] Installing Web Application Scanners ---------------- [ TOOLS = 21 ]"
 apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner sslyze nikto wfuzz davtest cadaver dirb evilginx2
 apt-get -qq install -y xsser burpsuite beef zaproxy shellfire
 
-info "[##] Installing Miscellaneous Tools --------------------- [ TOTAL = 21 ]"
+info "[##] Installing Miscellaneous Tools --------------------- [ TOOLS = 21 ]"
 apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish clamav jq xxd
 apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils
 
-info "[##] Installing Language & Support Tools ---------------- [ TOTAL = 16 ]"
+info "[##] Installing Language & Support Tools ---------------- [ TOOLS = 16 ]"
 apt-get -qq install -y python3 python3-dev python3-pip pipx npm nodejs postgresql libwine openjdk-11-jdk golang golang-go scapy bash-completion php ruby perl
 
-info "[##] Installing Port & Network Scanners ----------------- [ TOTAL = 13 ]"
+info "[##] Installing Port & Network Scanners ----------------- [ TOOLS = 13 ]"
 apt-get -qq install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe fping eyewitness
 
 info "[##] Installing Binary Exploitation Tools --------------- [ TOOLS = 10 ]"
 apt-get -qq install -y checksec ghidra pwncat radare2 gdb ltrace strace ollydbg binutils libc-bin
 
-info "[##] Installing Active Directory Tools ------------------- [ TOTAL = 8 ]"
+info "[##] Installing Active Directory Tools ------------------- [ TOOLS = 8 ]"
 apt-get -qq install -y bloodhound bloodhound.py certipy-ad responder ldap-utils lapsdumper gpp-decrypt bloodyad
 
 info "[##] Installing Password Cracking Tools ------------------ [ TOOLS = 7 ]"
 apt-get -qq install -y hashid john hashcat hydra medusa cewl cupp passwordsafe
 
-info "[##] Installing Windows-Specific Tools ------------------- [ TOTAL = 7 ]"
+info "[##] Installing Windows-Specific Tools ------------------- [ TOOLS = 7 ]"
 apt-get -qq install -y windows-binaries mimikatz rubeus nishang powersploit laudanum peass
 
 info "[##] Installing Pivoting & Tunneling Tools --------------- [ TOOLS = 6 ]"
 apt-get -qq install -y chisel ligolo-ng socat dnscat2 ptunnel sshuttle proxychains
 
-info "[##] Installing Exploitation Tools ----------------------- [ TOTAL = 5 ]"
+info "[##] Installing Exploitation Tools ----------------------- [ TOOLS = 5 ]"
 apt-get -qq install -y netexec crackmapexec impacket-scripts pompem sliver
 
-info "[##] Installing Creds & Cloud Scan Tools ----------------- [ TOTAL = 3 ]"
+info "[##] Installing Creds & Cloud Scan Tools ----------------- [ TOOLS = 3 ]"
 apt-get -qq install -y trufflehog trivy pacu
 
-info "[##] Installing Network Traffic Tools -------------------- [ TOTAL = 4 ]"
+info "[##] Installing Network Traffic Tools -------------------- [ TOOLS = 4 ]"
 apt-get -qq install -y wireshark tshark sniffglue tcpdump
 
 info "[##] Installing Mobile APK Analysis Tools ---------------- [ TOOLS = 4 ]"
