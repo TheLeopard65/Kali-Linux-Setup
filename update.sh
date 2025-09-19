@@ -1,4 +1,5 @@
 #!/bin/bash
+#Author: TheLeopard65
 
 # Checking if user is root
 if [ $(whoami) != "root" ]; then
@@ -10,6 +11,7 @@ clear
 echo "[###] STARTING THE PENTESTER'S KALI - LINUX UPDATE SETUP [###]"
 figlet "PENTESTER'S KALI - LINUX"
 echo "[###] -------------------------------------------------- [###]"
+
 # Updating and Upgrading the system & Databases
 apt-get -qq update
 apt-get -qq upgrade -y

@@ -1,4 +1,5 @@
 #!/bin/bash
+#Author: TheLeopard65
 
 clear
 echo "[###] STARTING THE PENTESTER'S KALI - LINUX UPDATE SETUP [###]"

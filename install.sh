@@ -1,5 +1,5 @@
 #!/bin/bash
-# Author: TheLeopard65
+#Author: TheLeopard65
 
 # ------------------------------------- COLORS --------------------------------
 
@@ -18,7 +18,10 @@ success() { echo -e "${GREEN}[ OK ]${NC} $1"; }
 
 # ------------------------------------- HEADER/TITLE --------------------------
 
-apt-get -qq install -y figlet
+if ! command -v figlet &> /dev/null; then
+  apt-get -qq install -y figlet
+fi
+
 clear
 echo -e "${GREEN}[###] STARTING THE PENTESTER'S KALI LINUX INSTALL SCRIPT [###]${NC}"
 figlet "PENTESTER'S KALI - LINUX" || echo -e "${YELLOW}(Install 'figlet' to see ASCII banners)${NC}"
@@ -34,6 +37,8 @@ if [[ "$(id -u)" -ne 0 ]]; then
     exit 1
 fi
 
+USER_HOME=${SUDO_USER:-$(logname)}
+
 # ------------------------------------- USER PROMPTS --------------------------
 
 prompt_yes_no() {
@@ -44,12 +49,13 @@ prompt_yes_no() {
 
 pipt=$(prompt_yes_no "1. Install pip3 & pipx tools? -------")
 pyp2=$(prompt_yes_no "2. Install Python2 & pip2 tools? ----")
-zshc=$(prompt_yes_no "3. Modify .zshrc for better UX? -----")
-barc=$(prompt_yes_no "4. Modify .bashrc for better UX? ----")
-snpd=$(prompt_yes_no "5. Install Snapd & Snap packages? ---")
-gitx=$(prompt_yes_no "6. Add global Git configurations? ---")
-narc=$(prompt_yes_no "7. Modify nanorc for easier usage? --")
-panl=$(prompt_yes_no "8. Modify Taskbar/Panel Shortcuts? --")
+penv=$(prompt_yes_no "3. Install Older Python3 Versions? --")
+snpd=$(prompt_yes_no "4. Install Snapd & Snap packages? ---")
+narc=$(prompt_yes_no "5. Modify nanorc for easier usage? --")
+zshc=$(prompt_yes_no "6. Modify .zshrc for better UX? -----")
+barc=$(prompt_yes_no "7. Modify .bashrc for better UX? ----")
+gitx=$(prompt_yes_no "8. Add global Git configurations? ---")
+panl=$(prompt_yes_no "9. Modify Taskbar/Panel Shortcuts? --")
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
 
 # ------------------------------------- SYSTEM UPDATES ------------------------
@@ -141,12 +147,18 @@ if [[ "$pipt" == "y" ]]; then
 	pipx ensurepath > /dev/null
 fi
 
-# ------------------------------------- PYTHON2 & PIP2 ------------------------
+# ------------------------------------- OLD PYTHON ----------------------------
 
 if [[ "$pyp2" == "y" ]]; then
 	info "[##] Installing Python2 & its Libraries ------------------ [ TOOLS = 3 ]"
 	apt-get -qq install -y python2 python2-dev python2-minimal
 	curl -s https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip2.py && python2 get-pip2.py > /dev/null
+fi
+
+if [[ "$penv" == "y" ]]; then
+	info "[##] Installing Older versions of Python3 ---------------- [ TOOLS = 1 ]"
+	apt-get -qq install -y pyenv
+	pyenv install 3.11.11 3.10.16 3.8.20
 fi
 
 # ------------------------------------- ENABLE SNAPD --------------------------
@@ -162,7 +174,7 @@ fi
 
 # ------------------------------------- DOCKER & WINE32 CONFIG ----------------
 
-usermod -aG docker "$SUDO_USER"
+usermod -aG docker "$USER_HOME"
 dpkg --add-architecture i386 && apt-get -qq update && apt-get -qq install -y wine32
 
 # ------------------------------------- GLOBAL GIT CONFIG ---------------------
@@ -175,9 +187,6 @@ if [[ "$gitx" == "y" ]]; then
     git config --global user.email "$git_email"
     git config --global color.ui auto
 fi
-
-
-
 
 # ------------------------------------- NANORC MODIFICATIONS ------------------
 
@@ -200,7 +209,7 @@ fi
 if [[ "$barc" == "y" ]]; then
     info "[##] Performing BASH Configurations ------------------------- [ MANUAL ]"
     if [[ -f ./resources/bashrc ]]; then
-        cp ./resources/bashrc "/home/${SUDO_USER}/.bashrc"
+        cp ./resources/bashrc "/home/${USER_HOME}/.bashrc"
         cp ./resources/bashrc /root/.bashrc
         warn "[#] Manual action needed: Please run 'source ~/.bashrc' after this script."
     else
@@ -213,7 +222,7 @@ fi
 if [[ "$zshc" == "y" ]]; then
     info "[##] Performing ZSH Configurations -------------------------- [ MANUAL ]"
     if [[ -f ./resources/zshrc ]]; then
-        cp ./resources/zshrc "/home/${SUDO_USER}/.zshrc"
+        cp ./resources/zshrc "/home/${USER_HOME}/.zshrc"
         cp ./resources/zshrc /root/.zshrc
         warn "[#] Manual action needed: Please run 'source ~/.zshrc' after this script."
     else
@@ -226,19 +235,22 @@ fi
 if [[ "$panl" == "y" ]]; then
     info "[##] Performing Panel Configurations ------------------------ [ MANUAL ]"
     if [[ -f ./resources/xfce4-panel.xml ]]; then
-        cp ./resources/xfce4-panel.xml "/home/${SUDO_USER}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+        cp ./resources/xfce4-panel.xml "/home/${USER_HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
         cp ./resources/xfce4-panel.xml /root/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
         cp ./resources/xfce4-panel.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
     else
-        warn "[!!!] Xfce-panel.xml file not found in current directory, skipping copy."
+        warn "[!!!] Xfce4-panel.xml file not found in current directory, skipping copy."
     fi
 fi
-
 
 # ------------------------------------- POST SETUP COMMANDS -------------------
 
 info "[###] Finalizing the PENTESTER'S KALI - LINUX Setup --------- [ MANUAL ]"
-gzip -d /usr/share/wordlists/rockyou.txt.gz 2>/dev/null
+
+if [[ -f /usr/share/wordlists/rockyou.txt.gz ]]; then
+    gzip -d /usr/share/wordlists/rockyou.txt.gz 2>/dev/null
+fi
+
 searchsploit -u > /dev/null
 nmap --script-updatedb > /dev/null
 greenbone-nvt-sync --quiet
@@ -253,15 +265,16 @@ unset DEBIAN_FRONTEND
 # ------------------------------------- COMPLETION ----------------------------
 
 info "[###] Setting up the User's Home Directory ------------------ [ MANUAL ]"
-cd /home/$SUDO_USER/ && mkdir -p {loot,exploits,transfer,creds,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics}}
-sudo chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/{loot,exploits,transfer,tools,misc,creds,CTF}
+
+cd "/home/$USER_HOME/" && mkdir -p {loot,exploits,transfer,creds,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics}}
+sudo chown -R $USER_HOME:$USER_HOME /home/$USER_HOME/{loot,exploits,transfer,tools,misc,creds,CTF}
 
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
 echo -e "${GREEN}[###] Kali-Linux Pentest environment setup is finally complete!${NC}"
 if [[ "$barc" == "y" ]]; then
 	echo -e "${YELLOW}[###] Restart your terminal or run 'source ~/.bashrc' to apply all changes.${NC}"
 fi
-if groups "$SUDO_USER" | grep -q '\bdocker\b'; then
+if groups "$USER_HOME" | grep -q '\bdocker\b'; then
     echo -e "${YELLOW}[###] You may need to LOG OUT and back in to apply DOCKER group membership.${NC}"
 fi
 echo -e "${RED}[###] Please Restart/Reboot your System for some of the changes to take Effect.!!!${NC}"

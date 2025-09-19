@@ -1,5 +1,5 @@
 #!/bin/bash
-# Author: TheLeopard65
+#Author: TheLeopard65
 
 # ------------------------------------- COLORS --------------------------------
 
