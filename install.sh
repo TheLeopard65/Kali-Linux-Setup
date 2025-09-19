@@ -3,6 +3,7 @@
 
 # ------------------------------------- COLORS --------------------------------
 
+set -eo pipefail
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
 RED="\033[0;31m"
@@ -262,12 +263,24 @@ apt-get -qq autoremove -y
 updatedb
 unset DEBIAN_FRONTEND
 
-# ------------------------------------- COMPLETION ----------------------------
+# ------------------------------------- DIR SETUP & SSH KEY -------------------
 
 info "[###] Setting up the User's Home Directory ------------------ [ MANUAL ]"
 
 cd "/home/$USER_HOME/" && mkdir -p {loot,exploits,transfer,creds,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics}}
 sudo chown -R $USER_HOME:$USER_HOME /home/$USER_HOME/{loot,exploits,transfer,tools,misc,creds,CTF}
+
+SSH_KEY="/home/$USER_HOME/creds/ssh-key"
+
+if [[ ! -f "$SSH_KEY" ]]; then
+	cd /home/$USER_HOME/creds/
+    ssh-keygen -t ed25519 -f "$SSH_KEY" -N "" -q
+    chmod 600 "$SSH_KEY"
+	chmod 644 "$SSH_KEY.pub"
+	cd ..
+fi
+
+# ------------------------------------- COMPLETION ----------------------------
 
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
 echo -e "${GREEN}[###] Kali-Linux Pentest environment setup is finally complete!${NC}"
