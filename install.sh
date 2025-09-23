@@ -267,8 +267,8 @@ unset DEBIAN_FRONTEND
 
 info "[###] Setting up the User's Home Directory ------------------ [ MANUAL ]"
 
-cd "/home/$USER_HOME/" && mkdir -p {loot,exploits,transfer,creds,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics}}
-sudo chown -R $USER_HOME:$USER_HOME /home/$USER_HOME/{loot,exploits,transfer,tools,misc,creds,CTF}
+cd "/home/$USER_HOME/" && mkdir -p {recon,loot,exploits,transfer,creds,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics},OpenVPN}
+sudo chown -R $USER_HOME:$USER_HOME /home/$USER_HOME/{recon,loot,exploits,transfer,tools,misc,creds,CTF,OpenVPN}
 
 SSH_KEY="/home/$USER_HOME/creds/ssh-key"
 
