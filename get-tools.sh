@@ -71,7 +71,7 @@ linux_scripts() {
 # ------------------------------------- WINDOWS TOOLS -------------------------
 
 windows_scripts() {
-    echo "[###] DOWNLOADING WINDOWS SCRIPTS ---------------------------------------------------- ( Total Tools = 19 ) [###]"
+    echo "[###] DOWNLOADING WINDOWS SCRIPTS ---------------------------------------------------- ( Total Tools = 20 ) [###]"
     cd "$DIR" && mkdir -p windows-scripts && cd windows-scripts
 
     info "[1] Downloading JAWS Script" && wget -q https://raw.githubusercontent.com/411Hall/JAWS/master/jaws-enum.ps1 -O jaws-enum.ps1
@@ -81,42 +81,43 @@ windows_scripts() {
     info "[5] Downloading dnscat2.ps1" && wget -q https://raw.githubusercontent.com/lukebaggett/dnscat2-powershell/refs/heads/master/dnscat2.ps1 -O dnscat2.ps1
     info "[6] Downloading DomainPasswordSpray" && wget -q https://raw.githubusercontent.com/dafthack/DomainPasswordSpray/refs/heads/master/DomainPasswordSpray.ps1 -O DomainPasswordSpray.ps1
     info "[7] Downloading Invoke-DOSfuscation" && wget -q https://raw.githubusercontent.com/danielbohannon/Invoke-DOSfuscation/refs/heads/master/Invoke-DOSfuscation.psd1 -O Invoke-DOSfuscation.psd1
-    info "[8] Downloading LaZagne.exe" && wget -q https://github.com/AlessandroZ/LaZagne/releases/download/v2.4.7/LaZagne.exe -O LaZagne.exe
-    info "[9] Downloading Snaffler.exe" && wget -q https://github.com/SnaffCon/Snaffler/releases/download/1.0.212/Snaffler.exe -O Snaffler.exe
-    info "[10] Downloading Rpivot Client" && wget -q https://github.com/klsecservices/rpivot/releases/download/v1.0/client.exe -O rpivot-client.exe
-    info "[11] Downloading winPEASany" && wget -q https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASany.exe -O winPEASany.exe
-    info "[12] Downloading SharpView.exe" && wget -q https://github.com/tevora-threat/SharpView/raw/refs/heads/master/Compiled/SharpView.exe -O SharpView.exe
-    info "[13] Downloading chisel-windows" && wget -q https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_windows_amd64.gz -O chisel-windows.1.10.1.gz && gunzip chisel-windows.1.10.1.gz && mv chisel-windows.1.10.1 chisel-windows-1.10.1.exe
-    info "[14] Downloading ligolo-agent" && wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_windows_amd64.zip -O ligolo-Agent.zip && unzip -qq ligolo-Agent.zip && rm -f ligolo-Agent.zip LICENSE README.md && mv agent.exe ligolo-agent.exe
+    info "[8] Downloading TargetedKerberoast.py" && wget -q https://raw.githubusercontent.com/ShutdownRepo/targetedKerberoast/refs/heads/main/targetedKerberoast.py -O targetedKerberoast.py && ln -s $DIR/windows-scripts/targetedKerberoast.py /usr/local/bin/targetedKerberoast.py
+    info "[9] Downloading LaZagne.exe" && wget -q https://github.com/AlessandroZ/LaZagne/releases/download/v2.4.7/LaZagne.exe -O LaZagne.exe
+    info "[10] Downloading Snaffler.exe" && wget -q https://github.com/SnaffCon/Snaffler/releases/download/1.0.212/Snaffler.exe -O Snaffler.exe
+    info "[11] Downloading Rpivot Client" && wget -q https://github.com/klsecservices/rpivot/releases/download/v1.0/client.exe -O rpivot-client.exe
+    info "[12] Downloading winPEASany" && wget -q https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASany.exe -O winPEASany.exe
+    info "[13] Downloading SharpView.exe" && wget -q https://github.com/tevora-threat/SharpView/raw/refs/heads/master/Compiled/SharpView.exe -O SharpView.exe
+    info "[14] Downloading chisel-windows" && wget -q https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_windows_amd64.gz -O chisel-windows.1.10.1.gz && gunzip chisel-windows.1.10.1.gz && mv chisel-windows.1.10.1 chisel-windows-1.10.1.exe
+    info "[15] Downloading ligolo-agent" && wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_windows_amd64.zip -O ligolo-Agent.zip && unzip -qq ligolo-Agent.zip && rm -f ligolo-Agent.zip LICENSE README.md && mv agent.exe ligolo-agent.exe
 
-    info "[15] Downloading Inveigh Tools"
+    info "[16] Downloading Inveigh Tools"
     mkdir -p inveigh-tools && cd inveigh-tools
         wget -q https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.11/Inveigh-net8.0-win-x64-trimmed-single-v2.0.11.zip -O Inveigh-Net8-Win-2.0.11.zip
         unzip -qq Inveigh-Net8-Win-2.0.11.zip && rm -f Inveigh.pdb Inveigh-Net8-Win-2.0.11.zip
         wget -q https://raw.githubusercontent.com/Kevin-Robertson/Inveigh/refs/heads/master/Inveigh.ps1
     cd ..
 
-    info "[16] Downloading socat windows"
+    info "[17] Downloading socat windows"
     mkdir -p socat-windows && cd socat-windows
         wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx64.exe -O socatx64.exe
         wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx86.exe -O socatx86.exe
     cd ..
 
-    info "[17] Downloading UACME - Akagi"
+    info "[18] Downloading UACME - Akagi"
     mkdir -p UACME-Akagi && cd UACME-Akagi
         wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi32.exe
         wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi64.exe
     cd ..
 
-    info "[18] Cloning PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
-    info "[19] Cloning Sysinternals Repository" && git clone --quiet https://github.com/davehardy20/sysinternals.git
+    info "[19] Cloning PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
+    info "[20] Cloning Sysinternals Repository" && git clone --quiet https://github.com/davehardy20/sysinternals.git
     echo "[###] WINDOWS TOOLS DOWNLOAD COMPLETE [###]"
 }
 
 # ------------------------------------- MISC TOOLS ----------------------------
 
 misc_tools(){
-    echo "[###] DOWNLOADING MISC TOOLS ----------------------------------------------------- ( Total Tools = 7 ) [###]"
+    echo "[###] DOWNLOADING MISC TOOLS ----------------------------------------------------- ( Total Tools = 8 ) [###]"
     cd "$DIR"
 
     info "[1] Downloading BloodHound Docker Compose File" && wget -q https://raw.githubusercontent.com/SpecterOps/BloodHound/main/examples/docker-compose/docker-compose.yml -O docker-compose.yml
@@ -125,8 +126,9 @@ misc_tools(){
     info "[4] Cloning SocksOverRDP Repository" && git clone --quiet https://github.com/nccgroup/SocksOverRDP.git
     info "[5] Cloning Dehashed Repository" && git clone --quiet https://github.com/sm00v/Dehashed.git
     info "[6] Downloading GDB-GEF Plugin" && bash -c "$(curl -fsSL https://gef.blah.cat/sh)" > /dev/null
+    info "[7] Cloning FuzzDicts Repository" && git clone --quiet https://github.com/TheKingOfDuck/fuzzDicts.git /usr/share/fuzzDicts
 
-    info "[7] Downloading Nmap Binary"
+    info "[8] Downloading Nmap Binary"
     mkdir -p nmap-binary && cd nmap-binary
         wget -q https://github.com/opsec-infosec/nmap-static-binaries/raw/refs/heads/master/linux/x86_64/nmap && chmod +x ./nmap
         wget -q https://raw.githubusercontent.com/nmap/nmap/refs/heads/master/nmap-protocols
