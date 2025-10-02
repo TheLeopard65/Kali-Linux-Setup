@@ -93,7 +93,7 @@ info "[##] Installing Binary Exploitation Tools --------------- [ TOOLS = 10 ]"
 apt-get -qq install -y checksec ghidra pwncat radare2 gdb ltrace strace ollydbg binutils libc-bin
 
 info "[##] Installing Active Directory Tools ------------------- [ TOOLS = 9 ]"
-apt-get -qq install -y bloodhound bloodhound.py certipy-ad responder ldap-utils lapsdumper gpp-decrypt bloodyad bloodhound-ce-python
+apt-get -qq install -y bloodhound bloodhound.py certipy-ad responder ldap-utils lapsdumper gpp-decrypt bloodyad bloodhound-ce-python krb5-user
 
 info "[##] Installing Password Cracking Tools ------------------ [ TOOLS = 7 ]"
 apt-get -qq install -y hashid john hashcat hydra medusa cewl cupp passwordsafe
