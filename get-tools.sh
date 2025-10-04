@@ -71,7 +71,7 @@ linux_scripts() {
 # ------------------------------------- WINDOWS TOOLS -------------------------
 
 windows_scripts() {
-    echo "[###] DOWNLOADING WINDOWS SCRIPTS ---------------------------------------------------- ( Total Tools = 20 ) [###]"
+    echo "[###] DOWNLOADING WINDOWS SCRIPTS ---------------------------------------------------- ( Total Tools = 21 ) [###]"
     cd "$DIR" && mkdir -p windows-scripts && cd windows-scripts
 
     info "[1] Downloading JAWS Script" && wget -q https://raw.githubusercontent.com/411Hall/JAWS/master/jaws-enum.ps1 -O jaws-enum.ps1
@@ -89,28 +89,29 @@ windows_scripts() {
     info "[13] Downloading SharpView.exe" && wget -q https://github.com/tevora-threat/SharpView/raw/refs/heads/master/Compiled/SharpView.exe -O SharpView.exe
     info "[14] Downloading chisel-windows" && wget -q https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_windows_amd64.gz -O chisel-windows.1.10.1.gz && gunzip chisel-windows.1.10.1.gz && mv chisel-windows.1.10.1 chisel-windows-1.10.1.exe
     info "[15] Downloading ligolo-agent" && wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_windows_amd64.zip -O ligolo-Agent.zip && unzip -qq ligolo-Agent.zip && rm -f ligolo-Agent.zip LICENSE README.md && mv agent.exe ligolo-agent.exe
+    info "[16] Downloading RunasCs-tool" && wget -q https://github.com/antonioCoco/RunasCs/releases/download/v1.5/RunasCs.zip -O RunasCs.zip && unzip RunasCs.zip -d Runas-Binaries && rm RunasCs.zip
 
-    info "[16] Downloading Inveigh Tools"
+    info "[17] Downloading Inveigh Tools"
     mkdir -p inveigh-tools && cd inveigh-tools
         wget -q https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.11/Inveigh-net8.0-win-x64-trimmed-single-v2.0.11.zip -O Inveigh-Net8-Win-2.0.11.zip
         unzip -qq Inveigh-Net8-Win-2.0.11.zip && rm -f Inveigh.pdb Inveigh-Net8-Win-2.0.11.zip
         wget -q https://raw.githubusercontent.com/Kevin-Robertson/Inveigh/refs/heads/master/Inveigh.ps1
     cd ..
 
-    info "[17] Downloading socat windows"
+    info "[18] Downloading socat windows"
     mkdir -p socat-windows && cd socat-windows
         wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx64.exe -O socatx64.exe
         wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx86.exe -O socatx86.exe
     cd ..
 
-    info "[18] Downloading UACME - Akagi"
+    info "[19] Downloading UACME - Akagi"
     mkdir -p UACME-Akagi && cd UACME-Akagi
         wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi32.exe
         wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi64.exe
     cd ..
 
-    info "[19] Cloning PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
-    info "[20] Cloning Sysinternals Repository" && git clone --quiet https://github.com/davehardy20/sysinternals.git
+    info "[20] Cloning PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
+    info "[21] Cloning Sysinternals Repository" && git clone --quiet https://github.com/davehardy20/sysinternals.git
     echo "[###] WINDOWS TOOLS DOWNLOAD COMPLETE [###]"
 }
 
