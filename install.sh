@@ -86,8 +86,8 @@ apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwra
 info "[##] Installing Language & Support Tools ---------------- [ TOOLS = 16 ]"
 apt-get -qq install -y python3 python3-dev python3-pip pipx npm nodejs postgresql libwine openjdk-11-jdk golang golang-go scapy bash-completion php ruby perl
 
-info "[##] Installing Port & Network Scanners ----------------- [ TOOLS = 13 ]"
-apt-get -qq install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe fping eyewitness
+info "[##] Installing Port & Network Scanners ----------------- [ TOOLS = 14 ]"
+apt-get -qq install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe fping eyewitness elk-lapw
 
 info "[##] Installing Binary Exploitation Tools --------------- [ TOOLS = 10 ]"
 apt-get -qq install -y checksec ghidra pwncat radare2 gdb ltrace strace ollydbg binutils libc-bin
@@ -101,8 +101,8 @@ apt-get -qq install -y hashid john hashcat hydra medusa cewl cupp passwordsafe
 info "[##] Installing Windows-Specific Tools ------------------- [ TOOLS = 7 ]"
 apt-get -qq install -y windows-binaries mimikatz rubeus nishang powersploit laudanum peass
 
-info "[##] Installing Pivoting & Tunneling Tools --------------- [ TOOLS = 6 ]"
-apt-get -qq install -y chisel ligolo-ng socat dnscat2 ptunnel sshuttle proxychains
+info "[##] Installing Pivoting & Tunneling Tools --------------- [ TOOLS = 7 ]"
+apt-get -qq install -y chisel ligolo-ng socat dnscat2 ptunnel sshuttle proxychains sshpass
 
 info "[##] Installing Exploitation Tools ----------------------- [ TOOLS = 5 ]"
 apt-get -qq install -y netexec crackmapexec impacket-scripts pompem sliver
@@ -116,8 +116,8 @@ apt-get -qq install -y wireshark tshark sniffglue tcpdump
 info "[##] Installing Mobile APK Analysis Tools ---------------- [ TOOLS = 4 ]"
 apt-get -qq install -y jadx apktool adb poppler-utils
 
-info "[##] Installing Reconnaissance Tools --------------------- [ TOOLS = 4 ]"
-apt-get -qq install -y recon-ng sherlock theharvester linkedin2username
+info "[##] Installing Reconnaissance Tools --------------------- [ TOOLS = 5 ]"
+apt-get -qq install -y recon-ng sherlock theharvester linkedin2username gitleaks
 
 info "[##] Installing Wireless Pentest Tools ------------------- [ TOOLS = 4 ]"
 apt-get -qq install -y aircrack-ng reaver wifite kismet-core
@@ -267,8 +267,9 @@ unset DEBIAN_FRONTEND
 
 info "[###] Setting up the User's Home Directory ------------------ [ MANUAL ]"
 
-cd "/home/$USER_HOME/" && mkdir -p {recon,loot,exploits,transfer,creds,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics},OpenVPN}
+cd "/home/$USER_HOME/" && mkdir -p {recon,loot,exploits,transfer,creds/{hashes},tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics},OpenVPN}
 sudo chown -R $USER_HOME:$USER_HOME /home/$USER_HOME/{recon,loot,exploits,transfer,tools,misc,creds,CTF,OpenVPN}
+touch "/home/$USER_HOME/creds/credentials.txt"
 
 SSH_KEY="/home/$USER_HOME/creds/ssh-key"
 
