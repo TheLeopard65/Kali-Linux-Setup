@@ -69,7 +69,7 @@ apt-get -qq update && apt-get -qq upgrade -y
 info "[##] Installing Compulsory/Required Tools --------------- [ TOOLS = 37 ]"
 apt-get -qq install -y wget curl whois openvpn wordlists seclists webshells exploitdb dpkg netcat-traditional ncat plocate git eog tor libffi-dev snapd git-all
 apt-get -qq install -y metasploit-framework powershell git-lfs build-essential firefox-esr docker.io docker-compose libssl-dev net-tools torbrowser-launcher
-apt-get -qq install -y coreutils uuid ntpsec-ntpdate axel xclip openssl flameshot dkms linux-headers-$(uname -r)
+apt-get -qq install -y coreutils uuid ntpsec-ntpdate axel xclip openssl flameshot dkms linux-headers-$(uname -r) screenfetch
 
 info "[##] Installing Service-Specific Tools ------------------ [ TOOLS = 27 ]"
 apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat smbmap smtp-user-enum
@@ -81,7 +81,7 @@ apt-get -qq install -y xsser burpsuite beef zaproxy shellfire
 
 info "[##] Installing Miscellaneous Tools --------------------- [ TOOLS = 21 ]"
 apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish clamav jq xxd
-apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils
+apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils gemini-cli
 
 info "[##] Installing Language & Support Tools ---------------- [ TOOLS = 16 ]"
 apt-get -qq install -y python3 python3-dev python3-pip pipx npm nodejs postgresql libwine openjdk-11-jdk golang golang-go scapy bash-completion php ruby perl
@@ -292,4 +292,6 @@ if groups "$USER_HOME" | grep -q '\bdocker\b'; then
     echo -e "${YELLOW}[###] You may need to LOG OUT and back in to apply DOCKER group membership.${NC}"
 fi
 echo -e "${RED}[###] Please Restart/Reboot your System for some of the changes to take Effect.!!!${NC}"
+echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
+screenfetch
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
