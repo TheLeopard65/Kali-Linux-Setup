@@ -75,13 +75,13 @@ info "[##] Installing Service-Specific Tools ------------------ [ TOOLS = 27 ]"
 apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat smbmap smtp-user-enum
 apt-get -qq install -y sqlmap onesixtyone nbtscan snmp snmpcheck samba samba-common-bin rpcbind kubectl mdbtools xtightvncviewer redis mongodb-clients ansible
 
-info "[##] Installing Web Application Scanners ---------------- [ TOOLS = 21 ]"
-apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner sslyze nikto wfuzz davtest cadaver dirb evilginx2
-apt-get -qq install -y xsser burpsuite beef zaproxy shellfire
+info "[##] Installing Web Application Scanners ---------------- [ TOOLS = 22 ]"
+apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner greenbone-feed-sync sslyze nikto wfuzz davtest cadaver
+apt-get -qq install -y xsser burpsuite beef zaproxy shellfire dirb evilginx2
 
 info "[##] Installing Miscellaneous Tools --------------------- [ TOOLS = 21 ]"
 apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish clamav jq xxd
-apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils gemini-cli
+apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils gemini-cli clamav-freshclam
 
 info "[##] Installing Language & Support Tools ---------------- [ TOOLS = 16 ]"
 apt-get -qq install -y python3 python3-dev python3-pip pipx npm nodejs postgresql libwine openjdk-11-jdk golang golang-go scapy bash-completion php ruby perl
@@ -254,8 +254,6 @@ fi
 
 searchsploit -u > /dev/null
 nmap --script-updatedb > /dev/null
-greenbone-nvt-sync --quiet
-freshclam --quiet
 apt-get -qq update
 apt-get -qq upgrade -y
 apt-get -qq full-upgrade -y
@@ -267,7 +265,7 @@ unset DEBIAN_FRONTEND
 
 info "[###] Setting up the User's Home Directory ------------------ [ MANUAL ]"
 
-cd "/home/$USER_HOME/" && mkdir -p {recon,loot,exploits,transfer,creds/{hashes},tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics},OpenVPN}
+cd "/home/$USER_HOME/" && mkdir -p {recon,loot,exploits,transfer,creds/hashes,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics},OpenVPN}
 sudo chown -R $USER_HOME:$USER_HOME /home/$USER_HOME/{recon,loot,exploits,transfer,tools,misc,creds,CTF,OpenVPN}
 touch "/home/$USER_HOME/creds/credentials.txt"
 

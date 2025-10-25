@@ -37,7 +37,7 @@ apt-get -qq install -y git zip gzip unzip wget ruby-dev make python3
 # ------------------------------------- LINUX TOOLS ---------------------------
 
 linux_scripts() {
-    echo "[###] DOWNLOADING LINUX SCRIPTS ------------------------------------------------------ ( Total Tools = 18 ) [###]"
+    echo "[###] DOWNLOADING LINUX SCRIPTS ------------------------------------------------------ ( Total Tools = 19 ) [###]"
     cd "$DIR" && mkdir -p linux-scripts && cd linux-scripts
 
     info "[1] Downloading LinEnum Script" && wget -q https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh -O LinEnum.sh && chmod +x LinEnum.sh
@@ -52,18 +52,19 @@ linux_scripts() {
     info "[10] Downloading linpeas" && wget -q https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -O linpeas.sh && chmod +x linpeas.sh
     info "[11] Downloading chisel-linux" && wget -q https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_linux_amd64.gz -O chisel-linux.gz && gunzip chisel-linux.gz && chmod +x chisel-linux
     info "[12] Downloading kerbrute" && wget -q https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64 -O kerbrute && chmod +x kerbrute && ln -s $DIR/linux-scripts/kerbrute /usr/local/bin/kerbrute
+    info "[13] Downloading winrmexec.py" && wget -q https://raw.githubusercontent.com/ozelis/winrmexec/refs/heads/main/winrmexec.py -O winrmexec.py
 
-    info "[13] Downloading ligolo-NG Tools"
+    info "[14] Downloading ligolo-NG Tools"
 	mkdir -p ligolo-tools && cd ligolo-tools
 	    wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_proxy_0.8.2_linux_amd64.tar.gz -O ligolo-proxy.tar.gz && tar -xzf ligolo-proxy.tar.gz && rm -rf LICENSE README.md ligolo-proxy.tar.gz && mv proxy ligolo-proxy
 	    wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_linux_amd64.tar.gz -O ligolo-agent.tar.gz && tar -xzf ligolo-agent.tar.gz  && rm -rf LICENSE README.md ligolo-agent.tar.gz && mv agent ligolo-agent
 	cd ..
 
-	info "[14] Downloading kiterunner" && wget -q https://github.com/assetnote/kiterunner/releases/download/v1.0.2/kiterunner_1.0.2_linux_amd64.tar.gz -O kiterunner-1.0.2.tar.gz && tar -xzf kiterunner-1.0.2.tar.gz && ln -s $DIR/linux-scripts/kr /usr/local/bin/kr && rm kiterunner-1.0.2.tar.gz
-    info "[15] Downloading mimipenguin" && wget -q https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz -O mimipenguin-2.0.tar.gz && tar -xzf mimipenguin-2.0.tar.gz && mv mimipenguin_2.0-release mimipenguin-2.0 && rm -f mimipenguin-2.0.tar.gz
-    info "[16] Cloning Linux Kernel Exploits Repository" && git clone --quiet https://github.com/JlSakuya/Linux-Privilege-Escalation-Exploits.git
-    info "[17] Cloning SUDO_KILLER Repository" && git clone --quiet https://github.com/TH3xACE/SUDO_KILLER.git
-    info "[18] Cloning Rpivot Repository" && git clone --quiet https://github.com/klsecservices/rpivot.git
+	info "[15] Downloading kiterunner" && wget -q https://github.com/assetnote/kiterunner/releases/download/v1.0.2/kiterunner_1.0.2_linux_amd64.tar.gz -O kiterunner-1.0.2.tar.gz && tar -xzf kiterunner-1.0.2.tar.gz && ln -s $DIR/linux-scripts/kr /usr/local/bin/kr && rm kiterunner-1.0.2.tar.gz
+    info "[16] Downloading mimipenguin" && wget -q https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz -O mimipenguin-2.0.tar.gz && tar -xzf mimipenguin-2.0.tar.gz && mv mimipenguin_2.0-release mimipenguin-2.0 && rm -f mimipenguin-2.0.tar.gz
+    info "[17] Cloning Linux Kernel Exploits Repository" && git clone --quiet https://github.com/JlSakuya/Linux-Privilege-Escalation-Exploits.git
+    info "[18] Cloning SUDO_KILLER Repository" && git clone --quiet https://github.com/TH3xACE/SUDO_KILLER.git
+    info "[19] Cloning Rpivot Repository" && git clone --quiet https://github.com/klsecservices/rpivot.git
 
     echo "[###] LINUX TOOLS DOWNLOAD COMPLETE [###]"
 }
