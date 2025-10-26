@@ -290,9 +290,7 @@ unset DEBIAN_FRONTEND
 info "[###] Setting up the User's Home Directory ------------------ [ MANUAL ]"
 
 cd "/home/$USER_HOME/" && mkdir -p {recon,loot,exploits,transfer,creds/hashes,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics},OpenVPN}
-sudo chown -R $USER_HOME:$USER_HOME /home/$USER_HOME/{recon,loot,exploits,transfer,tools,misc,creds,CTF,OpenVPN}
 touch "/home/$USER_HOME/creds/credentials.txt"
-
 SSH_KEY="/home/$USER_HOME/creds/ssh-key"
 
 if [[ ! -f "$SSH_KEY" ]]; then
@@ -302,6 +300,7 @@ if [[ ! -f "$SSH_KEY" ]]; then
 	chmod 644 "$SSH_KEY.pub"
 	cd ..
 fi
+sudo chown -R $USER_HOME:$USER_HOME /home/$USER_HOME/{recon,loot,exploits,transfer,tools,misc,creds,CTF,OpenVPN}
 
 # ------------------------------------- COMPLETION ----------------------------
 
