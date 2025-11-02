@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=ghidra
+Comment=Software Reverse Engineering Framework
+Exec=ghidra
+Icon=kali-ghidra
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=kali-resource-development;kali-respond
+X-Kali-Package=ghidra
+StartupWMClass=ghidra-Ghidra
+X-XFCE-Source=file:///usr/share/applications/kali-ghidra.desktop

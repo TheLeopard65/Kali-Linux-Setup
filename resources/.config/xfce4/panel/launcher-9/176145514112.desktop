@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=wireshark
+Comment=Interactively dump and analyze network traffic
+Exec=/usr/share/kali-menu/helper-scripts/wireshark.sh %f
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=kali-network-sniffing;kali-discovery;kali-respond
+X-Kali-Package=wireshark
+Icon=org.wireshark.Wireshark
+MimeType=application/vnd.tcpdump.pcap;application/x-pcapng;application/x-snoop;application/x-iptrace;application/x-lanalyzer;application/x-nettl;application/x-radcom;application/x-etherpeek;application/x-visualnetworks;application/x-netinstobserver;application/x-5view;application/x-tektronix-rf5;application/x-micropross-mplog;application/x-apple-packetlogger;application/x-endace-erf;application/ipfix;application/x-ixia-vwr;
+StartupWMClass=wireshark
+X-XFCE-Source=file:///usr/share/applications/org.wireshark.Wireshark.desktop

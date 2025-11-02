@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=gophish
+Comment=Open-Source Phishing Toolkit
+Exec=/usr/share/kali-menu/exec-in-shell "gophish"
+Icon=kali-gophish
+StartupNotify=false
+Terminal=true
+Type=Application
+Categories=kali-initial-access;kali-system-services
+X-Kali-Package=gophish
+X-XFCE-Source=file:///usr/share/applications/kali-gophish.desktop

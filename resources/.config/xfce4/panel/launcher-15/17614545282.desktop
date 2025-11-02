@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=bloodhound
+Comment=Six Degrees of Domain Admin, BloodHound CE
+Exec=/usr/share/kali-menu/exec-in-shell "bloodhound"
+Icon=kali-bloodhound
+StartupNotify=false
+Terminal=true
+Type=Application
+Categories=kali-active-directory;kali-discovery
+X-Kali-Package=bloodhound
+X-XFCE-Source=file:///usr/share/applications/kali-bloodhound.desktop

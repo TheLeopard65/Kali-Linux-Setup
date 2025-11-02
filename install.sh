@@ -38,7 +38,8 @@ if [[ "$(id -u)" -ne 0 ]]; then
     exit 1
 fi
 
-USER_HOME=${SUDO_USER:-$(logname)}
+TARGET_USER=${SUDO_USER:-$(logname)}
+TARGET_HOME=$(eval echo "~$TARGET_USER")
 
 # ------------------------------------- USER PROMPTS --------------------------
 
@@ -56,7 +57,7 @@ narc=$(prompt_yes_no "5. Modify nanorc for easier usage? --")
 zshc=$(prompt_yes_no "6. Modify .zshrc for better UX? -----")
 barc=$(prompt_yes_no "7. Modify .bashrc for better UX? ----")
 gitx=$(prompt_yes_no "8. Add global Git configurations? ---")
-panl=$(prompt_yes_no "9. Modify Taskbar/Panel Shortcuts? --")
+desk=$(prompt_yes_no "9. Customize my XFCE4 Desktop Apps? -")
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
 
 # ------------------------------------- SYSTEM UPDATES ------------------------
@@ -84,9 +85,9 @@ info "[##] Installing Miscellaneous Tools --------------------- [ TOOLS = 22 ]"
 apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish xxd > /dev/null
 apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils gemini-cli clamav-freshclam clamav jq xq > /dev/null
 
-info "[##] Installing Language & Support Tools ---------------- [ TOOLS = 16 ]"
+info "[##] Installing Language & Support Tools ---------------- [ TOOLS = 17 ]"
 apt-get -qq install -y python3 python3-dev python3-pip pipx npm nodejs postgresql libwine openjdk-11-jdk golang golang-go scapy bash-completion php ruby > /dev/null
-apt-get -qq install -y php > /dev/null
+apt-get -qq install -y php rsync > /dev/null
 
 info "[##] Installing Port & Network Scanners ----------------- [ TOOLS = 14 ]"
 apt-get -qq install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe fping eyewitness elk-lapw > /dev/null
@@ -200,7 +201,7 @@ fi
 
 # ------------------------------------- DOCKER & WINE32 CONFIG ----------------
 
-usermod -aG docker "$USER_HOME"
+usermod -aG docker "$TARGET_USER"
 dpkg --add-architecture i386 && apt-get -qq update && apt-get -qq install -y wine32
 
 # ------------------------------------- GLOBAL GIT CONFIG ---------------------
@@ -235,7 +236,7 @@ fi
 if [[ "$barc" == "y" ]]; then
     info "[##] Performing BASH Configurations ------------------------- [ MANUAL ]"
     if [[ -f ./resources/bashrc ]]; then
-        cp ./resources/bashrc "/home/${USER_HOME}/.bashrc"
+        cp ./resources/bashrc "${TARGET_HOME}/.bashrc"
         cp ./resources/bashrc /root/.bashrc
         warn "[#] Manual action needed: Please run 'source ~/.bashrc' after this script."
     else
@@ -248,7 +249,7 @@ fi
 if [[ "$zshc" == "y" ]]; then
     info "[##] Performing ZSH Configurations -------------------------- [ MANUAL ]"
     if [[ -f ./resources/zshrc ]]; then
-        cp ./resources/zshrc "/home/${USER_HOME}/.zshrc"
+        cp ./resources/zshrc "${TARGET_HOME}/.zshrc"
         cp ./resources/zshrc /root/.zshrc
         warn "[#] Manual action needed: Please run 'source ~/.zshrc' after this script."
     else
@@ -258,13 +259,13 @@ fi
 
 # ------------------------------------- PANEL CUSTOMIZATION -------------------
 
-if [[ "$panl" == "y" ]]; then
-    info "[##] Performing Panel Configurations ------------------------ [ MANUAL ]"
-    if [[ -f ./resources/xfce4-panel.xml ]]; then
-        cp ./resources/xfce4-panel.xml "/home/${USER_HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
-        cp ./resources/xfce4-panel.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+if [[ "$desk" == "y" ]]; then
+    info "[##] Performing XFCE Customizations ------------------------- [ MANUAL ]"
+    if [[ -d ./resources/.config ]]; then
+    	rm -rf "${TARGET_HOME}/.config"
+        cp -rpa ./resources/.config "${TARGET_HOME}/"
     else
-        warn "[!!!] Xfce4-panel.xml file not found in current directory, skipping copy."
+        warn "[!!!] .config directory not found in current directory, skipping copy."
     fi
 fi
 
@@ -289,18 +290,18 @@ unset DEBIAN_FRONTEND
 
 info "[###] Setting up the User's Home Directory ------------------ [ MANUAL ]"
 
-cd "/home/$USER_HOME/" && mkdir -p {recon,loot,exploits,transfer,creds/hashes,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics},OpenVPN}
-touch "/home/$USER_HOME/creds/credentials.txt"
-SSH_KEY="/home/$USER_HOME/creds/ssh-key"
+cd "/home/$TARGET_USER/" && mkdir -p {recon,loot,exploits,transfer,creds/hashes,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics},OpenVPN}
+touch "/home/$TARGET_USER/creds/credentials.txt"
+SSH_KEY="/home/$TARGET_USER/creds/ssh-key"
 
 if [[ ! -f "$SSH_KEY" ]]; then
-	cd /home/$USER_HOME/creds/
+	cd /home/$TARGET_USER/creds/
     ssh-keygen -t ed25519 -f "$SSH_KEY" -N "" -q
     chmod 600 "$SSH_KEY"
 	chmod 644 "$SSH_KEY.pub"
 	cd ..
 fi
-sudo chown -R $USER_HOME:$USER_HOME /home/$USER_HOME/{recon,loot,exploits,transfer,tools,misc,creds,CTF,OpenVPN}
+sudo chown -R $TARGET_USER:$TARGET_USER /home/$TARGET_USER/{recon,loot,exploits,transfer,tools,misc,creds,CTF,OpenVPN,.config}
 
 # ------------------------------------- COMPLETION ----------------------------
 
@@ -309,7 +310,7 @@ echo -e "${GREEN}[###] Kali-Linux Pentest environment setup is finally complete!
 if [[ "$barc" == "y" ]]; then
 	echo -e "${YELLOW}[###] Restart your terminal or run 'source ~/.bashrc' to apply all changes.${NC}"
 fi
-if groups "$USER_HOME" | grep -q '\bdocker\b'; then
+if groups "$TARGET_USER" | grep -q '\bdocker\b'; then
     echo -e "${YELLOW}[###] You may need to LOG OUT and back in to apply DOCKER group membership.${NC}"
 fi
 echo -e "${RED}[###] Please Restart/Reboot your System for some of the changes to take Effect.!!!${NC}"

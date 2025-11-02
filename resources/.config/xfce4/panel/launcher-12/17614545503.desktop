@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=zaproxy
+Comment=Testing tool for finding vulnerabilities in web applications
+Exec=zaproxy
+Icon=kali-zaproxy
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=kali-web-vulnerability-scanning;kali-identify
+X-Kali-Package=zaproxy
+StartupWMClass=org-zaproxy-zap-ZAP
+X-XFCE-Source=file:///usr/share/applications/kali-zaproxy.desktop

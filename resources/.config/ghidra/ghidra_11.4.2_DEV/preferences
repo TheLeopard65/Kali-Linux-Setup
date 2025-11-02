@@ -1,0 +1,15 @@
+#User Preferences
+#Sun Oct 26 02:41:52 EDT 2025
+G_FILE_CHOOSER.HEIGHT.Select\ a\ Ghidra\ Project\ Directory=600
+G_FILE_CHOOSER.VIEW_STYLE.Select\ a\ Ghidra\ Project\ Directory=SimpleView
+G_FILE_CHOOSER.WIDTH.Select\ a\ Ghidra\ Project\ Directory=800
+GhidraShowWhatsNew=false
+LastOpenedProject=/home/kali/misc/Ghidra-Projects/Standard-Project
+ProjectDirectory=/home/kali/misc/Ghidra-Projects/
+RECENT_0=/home/kali/misc/Ghidra-Projects
+RecentProjects=/home/kali/misc/Ghidra-Projects/Standard-Project
+SHOW_TIPS=false
+TIP_INDEX=2
+Theme=Class\:generic.theme.builtin.FlatLightTheme
+USER_AGREEMENT=ACCEPT
+ViewedProjects=

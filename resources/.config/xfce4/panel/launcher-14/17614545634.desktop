@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=burpsuite
+Comment=platform for security testing of web applications
+Exec=burpsuite
+Icon=kali-burpsuite
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=kali-web-vulnerability-scanning;kali-reconnaissance
+X-Kali-Package=burpsuite
+StartupWMClass=burp-StartBurp
+X-XFCE-Source=file:///usr/share/applications/kali-burpsuite.desktop

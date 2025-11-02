@@ -1,0 +1,74 @@
+2025-10-26 02:39:35 INFO  (LoggingInitialization) Using log config file: jar:file:/usr/share/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2025-10-26 02:39:35 INFO  (LoggingInitialization) Using log file: /home/kali/.config/ghidra/ghidra_11.4.2_DEV/application.log  
+2025-10-26 02:39:36 INFO  (Preferences) Loading user preferences: /home/kali/.config/ghidra/ghidra_11.4.2_DEV/preferences  
+2025-10-26 02:39:45 INFO  (ClassSearcher) Searching for classes...  
+2025-10-26 02:39:48 INFO  (ClassSearcher) Class search complete (2934 ms)  
+2025-10-26 02:39:49 INFO  (SSLContextInitializer) Initializing SSL Context  
+2025-10-26 02:39:49 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
+2025-10-26 02:39:49 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking  
+2025-10-26 02:39:49 INFO  (ApplicationTrustManagerFactory) Trust manager disabled, cacerts have not been set  
+2025-10-26 02:39:49 INFO  (GhidraRun) User kali started Ghidra.  
+2025-10-26 02:39:49 INFO  (GhidraRun) User settings directory: /home/kali/.config/ghidra/ghidra_11.4.2_DEV  
+2025-10-26 02:39:49 INFO  (GhidraRun) User temp directory: /tmp/kali-ghidra  
+2025-10-26 02:39:49 INFO  (GhidraRun) User cache directory: /home/kali/.cache/ghidra  
+2025-10-26 02:39:50 DEBUG (DefaultProjectManager) No tools found; Installing default tools  
+2025-10-26 02:39:50 DEBUG (DefaultProjectManager) 	no recent project directories found  
+2025-10-26 02:39:54 DEBUG (RecoverySnapshotMgrPlugin) Recovery snapshot timer set to 5 minute(s)  
+2025-10-26 02:39:54 ERROR (SwingExceptionHandler) Error: Uncaught Exception! 
+IllegalArgumentException - view is invalid java.lang.IllegalArgumentException: view is invalid
+	at javax.help.search.MergingSearchEngine.merge(MergingSearchEngine.java:91)
+	at javax.help.JHelpSearchNavigator.merge(JHelpSearchNavigator.java:168)
+	at javax.help.plaf.basic.BasicSearchNavigatorUI.addSubHelpSets(BasicSearchNavigatorUI.java:275)
+	at javax.help.plaf.basic.BasicSearchNavigatorUI.reloadData(BasicSearchNavigatorUI.java:225)
+	at javax.help.plaf.basic.BasicSearchNavigatorUI.installUI(BasicSearchNavigatorUI.java:174)
+	at java.desktop/javax.swing.JComponent.setUI(JComponent.java:740)
+	at javax.help.JHelpNavigator.setUI(JHelpNavigator.java:257)
+	at help.CustomSearchView$CustomHelpSearchNavigator.setUI(CustomSearchView.java:52)
+	at javax.help.JHelpNavigator.updateUI(JHelpNavigator.java:276)
+	at javax.help.JHelpNavigator.<init>(JHelpNavigator.java:105)
+	at javax.help.JHelpSearchNavigator.<init>(JHelpSearchNavigator.java:66)
+	at help.CustomSearchView$CustomHelpSearchNavigator.<init>(CustomSearchView.java:47)
+	at help.CustomSearchView.createNavigator(CustomSearchView.java:37)
+	at javax.help.JHelp.setupNavigators(JHelp.java:148)
+	at javax.help.JHelp.<init>(JHelp.java:126)
+	at javax.help.WindowPresentation.createJHelp(WindowPresentation.java:853)
+	at javax.help.WindowPresentation.createHelpWindow(WindowPresentation.java:889)
+	at help.GHelpBroker.updateWindowSize(GHelpBroker.java:335)
+	at help.GHelpBroker.setDisplayed(GHelpBroker.java:160)
+	at docking.help.HelpManager.displayHelp(HelpManager.java:455)
+	at docking.help.HelpManager.showHelp(HelpManager.java:232)
+	at ghidra.framework.main.FrontEndTool.checkWhatsNewPreference(FrontEndTool.java:838)
+	at ghidra.framework.main.FrontEndTool.setVisible(FrontEndTool.java:631)
+	at ghidra.GhidraRun.openProject(GhidraRun.java:194)
+	at ghidra.GhidraRun.lambda$launch$0(GhidraRun.java:95)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:87)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+ 
+2025-10-26 02:41:31 INFO  (DefaultProject) Creating project: /home/kali/misc/Ghidra-Projects/Standard-Project  
+2025-10-26 02:41:39 INFO  (LoggingInitialization) Using log config file: jar:file:/usr/share/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2025-10-26 02:41:39 INFO  (LoggingInitialization) Using log file: /home/kali/.config/ghidra/ghidra_11.4.2_DEV/application.log  
+2025-10-26 02:41:39 INFO  (Preferences) Loading user preferences: /home/kali/.config/ghidra/ghidra_11.4.2_DEV/preferences  
+2025-10-26 02:41:40 INFO  (ClassSearcher) Searching for classes...  
+2025-10-26 02:41:43 INFO  (ClassSearcher) Class search complete (2963 ms)  
+2025-10-26 02:41:43 INFO  (SSLContextInitializer) Initializing SSL Context  
+2025-10-26 02:41:44 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
+2025-10-26 02:41:44 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking  
+2025-10-26 02:41:44 INFO  (ApplicationTrustManagerFactory) Trust manager disabled, cacerts have not been set  
+2025-10-26 02:41:44 INFO  (GhidraRun) User kali started Ghidra.  
+2025-10-26 02:41:44 INFO  (GhidraRun) User settings directory: /home/kali/.config/ghidra/ghidra_11.4.2_DEV  
+2025-10-26 02:41:44 INFO  (GhidraRun) User temp directory: /tmp/kali-ghidra  
+2025-10-26 02:41:44 INFO  (GhidraRun) User cache directory: /home/kali/.cache/ghidra  
+2025-10-26 02:41:46 DEBUG (RecoverySnapshotMgrPlugin) Recovery snapshot timer set to 5 minute(s)  
+2025-10-26 02:41:47 INFO  (DefaultProject) Opening project: /home/kali/misc/Ghidra-Projects/Standard-Project  
+2025-10-26 02:41:48 INFO  (GhidraRun) Ghidra startup complete (10572 ms)  
