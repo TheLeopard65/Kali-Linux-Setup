@@ -68,26 +68,28 @@ apt-get -qq update && apt-get -qq upgrade -y
 # ------------------------------------- TOOLS INSTALLATION --------------------
 
 info "[##] Installing Compulsory/Required Tools --------------- [ TOOLS = 37 ]"
-apt-get -qq install -y wget curl whois openvpn wordlists seclists webshells exploitdb dpkg netcat-traditional ncat plocate git libffi-dev snapd git-all > /dev/null
-apt-get -qq install -y metasploit-framework powershell git-lfs build-essential firefox-esr docker.io docker-compose libssl-dev torbrowser-launcher > /dev/null
-apt-get -qq install -y coreutils uuid ntpsec-ntpdate axel xclip openssl flameshot dkms linux-headers-$(uname -r) screenfetch tor eog net-tools > /dev/null
+apt-get -qq install -y wget curl whois openvpn wordlists seclists webshells exploitdb dpkg netcat-traditional ncat plocate git libffi-dev > /dev/null
+apt-get -qq install -y metasploit-framework powershell git-lfs build-essential firefox-esr docker.io docker-compose torbrowser-launcher > /dev/null
+apt-get -qq install -y coreutils uuid ntpsec-ntpdate axel xclip openssl flameshot dkms linux-headers-$(uname -r) screenfetch tor eog > /dev/null
+apt-get -qq install -y  snapd git-all libssl-dev net-tools > /dev/null
 
 info "[##] Installing Service-Specific Tools ------------------ [ TOOLS = 27 ]"
-apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat smtp-user-enum > /dev/null
-apt-get -qq install -y sqlmap onesixtyone nbtscan snmp snmpcheck samba samba-common-bin rpcbind kubectl mdbtools xtightvncviewer mongodb-clients ansible > /dev/null
-apt-get -qq install -q smbmap redis > /dev/null
+apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat > /dev/null
+apt-get -qq install -y sqlmap onesixtyone nbtscan snmp snmpcheck samba samba-common-bin rpcbind kubectl mdbtools mongodb-clients ansible > /dev/null
+apt-get -qq install -q smbmap redis smtp-user-enum xtightvncviewer > /dev/null
 
 info "[##] Installing Web Application Scanners ---------------- [ TOOLS = 22 ]"
-apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner greenbone-feed-sync sslyze nikto davtest > /dev/null
-apt-get -qq install -y xsser burpsuite beef zaproxy shellfire dirb evilginx2 cadaver wfuzz > /dev/null
+apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner greenbone-feed-sync davtest > /dev/null
+apt-get -qq install -y xsser burpsuite beef zaproxy shellfire dirb evilginx2 cadaver wfuzz nikto sslyze > /dev/null
 
 info "[##] Installing Miscellaneous Tools --------------------- [ TOOLS = 22 ]"
-apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish xxd > /dev/null
+apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter > /dev/null
 apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils gemini-cli clamav-freshclam clamav jq xq > /dev/null
+apt-get -qq install -y gophish xxd > /dev/null
 
 info "[##] Installing Language & Support Tools ---------------- [ TOOLS = 17 ]"
-apt-get -qq install -y python3 python3-dev python3-pip pipx npm nodejs postgresql libwine openjdk-11-jdk golang golang-go scapy bash-completion php ruby > /dev/null
-apt-get -qq install -y php rsync > /dev/null
+apt-get -qq install -y python3 python3-dev python3-pip pipx npm nodejs postgresql libwine openjdk-11-jdk golang golang-go scapy php ruby > /dev/null
+apt-get -qq install -y php rsync bash-completion > /dev/null
 
 info "[##] Installing Port & Network Scanners ----------------- [ TOOLS = 14 ]"
 apt-get -qq install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe fping eyewitness elk-lapw > /dev/null
@@ -96,7 +98,8 @@ info "[##] Installing Binary Exploitation Tools --------------- [ TOOLS = 10 ]"
 apt-get -qq install -y checksec ghidra pwncat radare2 gdb ltrace strace ollydbg binutils libc-bin > /dev/null
 
 info "[##] Installing Active Directory Tools ------------------- [ TOOLS = 9 ]"
-apt-get -qq install -y bloodhound bloodhound.py certipy-ad responder ldap-utils lapsdumper gpp-decrypt bloodyad bloodhound-ce-python krb5-user > /dev/null
+apt-get -qq install -y bloodhound bloodhound.py certipy-ad responder ldap-utils lapsdumper gpp-decrypt bloodyad bloodhound-ce-python > /dev/null
+apt-get -qq install -y krb5-user > /dev/null
 
 info "[##] Installing Password Cracking Tools ------------------ [ TOOLS = 7 ]"
 apt-get -qq install -y hashid john hashcat hydra medusa cewl cupp passwordsafe > /dev/null
@@ -129,15 +132,16 @@ apt-get -qq install -y aircrack-ng reaver wifite kismet-core > /dev/null
 
 echo -e "${GREEN}[###] -------------------------------------------------- [###]${NC}"
 info "[##] Installing Web, App & API Python3 Libraries -------- [ TOOLS = 12 ]"
-apt-get -qq install -y python3-flask python3-flask-socketio python3-flask-restful python3-bs4 python3-lxml python3-yaml python3-requests python3-selenium > /dev/null
-apt-get -qq install -y python3-pyqt5 python3-tk python3-pynput python3-pyautogui > /dev/null
+apt-get -qq install -y python3-flask python3-flask-socketio python3-flask-restful python3-bs4 python3-lxml python3-yaml python3-requests > /dev/null
+apt-get -qq install -y python3-pyqt5 python3-tk python3-pynput python3-pyautogui python3-selenium > /dev/null
 
 info "[##] Installing Networking Python3 Libraries ------------ [ TOOLS = 12 ]"
-apt-get -qq install -y python3-paramiko python3-socketio python3-nmap python3-scapy python3-shodan python3-impacket python3-bcrypt python3-cryptography > /dev/null
-apt-get -qq install -y python3-pycryptodome python3-ldap python3-corepywrap python3-requests
+apt-get -qq install -y python3-paramiko python3-socketio python3-nmap python3-scapy python3-shodan python3-impacket python3-cryptography > /dev/null
+apt-get -qq install -y python3-pycryptodome python3-ldap python3-corepywrap python3-requests python3-bcrypt > /dev/null
 
 info "[##] Installing Miscellaneous Python3 Libraries ---------- [ TOOLS = 8 ]"
-apt-get -qq install -y python3-pwntools python3-ropgadget python3-geopy python3-colormap python3-termcolor python3-pil python3-capstone python3-pyftpdlib > /dev/null
+apt-get -qq install -y python3-pwntools python3-ropgadget python3-geopy python3-colormap python3-termcolor python3-pil python3-pyftpdlib > /dev/null
+apt-get -qq install -y python3-capstone > /dev/null
 
 info "[##] Installing AI/ML Python3 Libraries ------------------ [ TOOLS = 7 ]"
 apt-get -qq install -y python3-numpy python3-pandas python3-matplotlib python3-opencv python3-soundfile python3-pydantic python3-sqlalchemy > /dev/null
@@ -148,6 +152,7 @@ if [[ "$pipt" == "y" ]]; then
 	info "[##] Installing Important PIPX Tools -------------------- [ TOOLS = 23 ]"
 	pipx install --quiet websocket-client pwnedpasswords geocoder ipython impacket tqdm pytesseract pytest pyinstaller ropgadget pwntools flask pypykatz > /dev/null
 	pipx install --quiet defaultcreds-cheat-sheet kerbrute pywhisker droopescan uploadserver wsgidav cheroot xsstrike wesng bloodhound > /dev/null
+	pipx install --quiet pwntools flask shell-gpt > /dev/null
 	pipx ensurepath > /dev/null
 fi
 
