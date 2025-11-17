@@ -181,7 +181,7 @@ fi
 # ------------------------------------- ENABLE SNAPD --------------------------
 
 if [[ "$snpd" == "y" ]]; then
-	info "[##] Installing Snapd & its packages --------------------------------- [ TOOLS = 4 ]"
+	info "[##] Installing Snapd & its packages -------------------------- [ TOOLS = 4 ]"
 	systemctl enable snapd > /dev/null
 	systemctl start snapd > /dev/null
 	snap install ngrok > /dev/null
@@ -197,7 +197,7 @@ dpkg --add-architecture i386 && apt-get -qq update && apt-get -qq install -y win
 # ------------------------------------- GLOBAL GIT CONFIG ---------------------
 
 if [[ "$gitx" == "y" ]]; then
-	info "[##] Configuring GIT Configurations ------------------------------------- [ MANUAL ]"
+	info "[##] Configuring GIT Configurations ------------------------------ [ MANUAL ]"
 	read -p ">>>[#] Please Enter your GitHub/GitLab Username: " git_username
 	read -p ">>>[#] Please Enter your GitHub/GitLab Email: " git_email
     git config --global user.name "$git_username"
@@ -208,7 +208,7 @@ fi
 # ------------------------------------- NANORC MODIFICATIONS ------------------
 
 if [[ "$narc" == "y" ]]; then
-    info "[##] Performing NANO Configurations ------------------------------------- [ MANUAL ]"
+    info "[##] Performing NANO Configurations ------------------------------ [ MANUAL ]"
     if [[ -f ./resources/nanorc ]]; then
         cp ./resources/nanorc /etc/nanorc
     else
@@ -224,7 +224,7 @@ fi
 # ------------------------------------- BASHRC CUSTOMIZATION ------------------
 
 if [[ "$barc" == "y" ]]; then
-    info "[##] Performing BASH Configurations ------------------------------------- [ MANUAL ]"
+    info "[##] Performing BASH Configurations ------------------------------ [ MANUAL ]"
     if [[ -f ./resources/bashrc ]]; then
 	    cp "$SCRIPT_DIR/resources/bashrc" "$TARGET_HOME/.bashrc"
         cp "$SCRIPT_DIR/resources/bashrc" "/root/.bashrc"
@@ -237,7 +237,7 @@ fi
 # ------------------------------------- ZSHRC CUSTOMIZATION -------------------
 
 if [[ "$zshc" == "y" ]]; then
-    info "[##] Performing ZSH Configurations -------------------------------------- [ MANUAL ]"
+    info "[##] Performing ZSH Configurations ------------------------------- [ MANUAL ]"
     if [[ -f ./resources/zshrc ]]; then
 	    cp "$SCRIPT_DIR/resources/zshrc" "$TARGET_HOME/.zshrc"
         cp "$SCRIPT_DIR/resources/zshrc" "/root/.zshrc"
@@ -253,7 +253,7 @@ source ./resources/set-xfce4.sh
 
 # ------------------------------------- POST SETUP COMMANDS -------------------
 
-info "[###] Finalizing the PENTESTER'S KALI - LINUX Setup ------------------------- [ MANUAL ]"
+info "[###] Finalizing the PENTESTER'S KALI - LINUX Setup -------------- [ MANUAL ]"
 
 if [[ -f /usr/share/wordlists/rockyou.txt.gz ]]; then
     gzip -d /usr/share/wordlists/rockyou.txt.gz 2>/dev/null
