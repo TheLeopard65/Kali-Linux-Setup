@@ -21,6 +21,11 @@ wget -q 'https://www.kali.org/wallpapers/community/images/community/grey-kali-20
 cp /usr/share/backgrounds/kali-16x9/kali-red-sticker.jpg /usr/share/backgrounds/kali-custom/kali-red-sticker.jpg
 cp /usr/share/backgrounds/kali-16x9/kali-cubism.jpg /usr/share/backgrounds/kali-custom/kali-cubism.jpg
 
+MONITOR_PATH=$(xfconf-query -c xfce4-desktop -l | grep "monitorVirtual1" | grep "last-image")
+IMAGE="/usr/share/backgrounds/kali-setup/kali-red-sticker.jpg"
+xfconf-query -c xfce4-desktop -p "$MONITOR_PATH" --type string -s "$IMAGE"
+xfdesktop --reload
+
 # ------------------------------------- PANEL CUSTOMIZATION -------------------
 
 if [[ "$desk" == "y" ]]; then
