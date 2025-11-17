@@ -45,7 +45,7 @@ xfdesktop --reload
 if [[ "$desk" == "y" ]]; then
     info "[##] Performing XFCE Customizations ------------------------------ [ MANUAL ]"
     if [[ -d "./.config" || -d "./.local" ]]; then
-        rm -rf "${TARGET_HOME}/.config" "${TARGET_HOME}/.local" "${TARGET_HOME}/.cache"
+        rm -rf "${TARGET_HOME}/.config" "${TARGET_HOME}/.local"
         cp -rpa ./.config "${TARGET_HOME}/"
         cp -rpa ./.local "${TARGET_HOME}/"
     else
