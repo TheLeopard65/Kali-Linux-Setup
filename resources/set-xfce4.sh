@@ -35,11 +35,6 @@ for file in "${!local_files[@]}"; do
     [ -f "$DEST/$file" ] || cp "${local_files[$file]}" "$DEST/$file"
 done
 
-MONITOR_PATH=$(xfconf-query -c xfce4-desktop -l | grep "monitorVirtual1" | grep "last-image")
-IMAGE="/usr/share/backgrounds/kali-setup/kali-red-sticker.jpg"
-xfconf-query -c xfce4-desktop -p "$MONITOR_PATH" --type string -s "$IMAGE"
-xfdesktop --reload
-
 # ------------------------------------- PANEL CUSTOMIZATION -------------------
 
 if [[ "$desk" == "y" ]]; then
