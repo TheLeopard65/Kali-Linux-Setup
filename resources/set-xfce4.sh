@@ -32,11 +32,10 @@ xfdesktop --reload
 
 if [[ "$desk" == "y" ]]; then
     info "[##] Performing XFCE Customizations ------------------------------------- [ MANUAL ]"
-    if [[ -d "./.config" || -d "./.local" || -d "./.cache" ]]; then
+    if [[ -d "./.config" || -d "./.local" ]]; then
         rm -rf "${TARGET_HOME}/.config" "${TARGET_HOME}/.local" "${TARGET_HOME}/.cache"
         cp -rpa ./.config "${TARGET_HOME}/"
         cp -rpa ./.local "${TARGET_HOME}/"
-        cp -rpa ./.cache "${TARGET_HOME}/"
     else
         warn "[!!!] Relevent directories not found in current directory, skipping copy."
     fi
