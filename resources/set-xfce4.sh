@@ -13,17 +13,12 @@ apt-get install -y kali-wallpapers-2023 kali-wallpapers-2024 kali-wallpapers-202
 apt-get install -y kali-wallpapers-2019.4 kali-wallpapers-2020.4 kali-wallpapers-2022 > /dev/null
 
 mkdir -p '/usr/share/backgrounds/kali-custom/'
-wget 'https://wallpapercave.com/wp/wp14448314.jpg' -O /usr/share/backgrounds/kali-custom/firewatch-purple.jpg
-wget 'https://wallpapercave.com/wp/wp12705841.png' -O /usr/share/backgrounds/kali-custom/black-panther-red.png
-wget 'https://www.kali.org/wallpapers/community/images/community/grey-kali-2025-2-3840x2160.png' -O /usr/share/backgrounds/kali-custom/grey-kali-linux.png
-
+wget 'https://wallpapercave.com/wp/wp14448314.jpg' -O /usr/share/backgrounds/kali-custom/firewatch-purple.jpg > /dev/null
+wget 'https://wallpapercave.com/wp/wp12705841.png' -O /usr/share/backgrounds/kali-custom/black-panther-red.png > /dev/null
+wget 'https://www.hdwallpapers.in/download/artistic_landscape_view_of_mountains_trees_lights_purple_starry_sky_moon_minimalism_4k_hd_minimalism-HD.jpg' -O /usr/share/backgrounds/kali-custom/watchtower-waterfall.jpg > /dev/null
+wget 'https://www.kali.org/wallpapers/community/images/community/grey-kali-2025-2-3840x2160.png' -O /usr/share/backgrounds/kali-custom/grey-kali-linux.png > /dev/null
 cp /usr/share/backgrounds/kali-16x9/kali-red-sticker.jpg /usr/share/backgrounds/kali-custom/kali-red-sticker.jpg
 cp /usr/share/backgrounds/kali-16x9/kali-cubism.jpg /usr/share/backgrounds/kali-custom/kali-cubism.jpg
-cp /usr/share/backgrounds/kali-16x9/kali-ascii.jpg /usr/share/backgrounds/kali-custom/kali-ascii.jpg
-cp /usr/share/backgrounds/kali-16x9/kali-contours.jpg /usr/share/backgrounds/kali-custom/kali-contours.jpg
-cp /usr/share/backgrounds/kali-16x9/kali-light.jpg /usr/share/backgrounds/kali-custom/kali-light.jpg
-cp /usr/share/backgrounds/kali-16x9/kali-oleo.jpg /usr/share/backgrounds/kali-custom/kali-oleo.jpg
-cp /usr/share/backgrounds/kali-16x9/kali-contours.jpg /usr/share/backgrounds/kali-custom/kali-contours.jpg
 
 xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVirtual1/workspace0/last-image -s "/usr/share/backgrounds/kali-setup/kali-red-sticker.jpg"
 xfdesktop --reload
