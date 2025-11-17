@@ -39,10 +39,10 @@ done
 
 if [[ "$desk" == "y" ]]; then
     info "[##] Performing XFCE Customizations ------------------------------ [ MANUAL ]"
-    if [[ -d "./.config" || -d "./.local" ]]; then
+    if [[ -d "./resources/.config" || -d "./resources/.local" ]]; then
         rm -rf "${TARGET_HOME}/.config" "${TARGET_HOME}/.local"
-        cp -rpa ./.config "${TARGET_HOME}/"
-        cp -rpa ./.local "${TARGET_HOME}/"
+        cp -rpa ./resources/.config "${TARGET_HOME}/"
+        cp -rpa ./resources/.local "${TARGET_HOME}/"
     else
         warn "[!!!] Relevent directories not found in current directory, skipping copy."
     fi
