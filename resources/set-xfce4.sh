@@ -13,13 +13,27 @@ info "[##] Setting up a new Desktop Wallpaper -------------------------- [ MANUA
 apt-get install -y kali-wallpapers-2023 kali-wallpapers-2024 kali-wallpapers-2025 kali-wallpapers-community > /dev/null
 apt-get install -y kali-wallpapers-2019.4 kali-wallpapers-2020.4 kali-wallpapers-2022 > /dev/null
 
-mkdir -p '/usr/share/backgrounds/kali-custom/'
-wget -q 'https://wallpapercave.com/wp/wp14448314.jpg' -O /usr/share/backgrounds/kali-custom/firewatch-purple.jpg
-wget -q 'https://wallpapercave.com/wp/wp12705841.png' -O /usr/share/backgrounds/kali-custom/black-panther-red.png
-wget -q 'https://www.hdwallpapers.in/download/artistic_landscape_view_of_mountains_trees_lights_purple_starry_sky_moon_minimalism_4k_hd_minimalism-HD.jpg' -O /usr/share/backgrounds/kali-custom/watchtower-waterfall.jpg
-wget -q 'https://www.kali.org/wallpapers/community/images/community/grey-kali-2025-2-3840x2160.png' -O /usr/share/backgrounds/kali-custom/grey-kali-linux.png
-cp /usr/share/backgrounds/kali-16x9/kali-red-sticker.jpg /usr/share/backgrounds/kali-custom/kali-red-sticker.jpg
-cp /usr/share/backgrounds/kali-16x9/kali-cubism.jpg /usr/share/backgrounds/kali-custom/kali-cubism.jpg
+DEST="/usr/share/backgrounds/kali-custom"
+
+declare -A files=(
+    ["firewatch-purple.jpg"]="https://wallpapercave.com/wp/wp14448314.jpg"
+    ["black-panther-red.png"]="https://wallpapercave.com/wp/wp12705841.png"
+    ["watchtower-waterfall.jpg"]="https://www.hdwallpapers.in/download/artistic_landscape_view_of_mountains_trees_lights_purple_starry_sky_moon_minimalism_4k_hd_minimalism-HD.jpg"
+    ["grey-kali-linux.png"]="https://www.kali.org/wallpapers/community/images/community/grey-kali-2025-2-3840x2160.png"
+)
+declare -A local_files=(
+    ["kali-red-sticker.jpg"]="/usr/share/backgrounds/kali-16x9/kali-red-sticker.jpg"
+    ["kali-cubism.jpg"]="/usr/share/backgrounds/kali-16x9/kali-cubism.jpg"
+)
+
+mkdir -p "$DEST"
+for file in "${!files[@]}"; do
+    [ -f "$DEST/$file" ] || wget -q "${files[$file]}" -O "$DEST/$file"
+done
+
+for file in "${!local_files[@]}"; do
+    [ -f "$DEST/$file" ] || cp "${local_files[$file]}" "$DEST/$file"
+done
 
 MONITOR_PATH=$(xfconf-query -c xfce4-desktop -l | grep "monitorVirtual1" | grep "last-image")
 IMAGE="/usr/share/backgrounds/kali-setup/kali-red-sticker.jpg"
