@@ -7,7 +7,8 @@ fi
 
 # ------------------------------------- USER DIRECTORY SETUP ------------------
 
-info "[###] Setting up a new Desktop Wallpaper ------------------------------------ [ MANUAL ]"
+echo -e "${GREEN}[###] ------------------------------------------------------------------------ [###]${NC}"
+info "[##] Setting up a new Desktop Wallpaper -------------------------- [ MANUAL ]"
 
 apt-get install -y kali-wallpapers-2023 kali-wallpapers-2024 kali-wallpapers-2025 kali-wallpapers-community > /dev/null
 apt-get install -y kali-wallpapers-2019.4 kali-wallpapers-2020.4 kali-wallpapers-2022 > /dev/null
@@ -20,14 +21,10 @@ wget -q 'https://www.kali.org/wallpapers/community/images/community/grey-kali-20
 cp /usr/share/backgrounds/kali-16x9/kali-red-sticker.jpg /usr/share/backgrounds/kali-custom/kali-red-sticker.jpg
 cp /usr/share/backgrounds/kali-16x9/kali-cubism.jpg /usr/share/backgrounds/kali-custom/kali-cubism.jpg
 
-MONITOR_PATH=$(xfconf-query -c xfce4-desktop -l | grep "monitorVirtual1" | grep "last-image")
-IMAGE="/usr/share/backgrounds/kali-setup/kali-red-sticker.jpg"
-xfconf-query -c xfce4-desktop -p "$MONITOR_PATH" --type string -s "$IMAGE"
-
 # ------------------------------------- PANEL CUSTOMIZATION -------------------
 
 if [[ "$desk" == "y" ]]; then
-    info "[##] Performing XFCE Customizations ------------------------------------- [ MANUAL ]"
+    info "[##] Performing XFCE Customizations ------------------------------ [ MANUAL ]"
     if [[ -d "./.config" || -d "./.local" ]]; then
         rm -rf "${TARGET_HOME}/.config" "${TARGET_HOME}/.local" "${TARGET_HOME}/.cache"
         cp -rpa ./.config "${TARGET_HOME}/"
@@ -40,7 +37,7 @@ fi
 # ------------------------------------- USER DIRECTORY SETUP ------------------
 
 if [[ "$udir" == "y" ]]; then
-	info "[###] Setting up the User's Home Directory ---------------------------------- [ MANUAL ]"
+	info "[###] Setting up the User's Home Directory ----------------------- [ MANUAL ]"
 
 	cd "/home/$TARGET_USER/" && mkdir -p {recon,loot,exploits,transfer,creds/hashes,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics},OpenVPN}
 	touch "/home/$TARGET_USER/creds/credentials.txt"
