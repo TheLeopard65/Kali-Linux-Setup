@@ -38,7 +38,7 @@ if [[ "$(id -u)" -ne 0 ]]; then
     exit 1
 fi
 
-TARGET_USER=${SUDO_USER:-$(logname)}
+TARGET_USER=${SUDO_USER:-$(whoami)}
 TARGET_HOME=$(eval echo "~$TARGET_USER")
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
@@ -135,7 +135,7 @@ apt-get -qq install -y python3-numpy python3-pandas python3-matplotlib python3-o
 
 if [[ "$pipt" == "y" ]]; then
 	info "[##] Installing Important PIPX Tools ------------------------- [ TOOLS = 23 ]"
-	pipx install --quiet websocket-client pwnedpasswords geocoder ipython impacket tqdm pytesseract pytest pyinstaller ropgadget pwntools flask pypykatz > /dev/null
+	pipx install --quiet websocket-client pwnedpasswords geocoder ipython impacket tqdm pytesseract pytest pyinstaller ropgadget pypykatz > /dev/null
 	pipx install --quiet defaultcreds-cheat-sheet kerbrute pywhisker droopescan uploadserver wsgidav cheroot xsstrike wesng bloodhound > /dev/null
 	pipx install --quiet pwntools flask shell-gpt > /dev/null
 	pipx ensurepath > /dev/null
