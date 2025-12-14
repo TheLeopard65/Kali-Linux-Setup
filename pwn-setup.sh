@@ -1,20 +1,20 @@
 #!/bin/bash
 #Author: Leopard
 
+# Checking if the script is being executed as root or not.
+if [[ "$(id -u)" -ne 0 ]]; then
+    error "Please run this script using ROOT or SUDO. (For example: 'sudo $0')!"
+    exit 1
+fi
+
 # Some important configurations such colors and Helping Functions
 set -eo pipefail
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
 RED="\033[0;31m"
 NC="\033[0m"
-
 error() { echo -e "${RED}[ERROR]${NC} $1"; }
 success() { echo -e "${GREEN}[ OK ]${NC} $1"; }
-
-
-if ! command -v figlet &> /dev/null; then
-  apt-get -qq install -y figlet
-fi
 
 clear
 echo -e "${GREEN}[###] STARTING THE PENTESTER'S KALI LINUX INSTALL SCRIPT [###]${NC}"
@@ -24,12 +24,9 @@ echo -e "${GREEN}[###] ---------------------------------------------------------
 export DEBIAN_FRONTEND=noninteractive
 echo '* libraries/restart-without-asking boolean true' | debconf-set-selections
 
-# Checking if the script is being executed as root or not.
-if [[ "$(id -u)" -ne 0 ]]; then
-    error "Please run this script using ROOT or SUDO. (For example: 'sudo $0')!"
-    exit 1
+if ! command -v figlet &> /dev/null; then
+  apt-get -qq install -y figlet
 fi
-
 
 TARGET_USER=${SUDO_USER:-$(whoami)}
 TARGET_HOME=$(eval echo "~$TARGET_USER")
@@ -43,7 +40,7 @@ apt-get autoremove -y -qq
 
 # Installing the necessary requried packages for Binary Exploitation
 apt-get -qq install -y python3 python3-dev python3-venv python3-pip pipx gdb radare2 pwncat strace ltrace binutils python3-requests > /dev/null
-apt-get -qq install -y netcat-traditional ncat nmap python3-flask socat impacket-scripts > /dev/null
+apt-get -qq install -y netcat-traditional ncat nmap python3-flask socat impacket-scripts plocate > /dev/null
 
 # Creating a new Python3 Virtual Environment in the Home Directory.
 python3 -m venv "$TARGET_HOME/PWN-VENV"
