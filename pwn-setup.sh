@@ -55,11 +55,6 @@ pip3 install pwntools pwn-flashlib ROPGadget one_gadget > /dev/null
 deactivate
 chown -R "$TARGET_USER:$TARGET_USER" "$TARGET_HOME/PWN-VENV"
 
-# Installing some necessary Python3 Cmdlets through the Pipx Command.
-info "[##] Creating tools and Cmdlets via PIPX  ---------------------------- [ #4 ]"
-pipx install pwntools ROPGadget one_gadget impacket --include-deps > /dev/null
-pipx ensurepath
-
 # Finall Update, Upgrade and Auto-remove.
 info "[##] Final Update and Upgrade to the System Packages  ---------------- [ #5 ]"
 apt-get -qq update
@@ -68,6 +63,13 @@ apt-get -qq full-upgrade -y
 apt-get -qq autoremove -y
 updatedb
 unset DEBIAN_FRONTEND
+
+# Installing some necessary Python3 Cmdlets through the Pipx Command.
+info "[##] Creating tools and Cmdlets via PIPX  ---------------------------- [ #4 ]"
+sudo -u "$TARGET_USER" HOME="$TARGET_HOME" pipx install pwntools ROPGadget one_gadget impacket --include-deps > /dev/null
+sudo -u "$TARGET_USER" HOME="$TARGET_HOME" pipx ensurepath > /dev/null
+info "[!!!] '!/.local/bin' has been added to PATH, Please Open a new terminal or Re-login."
+info "[!!!] Alternatively, you can source your shell's config file with 'source ~/.bashrc'"
 
 echo -e "${GREEN}[###] ------------------------------------------------------------------------ [###]${NC}"
 echo -e "${GREEN}[###] Kali-Linux PWN / Binary Exploitation Environment Setup is finally Complete.!!!${NC}"
