@@ -49,15 +49,15 @@ linux_scripts() {
     info "[7] Downloading XXEinjector" && wget -q https://raw.githubusercontent.com/enjoiz/XXEinjector/refs/heads/master/XXEinjector.rb -O XXEinjector.rb && chmod +x XXEinjector.rb && ln -s $DIR/linux-scripts/XXEinjector.rb /usr/local/bin/XXEinjector
     info "[8] Downloading Windows Exploit Suggester" && wget -q https://raw.githubusercontent.com/Pwnistry/Windows-Exploit-Suggester-python3/refs/heads/master/windows-exploit-suggester.py -O windows-exploit-suggester.py && chmod +x windows-exploit-suggester.py
     info "[9] Downloading pspy64" && wget -q https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64 -O pspy64 && chmod +x pspy64
-    info "[10] Downloading linpeas" && wget -q https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -O linpeas.sh && chmod +x linpeas.sh
-    info "[11] Downloading chisel-linux" && wget -q https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_linux_amd64.gz -O chisel-linux.gz && gunzip chisel-linux.gz && chmod +x chisel-linux
+    info "[10] Downloading linpeas" && wget -q https://github.com/peass-ng/PEASS-ng/releases/download/20260412-090b08ae/linpeas.sh -O linpeas.sh && chmod +x linpeas.sh
+    info "[11] Downloading chisel-linux" && wget -q https://github.com/jpillora/chisel/releases/download/v1.11.5/chisel_1.11.5_linux_amd64.gz -O chisel-linux.gz && gunzip chisel-linux.gz && chmod +x chisel-linux
     info "[12] Downloading kerbrute" && wget -q https://github.com/ropnop/kerbrute/releases/download/v1.0.3/kerbrute_linux_amd64 -O kerbrute && chmod +x kerbrute && ln -s $DIR/linux-scripts/kerbrute /usr/local/bin/kerbrute
     info "[13] Downloading winrmexec.py" && wget -q https://raw.githubusercontent.com/ozelis/winrmexec/refs/heads/main/winrmexec.py -O winrmexec.py
 
     info "[14] Downloading ligolo-NG Tools"
 	mkdir -p ligolo-tools && cd ligolo-tools
-	    wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_proxy_0.8.2_linux_amd64.tar.gz -O ligolo-proxy.tar.gz && tar -xzf ligolo-proxy.tar.gz && rm -rf LICENSE README.md ligolo-proxy.tar.gz && mv proxy ligolo-proxy
-	    wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_linux_amd64.tar.gz -O ligolo-agent.tar.gz && tar -xzf ligolo-agent.tar.gz  && rm -rf LICENSE README.md ligolo-agent.tar.gz && mv agent ligolo-agent
+	    wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.3/ligolo-ng_proxy_0.8.3_linux_amd64.tar.gz -O ligolo-proxy.tar.gz && tar -xzf ligolo-proxy.tar.gz && rm -rf LICENSE README.md ligolo-proxy.tar.gz && mv proxy ligolo-proxy
+	    wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.3/ligolo-ng_agent_0.8.3_linux_amd64.tar.gz -O ligolo-agent.tar.gz && tar -xzf ligolo-agent.tar.gz  && rm -rf LICENSE README.md ligolo-agent.tar.gz && mv agent ligolo-agent
 	cd ..
 
 	info "[15] Downloading kiterunner" && wget -q https://github.com/assetnote/kiterunner/releases/download/v1.0.2/kiterunner_1.0.2_linux_amd64.tar.gz -O kiterunner-1.0.2.tar.gz && tar -xzf kiterunner-1.0.2.tar.gz && ln -s $DIR/linux-scripts/kr /usr/local/bin/kr && rm kiterunner-1.0.2.tar.gz
@@ -84,35 +84,36 @@ windows_scripts() {
     info "[7] Downloading Invoke-DOSfuscation" && wget -q https://raw.githubusercontent.com/danielbohannon/Invoke-DOSfuscation/refs/heads/master/Invoke-DOSfuscation.psd1 -O Invoke-DOSfuscation.psd1
     info "[8] Downloading TargetedKerberoast.py" && wget -q https://raw.githubusercontent.com/ShutdownRepo/targetedKerberoast/refs/heads/main/targetedKerberoast.py -O targetedKerberoast.py && ln -s $DIR/windows-scripts/targetedKerberoast.py /usr/local/bin/targetedKerberoast.py
     info "[9] Downloading LaZagne.exe" && wget -q https://github.com/AlessandroZ/LaZagne/releases/download/v2.4.7/LaZagne.exe -O LaZagne.exe
-    info "[10] Downloading Snaffler.exe" && wget -q https://github.com/SnaffCon/Snaffler/releases/download/1.0.212/Snaffler.exe -O Snaffler.exe
+    info "[10] Downloading Snaffler.exe" && wget -q https://github.com/SnaffCon/Snaffler/releases/download/1.0.244/Snaffler.exe -O Snaffler.exe
     info "[11] Downloading Rpivot Client" && wget -q https://github.com/klsecservices/rpivot/releases/download/v1.0/client.exe -O rpivot-client.exe
     info "[12] Downloading winPEASany" && wget -q https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASany.exe -O winPEASany.exe
     info "[13] Downloading SharpView.exe" && wget -q https://github.com/tevora-threat/SharpView/raw/refs/heads/master/Compiled/SharpView.exe -O SharpView.exe
-    info "[14] Downloading chisel-windows" && wget -q https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_windows_amd64.gz -O chisel-windows.1.10.1.gz && gunzip chisel-windows.1.10.1.gz && mv chisel-windows.1.10.1 chisel-windows-1.10.1.exe
-    info "[15] Downloading ligolo-agent" && wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.2/ligolo-ng_agent_0.8.2_windows_amd64.zip -O ligolo-Agent.zip && unzip -qq ligolo-Agent.zip && rm -f ligolo-Agent.zip LICENSE README.md && mv agent.exe ligolo-agent.exe
+    info "[14] Downloading chisel-windows" && wget -q https://github.com/jpillora/chisel/releases/download/v1.11.5/chisel_1.11.5_windows_amd64.gz -O chisel-windows.1.10.1.gz && gunzip chisel-windows.1.10.1.gz && mv chisel-windows.1.10.1 chisel-windows-1.10.1.exe
+    info "[15] Downloading ligolo-agent" && wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.3/ligolo-ng_agent_0.8.3_windows_amd64.zip -O ligolo-Agent.zip && unzip -qq ligolo-Agent.zip && rm -f ligolo-Agent.zip LICENSE README.md && mv agent.exe ligolo-agent.exe
     info "[16] Downloading RunasCs-tool" && wget -q https://github.com/antonioCoco/RunasCs/releases/download/v1.5/RunasCs.zip -O RunasCs.zip && unzip RunasCs.zip -d Runas-Binaries && rm RunasCs.zip
+    info "[17] Downloading Rubeus.exe" && wget -q https://github.com/Flangvik/SharpCollection/raw/refs/heads/master/NetFramework_4.0_Any/Rubeus.exe -O Rubeus.exe
 
-    info "[17] Downloading Inveigh Tools"
+    info "[18] Downloading Inveigh Tools"
     mkdir -p inveigh-tools && cd inveigh-tools
-        wget -q https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.11/Inveigh-net8.0-win-x64-trimmed-single-v2.0.11.zip -O Inveigh-Net8-Win-2.0.11.zip
-        unzip -qq Inveigh-Net8-Win-2.0.11.zip && rm -f Inveigh.pdb Inveigh-Net8-Win-2.0.11.zip
+        wget -q https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.12/Inveigh-net8.0-win-x64-trimmed-single-v2.0.12.zip -O Inveigh-Net8-Win-2.0.12.zip
+        unzip -qq Inveigh-Net8-Win-2.0.12.zip && rm -f Inveigh.pdb Inveigh-Net8-Win-2.0.12.zip
         wget -q https://raw.githubusercontent.com/Kevin-Robertson/Inveigh/refs/heads/master/Inveigh.ps1
     cd ..
 
-    info "[18] Downloading socat windows"
+    info "[19] Downloading socat windows"
     mkdir -p socat-windows && cd socat-windows
         wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx64.exe -O socatx64.exe
         wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx86.exe -O socatx86.exe
     cd ..
 
-    info "[19] Downloading UACME - Akagi"
+    info "[20] Downloading UACME - Akagi"
     mkdir -p UACME-Akagi && cd UACME-Akagi
         wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi32.exe
         wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi64.exe
     cd ..
 
-    info "[20] Cloning PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
-    info "[21] Cloning Sysinternals Repository" && git clone --quiet https://github.com/davehardy20/sysinternals.git
+    info "[21] Cloning PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
+    info "[22] Cloning Sysinternals Repository" && git clone --quiet https://github.com/davehardy20/sysinternals.git
     echo "[###] WINDOWS TOOLS DOWNLOAD COMPLETE [###]"
 }
 
