@@ -92,28 +92,29 @@ windows_scripts() {
     info "[15] Downloading ligolo-agent" && wget -q https://github.com/nicocha30/ligolo-ng/releases/download/v0.8.3/ligolo-ng_agent_0.8.3_windows_amd64.zip -O ligolo-Agent.zip && unzip -qq ligolo-Agent.zip && rm -f ligolo-Agent.zip LICENSE README.md && mv agent.exe ligolo-agent.exe
     info "[16] Downloading RunasCs-tool" && wget -q https://github.com/antonioCoco/RunasCs/releases/download/v1.5/RunasCs.zip -O RunasCs.zip && unzip RunasCs.zip -d Runas-Binaries && rm RunasCs.zip
     info "[17] Downloading Rubeus.exe" && wget -q https://github.com/Flangvik/SharpCollection/raw/refs/heads/master/NetFramework_4.0_Any/Rubeus.exe -O Rubeus.exe
+    info "[18] Downloading PowerView.ps1" && wget -q https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/refs/heads/master/Recon/PowerView.ps1 -O PowerView.ps1
 
-    info "[18] Downloading Inveigh Tools"
+    info "[19] Downloading Inveigh Tools"
     mkdir -p inveigh-tools && cd inveigh-tools
         wget -q https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.12/Inveigh-net8.0-win-x64-trimmed-single-v2.0.12.zip -O Inveigh-Net8-Win-2.0.12.zip
         unzip -qq Inveigh-Net8-Win-2.0.12.zip && rm -f Inveigh.pdb Inveigh-Net8-Win-2.0.12.zip
         wget -q https://raw.githubusercontent.com/Kevin-Robertson/Inveigh/refs/heads/master/Inveigh.ps1
     cd ..
 
-    info "[19] Downloading socat windows"
+    info "[20] Downloading socat windows"
     mkdir -p socat-windows && cd socat-windows
         wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx64.exe -O socatx64.exe
         wget -q https://github.com/3ndG4me/socat/releases/download/v1.7.3.3/socatx86.exe -O socatx86.exe
     cd ..
 
-    info "[20] Downloading UACME - Akagi"
+    info "[21] Downloading UACME - Akagi"
     mkdir -p UACME-Akagi && cd UACME-Akagi
         wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi32.exe
         wget -q https://github.com/yuyudhn/UACME-bin/raw/refs/heads/main/Akagi64.exe
     cd ..
 
-    info "[21] Cloning PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
-    info "[22] Cloning Sysinternals Repository" && git clone --quiet https://github.com/davehardy20/sysinternals.git
+    info "[22] Cloning PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
+    info "[23] Cloning Sysinternals Repository" && git clone --quiet https://github.com/davehardy20/sysinternals.git
     echo "[###] WINDOWS TOOLS DOWNLOAD COMPLETE [###]"
 }
 
