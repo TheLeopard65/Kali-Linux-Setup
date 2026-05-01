@@ -142,9 +142,9 @@ lint=$(prompt_yes_no "1. Download Linux Tools/Scripts? ----------")
 wint=$(prompt_yes_no "2. Downlaod Windows Binaries/Tools? -------")
 mist=$(prompt_yes_no "3. Download Misc Tools & Scripts? ---------")
 
-if [[ "$lint" == "y" ]]; then linux_scripts fi
-if [[ "$wint" == "y" ]]; then windows_scripts fi
-if [[ "$mist" == "y" ]]; then misc_tools fi
+if [[ "$lint" == "y" ]]; then linux_scripts; fi
+if [[ "$wint" == "y" ]]; then windows_scripts; fi
+if [[ "$mist" == "y" ]]; then misc_tools; fi
 
 cd "$DIR"
 echo "[###] All selected tools downloaded to: $DIR"
