@@ -45,7 +45,7 @@ apt-get autoremove -y -qq
 # Installing the necessary requried packages for Binary Exploitation
 info "[##] Installing the Compulsory/Required Packages  -------------------- [ #2 ]"
 apt-get -qq install -y python3 python3-dev python3-venv python3-pip pipx gdb radare2 pwncat strace ltrace binutils python3-requests > /dev/null
-apt-get -qq install -y netcat-traditional ncat nmap python3-flask socat impacket-scripts plocate > /dev/null
+apt-get -qq install -y netcat-traditional ncat nmap python3-flask socat impacket-scripts plocate python3-setuptools > /dev/null
 
 # Creating a new Python3 Virtual Environment in the Home Directory.
 info "[##] Creating a Python3 Environment & Installing Libraries  ---------- [ #3 ]"
