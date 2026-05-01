@@ -31,7 +31,7 @@ DIR="$TARGET_HOME/IMP-TOOLS"
 mkdir -p "$DIR"
 
 linux_scripts() (
-    echo "[###] DOWNLOADING LINUX SCRIPTS ----------------------------------------------------------------------- ( Total Tools = 19 ) [###]"
+    echo "[###] DOWNLOADING LINUX SCRIPTS ------------------------------------------------------------------ ( Total Tools = 19 ) [###]"
     mkdir -p "$DIR/linux-scripts" && cd "$DIR/linux-scripts"
 
     info "[1] Downloading LinEnum Script" && wget -q https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh -O LinEnum.sh && chmod +x LinEnum.sh
@@ -64,7 +64,7 @@ linux_scripts() (
 )
 
 windows_scripts() (
-    echo "[###] DOWNLOADING WINDOWS SCRIPTS --------------------------------------------------------------------- ( Total Tools = 21 ) [###]"
+    echo "[###] DOWNLOADING WINDOWS SCRIPTS ---------------------------------------------------------------- ( Total Tools = 21 ) [###]"
     mkdir -p "$DIR/windows-scripts" && cd "$DIR/windows-scripts"
 
     info "[1] Downloading JAWS Script" && wget -q https://raw.githubusercontent.com/411Hall/JAWS/master/jaws-enum.ps1 -O jaws-enum.ps1
@@ -111,7 +111,7 @@ windows_scripts() (
 )
 
 misc_tools() (
-    echo "[###] DOWNLOADING MISC TOOLS --------------------------------------------------------------------------- ( Total Tools = 8 ) [###]"
+    echo "[###] DOWNLOADING MISC TOOLS ---------------------------------------------------------------------- ( Total Tools = 8 ) [###]"
     cd "$DIR"
 
     info "[1] Downloading BloodHound Docker Compose File" && wget -q https://raw.githubusercontent.com/SpecterOps/BloodHound/main/examples/docker-compose/docker-compose.yml -O docker-compose.yml
