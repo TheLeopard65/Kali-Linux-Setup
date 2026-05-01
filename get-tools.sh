@@ -32,7 +32,7 @@ cleanup=""
 
 rerun_cleanup() {
     echo "[###] REMOVING PRE-EXISTING SCRIPTS ----------------------------------------------------------------------------------- [###]"
-    rm -rf "$DIR"
+    rm -rf "$DIR" /usr/share/fuzzDicts
 
     for bin in kerbrute kr XXEinjector targetedKerberoast.py ligolo-proxy ligolo-agent; do
         rm -f "/usr/local/bin/$bin" 2>/dev/null || true
@@ -68,8 +68,6 @@ linux_scripts() (
     info "[17] Cloning Linux Kernel Exploits Repository" && git clone --quiet https://github.com/JlSakuya/Linux-Privilege-Escalation-Exploits.git
     info "[18] Cloning SUDO_KILLER Repository" && git clone --quiet https://github.com/TH3xACE/SUDO_KILLER.git
     info "[19] Cloning Rpivot Repository" && git clone --quiet https://github.com/klsecservices/rpivot.git
-
-    echo "[###] LINUX TOOLS DOWNLOAD COMPLETE [###]"
 )
 
 windows_scripts() (
@@ -116,7 +114,6 @@ windows_scripts() (
 
     info "[22] Cloning PKINITtools Repository" && git clone --quiet https://github.com/dirkjanm/PKINITtools.git
     info "[23] Cloning Sysinternals Repository" && git clone --quiet https://github.com/davehardy20/sysinternals.git
-    echo "[###] WINDOWS TOOLS DOWNLOAD COMPLETE [###]"
 )
 
 misc_tools() (
@@ -137,8 +134,6 @@ misc_tools() (
         wget -q https://raw.githubusercontent.com/nmap/nmap/refs/heads/master/nmap-protocols
         wget -q https://raw.githubusercontent.com/nmap/nmap/refs/heads/master/nmap-services
     cd ..
-
-    echo "[###] MISC TOOLS DOWNLOAD COMPLETE [###]"
 )
 
 prompt_yes_no() {

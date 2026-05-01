@@ -53,7 +53,9 @@ desk=$(prompt_yes_no "4. Customize User's XFCE4 Settings? -----")
 hdir=$(prompt_yes_no "5. Setup folders in home directory? -----")
 skey=$(prompt_yes_no "6. Generate an SSH Key pair (ed25519)? --")
 
-info "[##] Setting up a new Desktop Wallpaper ----------------------------------------------------------------------- [ MANUAL ]"
+echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
+
+info "[##] Setting up a new Desktop Wallpaper ------------------------------------------------------------------- [ MANUAL ]"
 
 apt-get install -y kali-wallpapers-2023 kali-wallpapers-2024 kali-wallpapers-2025 kali-wallpapers-community > /dev/null
 apt-get install -y kali-wallpapers-2019.4 kali-wallpapers-2020.4 kali-wallpapers-2022 > /dev/null
@@ -79,8 +81,6 @@ done
 for file in "${!local_files[@]}"; do
     [ -f "$DEST/$file" ] || cp "${local_files[$file]}" "$DEST/$file"
 done
-
-echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
 
 if [[ "$narc" == "y" ]]; then
     info "[##] Performing NANO Configurations ----------------------------------------------------------------------- [ MANUAL ]"
@@ -132,7 +132,7 @@ if [[ "$desk" == "y" ]]; then
 fi
 
 if [[ "$hdir" == "y" ]]; then
-	info "[###] Setting up the User's Home Directory ---------------------------------------------------------------- [ MANUAL ]"
+	info "[##] Setting up the User's Home Directory ----------------------------------------------------------------- [ MANUAL ]"
 	rm -rf "${TARGET_HOME}/Music" "${TARGET_HOME}/Pictures" "${TARGET_HOME}/Templates" "${TARGET_HOME}/Documents" "${TARGET_HOME}/Public" "${TARGET_HOME}/Videos"
 	mkdir -p "$TARGET_HOME"/{recon,loot,exploits,creds/hashes,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics},OpenVPN}
 	touch "$TARGET_HOME/creds/credentials.txt"
@@ -158,6 +158,7 @@ ligolo-agent.exe -connect <IP>:11601 -ignore-cert
 ### Step 5: Setup a route to the internal network
 sudo ip route add 172.168.10.0/24 dev ligolo
 EOL
+	chmod +x "$TARGET_HOME/misc/setup-ligolo.sh"
 fi
 
 if [[ "$skey" == "y" ]]; then

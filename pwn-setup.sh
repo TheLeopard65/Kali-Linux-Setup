@@ -34,17 +34,17 @@ TARGET_USER=${SUDO_USER:-$(whoami)}
 TARGET_HOME=$(eval echo "~$TARGET_USER")
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
-info "[##] Updating and Upgrading the System Packages  ------------------------------------------------------------------- [ #1 ]"
+info "[##] Updating and Upgrading the System Packages  -------------------------------------------------------------- [ #1 ]"
 apt-get update
 apt-get upgrade -y
 apt-get full-upgrade -y
 apt-get autoremove -y
 
-info "[##] Installing the Compulsory/Required Packages  ------------------------------------------------------------------ [ #2 ]"
+info "[##] Installing the Compulsory/Required Packages  ------------------------------------------------------------- [ #2 ]"
 apt-get install -y python3 python3-dev python3-venv python3-pip pipx gdb radare2 pwncat strace ltrace binutils python3-requests netcat-traditional \
 ncat nmap python3-flask socat impacket-scripts plocate python3-setuptools ruby ruby-dev rubygems
 
-info "[##] Creating a Python3 Environment & Installing Libraries  -------------------------------------------------------- [ #3 ]"
+info "[##] Creating a Python3 Environment & Installing Libraries  --------------------------------------------------- [ #3 ]"
 python3 -m venv "$TARGET_HOME/PWN-VENV"
 source "$TARGET_HOME/PWN-VENV/bin/activate"
 pip3 install pwntools pwn-flashlib ROPGadget
@@ -52,7 +52,7 @@ gem install one_gadget
 deactivate
 chown -R "$TARGET_USER:$TARGET_USER" "$TARGET_HOME/PWN-VENV"
 
-info "[##] Final Update and Upgrade to the System Packages  -------------------------------------------------------------- [ #4 ]"
+info "[##] Final Update and Upgrade to the System Packages  --------------------------------------------------------- [ #4 ]"
 apt-get update
 apt-get upgrade -y
 apt-get full-upgrade -y
@@ -60,7 +60,7 @@ apt-get autoremove -y
 updatedb
 unset DEBIAN_FRONTEND
 
-info "[##] Creating tools and Cmdlets via PIPX  -------------------------------------------------------------------------- [ #5 ]"
+info "[##] Creating tools and Cmdlets via PIPX  --------------------------------------------------------------------- [ #5 ]"
 
 for pkg in pwntools ROPGadget impacket; do
     sudo -u "$TARGET_USER" HOME="$TARGET_HOME" pipx install "$pkg" --include-deps
