@@ -28,7 +28,16 @@ echo -e "${GREEN}[###] ---------------------------------------------------------
 TARGET_USER="${SUDO_USER:-$USER}"
 TARGET_HOME="$(eval echo "~$TARGET_USER")"
 DIR="$TARGET_HOME/IMP-TOOLS"
-mkdir -p "$DIR"
+cleanup=""
+
+rerun_cleanup() {
+    echo "[###] REMOVING PRE-EXISTING SCRIPTS ----------------------------------------------------------------------------------- [###]"
+    rm -rf "$DIR"
+
+    for bin in kerbrute kr XXEinjector targetedKerberoast.py ligolo-proxy ligolo-agent; do
+        rm -f "/usr/local/bin/$bin" 2>/dev/null || true
+    done
+}
 
 linux_scripts() (
     echo "[###] DOWNLOADING LINUX SCRIPTS ------------------------------------------------------------------ ( Total Tools = 19 ) [###]"
@@ -74,7 +83,7 @@ windows_scripts() (
     info "[5] Downloading dnscat2.ps1" && wget -q https://raw.githubusercontent.com/lukebaggett/dnscat2-powershell/refs/heads/master/dnscat2.ps1 -O dnscat2.ps1
     info "[6] Downloading DomainPasswordSpray" && wget -q https://raw.githubusercontent.com/dafthack/DomainPasswordSpray/refs/heads/master/DomainPasswordSpray.ps1 -O DomainPasswordSpray.ps1
     info "[7] Downloading Invoke-DOSfuscation" && wget -q https://raw.githubusercontent.com/danielbohannon/Invoke-DOSfuscation/refs/heads/master/Invoke-DOSfuscation.psd1 -O Invoke-DOSfuscation.psd1
-    info "[8] Downloading TargetedKerberoast.py" && wget -q https://raw.githubusercontent.com/ShutdownRepo/targetedKerberoast/refs/heads/main/targetedKerberoast.py -O targetedKerberoast.py && ln -s "$DIR/windows-scripts/targetedKerberoast.py" /usr/local/bin/targetedKerberoast.py
+    info "[8] Downloading TargetedKerberoast.py" && wget -q https://raw.githubusercontent.com/ShutdownRepo/targetedKerberoast/refs/heads/main/targetedKerberoast.py -O targetedKerberoast.py && ln -sf "$DIR/windows-scripts/targetedKerberoast.py" /usr/local/bin/targetedKerberoast.py
     info "[9] Downloading LaZagne.exe" && wget -q https://github.com/AlessandroZ/LaZagne/releases/download/v2.4.7/LaZagne.exe -O LaZagne.exe
     info "[10] Downloading Snaffler.exe" && wget -q https://github.com/SnaffCon/Snaffler/releases/download/1.0.244/Snaffler.exe -O Snaffler.exe
     info "[11] Downloading Rpivot Client" && wget -q https://github.com/klsecservices/rpivot/releases/download/v1.0/client.exe -O rpivot-client.exe
@@ -141,6 +150,15 @@ prompt_yes_no() {
 lint=$(prompt_yes_no "1. Download Linux Tools/Scripts? ----------")
 wint=$(prompt_yes_no "2. Downlaod Windows Binaries/Tools? -------")
 mist=$(prompt_yes_no "3. Download Misc Tools & Scripts? ---------")
+
+if [[ -d "$DIR" ]]; then
+    cleanup=$(prompt_yes_no "Directory exists. Delete and reinstall from scratch?")
+    if [[ "$cleanup" == "y" ]]; then
+        rerun_cleanup
+    fi
+fi
+
+mkdir -p "$DIR"
 
 if [[ "$lint" == "y" ]]; then linux_scripts; fi
 if [[ "$wint" == "y" ]]; then windows_scripts; fi

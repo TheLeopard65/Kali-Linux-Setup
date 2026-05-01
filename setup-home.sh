@@ -14,6 +14,11 @@ warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 error() { echo -e "${RED}[ERROR]${NC} $1"; }
 success() { echo -e "${GREEN}[ OK ]${NC} $1"; }
 
+if [[ "$(id -u)" -ne 0 ]]; then
+    error "Please run this script using ROOT or SUDO. (For example: 'sudo $0')!"
+    exit 1
+fi
+
 if ! command -v figlet &> /dev/null; then
   apt-get -qq update || true
   apt-get -qq install -y figlet || true
@@ -26,7 +31,7 @@ echo -e "${GREEN}[###] ---------------------------------------------------------
 export DEBIAN_FRONTEND=noninteractive
 echo '* libraries/restart-without-asking boolean true' | debconf-set-selections
 
-TARGET_USER=${USER:-$(whoami)}
+TARGET_USER=${SUDO_USER:-$(whoami)}
 TARGET_HOME=$(eval echo "~$TARGET_USER")
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
@@ -48,7 +53,7 @@ desk=$(prompt_yes_no "4. Customize User's XFCE4 Settings? -----")
 hdir=$(prompt_yes_no "5. Setup folders in home directory? -----")
 skey=$(prompt_yes_no "6. Generate an SSH Key pair (ed25519)? --")
 
-info "[##] Setting up a new Desktop Wallpaper ------------------------------------------------------------------------ [ MANUAL ]"
+info "[##] Setting up a new Desktop Wallpaper ----------------------------------------------------------------------- [ MANUAL ]"
 
 apt-get install -y kali-wallpapers-2023 kali-wallpapers-2024 kali-wallpapers-2025 kali-wallpapers-community > /dev/null
 apt-get install -y kali-wallpapers-2019.4 kali-wallpapers-2020.4 kali-wallpapers-2022 > /dev/null
@@ -78,9 +83,11 @@ done
 echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
 
 if [[ "$narc" == "y" ]]; then
-    info "[##] Performing NANO Configurations ---------------------------------------------------------------------------- [ MANUAL ]"
+    info "[##] Performing NANO Configurations ----------------------------------------------------------------------- [ MANUAL ]"
     if [[ -f ./resources/nanorc ]]; then
     	cp ./resources/nanorc "$TARGET_HOME/.nanorc"
+    	cp ./resources/nanorc "/etc/nanorc.bak"
+    	cp ./resources/nanorc "/etc/nanorc"
     else
         warn "[!!!] nanorc file not found, skipping copy."
     fi
@@ -92,9 +99,10 @@ if [[ "$narc" == "y" ]]; then
 fi
 
 if [[ "$barc" == "y" ]]; then
-    info "[##] Performing BASH Configurations ---------------------------------------------------------------------------- [ MANUAL ]"
+    info "[##] Performing BASH Configurations ----------------------------------------------------------------------- [ MANUAL ]"
     if [[ -f ./resources/bashrc ]]; then
     	cp "$SCRIPT_DIR/resources/bashrc" "$TARGET_HOME/.bashrc"
+    	cp "$SCRIPT_DIR/resources/bashrc" "/root/.bashrc"
     	warn "[#] Manual action needed: Please run 'source ~/.bashrc' after this script."
     else
         warn "[!!!] bashrc file not found in current directory, skipping copy."
@@ -102,9 +110,10 @@ if [[ "$barc" == "y" ]]; then
 fi
 
 if [[ "$zshc" == "y" ]]; then
-    info "[##] Performing ZSH Configurations ----------------------------------------------------------------------------- [ MANUAL ]"
+    info "[##] Performing ZSH Configurations ------------------------------------------------------------------------ [ MANUAL ]"
     if [[ -f ./resources/zshrc ]]; then
     	cp "$SCRIPT_DIR/resources/zshrc" "$TARGET_HOME/.zshrc"
+    	cp "$SCRIPT_DIR/resources/zshrc" "/root/.zshrc"
         warn "[#] Manual action needed: Please run 'source ~/.zshrc' after this script."
     else
         warn "[!!!] zshrc file not found in current directory, skipping copy."
@@ -112,23 +121,23 @@ if [[ "$zshc" == "y" ]]; then
 fi
 
 if [[ "$desk" == "y" ]]; then
-    info "[##] Performing XFCE Customizations ---------------------------------------------------------------------------- [ MANUAL ]"
+    info "[##] Performing XFCE Customizations ----------------------------------------------------------------------- [ MANUAL ]"
     if [[ -d "./resources/.config" || -d "./resources/.local" ]]; then
-        rm -rf "${TARGET_HOME}/.config" "${TARGET_HOME}/.local"
-        cp -rpa ./resources/.config "${TARGET_HOME}/"
-        cp -rpa ./resources/.local "${TARGET_HOME}/"
+    	mkdir -p "${TARGET_HOME}/.config" "${TARGET_HOME}/.local"
+		cp -rpa ./resources/.config/. "${TARGET_HOME}/.config/"
+		cp -rpa ./resources/.local/.  "${TARGET_HOME}/.local/"
     else
         warn "[!!!] Relevent directories not found in current directory, skipping copy."
     fi
 fi
 
 if [[ "$hdir" == "y" ]]; then
-	info "[###] Setting up the User's Home Directory --------------------------------------------------------------------- [ MANUAL ]"
+	info "[###] Setting up the User's Home Directory ---------------------------------------------------------------- [ MANUAL ]"
 	rm -rf "${TARGET_HOME}/Music" "${TARGET_HOME}/Pictures" "${TARGET_HOME}/Templates" "${TARGET_HOME}/Documents" "${TARGET_HOME}/Public" "${TARGET_HOME}/Videos"
 	mkdir -p "$TARGET_HOME"/{recon,loot,exploits,creds/hashes,tools,misc,CTF/{rev,pwn,web,misc,crypto,forensics},OpenVPN}
 	touch "$TARGET_HOME/creds/credentials.txt"
 	touch "$TARGET_HOME/misc/setup-ligolo.sh"
-	cat <<'EOL' >> "$TARGET_HOME/misc/setup-ligolo.sh"
+	cat <<'EOL' > "$TARGET_HOME/misc/setup-ligolo.sh"
 
 ## Here are the commands to setup and use Ligolo-NG Tunneling
 
@@ -149,13 +158,15 @@ ligolo-agent.exe -connect <IP>:11601 -ignore-cert
 ### Step 5: Setup a route to the internal network
 sudo ip route add 172.168.10.0/24 dev ligolo
 EOL
-
-	sudo chown -R $TARGET_USER:$TARGET_USER /home/$TARGET_USER/{recon,loot,exploits,tools,misc,creds,CTF,OpenVPN,.config}
 fi
 
 if [[ "$skey" == "y" ]]; then
-	ssh-keygen -t ed25519 -f "$TARGET_HOME/creds/ssh-key" -N "" -q -C "kali@kali.org"
-	chown -R "$TARGET_USER:$TARGET_USER" "$TARGET_HOME/creds/ssh-key" "$TARGET_HOME/creds/ssh-key.pub"
+	if [[ ! -f "$TARGET_HOME/creds/ssh-key" ]]; then
+	    ssh-keygen -t ed25519 -f "$TARGET_HOME/creds/ssh-key" -N "" -q -C "kali@kali.org"
+		chown -R "$TARGET_USER:$TARGET_USER" "$TARGET_HOME/creds/ssh-key" "$TARGET_HOME/creds/ssh-key.pub"
+	else
+	    warn "SSH key already exists, skipping generation."
+	fi
 fi
 
 if [[ "$barc" == "y" ]]; then
@@ -165,7 +176,7 @@ if [[ "$zshc" == "y" ]]; then
 	echo -e "${YELLOW}[###] Restart your terminal or run 'source ~/.zshrc' to apply all changes.${NC}"
 fi
 
-chown -R "$TARGET_USER:$TARGET_USER" "$TARGET_HOME"
+chown -R "$TARGET_USER:$TARGET_USER" "$TARGET_HOME"/{recon,loot,exploits,tools,misc,creds,CTF,OpenVPN,.config}
 
 echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
 echo -e "${GREEN}[###] Kali-Linux Pentester's Home Directory Setup is finally complete!${NC}"

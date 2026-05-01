@@ -9,8 +9,8 @@ RED="\033[0;31m"
 BLUE="\033[0;34m"
 NC="\033[0m"
 
-if [ $(whoami) != "root" ]; then
-    echo "SYNTAX: PLEASE RUN THIS SCRIPT WITH ROOT/SUDO PRIVILEGES !!"
+if [[ "$(id -u)" -ne 0 ]]; then
+    error "Please run this script using ROOT or SUDO. (For example: 'sudo $0')!"
     exit 1
 fi
 

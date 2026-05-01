@@ -18,7 +18,6 @@ echo -e "${GREEN}[###] ---------------------------------------------------------
 figlet "PENTESTER'S KALI - LINUX" || echo -e "${YELLOW}(Install 'figlet' to see ASCII banners)${NC}"
 echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
 
-info "Checking for root privileges..."
 if [[ "$(id -u)" -ne 0 ]]; then
     error "Please run this script using ROOT or SUDO (e.g., 'sudo $0')!"
     exit 1
