@@ -50,16 +50,17 @@ prompt_yes_no() {
     echo "${reply,,}"
 }
 
-pipt=$(prompt_yes_no "1. Install pip3 & pipx tools? -------")
-pyp2=$(prompt_yes_no "2. Install Python2 & pip2 tools? ----")
-penv=$(prompt_yes_no "3. Install Older Python3 Versions? --")
-snpd=$(prompt_yes_no "4. Install Snapd & Snap packages? ---")
-narc=$(prompt_yes_no "5. Modify nanorc for easier usage? --")
-zshc=$(prompt_yes_no "6. Modify .zshrc for better UX? -----")
-barc=$(prompt_yes_no "7. Modify .bashrc for better UX? ----")
-gitx=$(prompt_yes_no "8. Add global Git configurations? ---")
-desk=$(prompt_yes_no "9. Customize User's XFCE4 Settings? -")
-udir=$(prompt_yes_no "10. Setup user Home Dir structure? --")
+pipt=$(prompt_yes_no "1. Install pip3 & pipx tools? ----------")
+pyp2=$(prompt_yes_no "2. Install Python2 & pip2 tools? -------")
+penv=$(prompt_yes_no "3. Install Older Python3 Versions? -----")
+snpd=$(prompt_yes_no "4. Install Snapd & Snap packages? ------")
+narc=$(prompt_yes_no "5. Modify nanorc for easier usage? -----")
+udir=$(prompt_yes_no "6. Setup user Home Dir structure? ------")
+zshc=$(prompt_yes_no "7. Modify .zshrc for better UX? --------")
+barc=$(prompt_yes_no "8. Modify .bashrc for better UX? -------")
+gitx=$(prompt_yes_no "9. Add global Git configurations? ------")
+desk=$(prompt_yes_no "10. Customize User's XFCE4 Settings? ---")
+w32s=$(prompt_yes_no "11. Enable support for Wine32 (I386)? --")
 echo -e "${GREEN}[###] ------------------------------------------------------------------------ [###]${NC}"
 
 # ------------------------------------- SYSTEM UPDATES ------------------------
@@ -192,7 +193,11 @@ fi
 # ------------------------------------- DOCKER & WINE32 CONFIG ----------------
 
 usermod -aG docker "$TARGET_USER"
-dpkg --add-architecture i386 && apt-get -qq update && apt-get -qq install -y wine32
+if [[ "$w32s" == "y" ]]; then
+    dpkg --add-architecture i386
+    apt-get update
+    apt-get install -y wine32
+fi
 
 # ------------------------------------- GLOBAL GIT CONFIG ---------------------
 
@@ -267,6 +272,11 @@ apt-get -qq full-upgrade -y
 apt-get -qq autoremove -y
 updatedb
 unset DEBIAN_FRONTEND
+
+info "[###] Deactivating the automatic Time Setup via Host-Time -------- [ MANUAL ]"
+
+/etc/init.d/virtualbox-guest-utils stop
+systemctl stop systemd-timesyncd
 
 # ------------------------------------- COMPLETION ----------------------------
 
