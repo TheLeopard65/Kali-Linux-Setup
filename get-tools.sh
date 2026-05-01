@@ -31,7 +31,7 @@ DIR="$TARGET_HOME/IMP-TOOLS"
 mkdir -p "$DIR"
 
 linux_scripts() (
-    echo "[###] DOWNLOADING LINUX SCRIPTS ------------------------------------------------------------- ( Total Tools = 19 ) [###]"
+    echo "[###] DOWNLOADING LINUX SCRIPTS ----------------------------------------------------------------------- ( Total Tools = 19 ) [###]"
     mkdir -p "$DIR/linux-scripts" && cd "$DIR/linux-scripts"
 
     info "[1] Downloading LinEnum Script" && wget -q https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh -O LinEnum.sh && chmod +x LinEnum.sh
@@ -64,7 +64,7 @@ linux_scripts() (
 )
 
 windows_scripts() (
-    echo "[###] DOWNLOADING WINDOWS SCRIPTS ----------------------------------------------------------- ( Total Tools = 21 ) [###]"
+    echo "[###] DOWNLOADING WINDOWS SCRIPTS --------------------------------------------------------------------- ( Total Tools = 21 ) [###]"
     mkdir -p "$DIR/windows-scripts" && cd "$DIR/windows-scripts"
 
     info "[1] Downloading JAWS Script" && wget -q https://raw.githubusercontent.com/411Hall/JAWS/master/jaws-enum.ps1 -O jaws-enum.ps1
@@ -88,8 +88,8 @@ windows_scripts() (
 
     info "[19] Downloading Inveigh Tools"
     mkdir -p inveigh-tools && cd inveigh-tools
-        wget -q https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.12/Inveigh-net8.0-win-x64-trimmed-single-v2.0.12.zip -O Inveigh-Net8-Win-2.0.12.zip
-        unzip -qq Inveigh-Net8-Win-2.0.12.zip && rm -f Inveigh.pdb Inveigh-Net8-Win-2.0.12.zip
+        wget -q https://github.com/Kevin-Robertson/Inveigh/releases/download/v2.0.12/Inveigh-net10.0-v2.0.12.zip -O Inveigh-net10.0-v2.0.12.zip
+        unzip -qq Inveigh-net10.0-v2.0.12.zip && rm -f Inveigh.pdb Inveigh-net10.0-v2.0.12.zip
         wget -q https://raw.githubusercontent.com/Kevin-Robertson/Inveigh/refs/heads/master/Inveigh.ps1
     cd ..
 
@@ -111,7 +111,7 @@ windows_scripts() (
 )
 
 misc_tools() (
-    echo "[###] DOWNLOADING MISC TOOLS ----------------------------------------------------------------- ( Total Tools = 8 ) [###]"
+    echo "[###] DOWNLOADING MISC TOOLS --------------------------------------------------------------------------- ( Total Tools = 8 ) [###]"
     cd "$DIR"
 
     info "[1] Downloading BloodHound Docker Compose File" && wget -q https://raw.githubusercontent.com/SpecterOps/BloodHound/main/examples/docker-compose/docker-compose.yml -O docker-compose.yml
@@ -132,21 +132,19 @@ misc_tools() (
     echo "[###] MISC TOOLS DOWNLOAD COMPLETE [###]"
 )
 
-run_choice() {
-    read -p "[#] Run Linux tools? (Y/N) [default: Y]: " a
-    a=${a:-Y}
-    [[ "${a,,}" == "y" || "${a,,}" == "yes" ]] && linux_scripts
-
-    read -p "[#] Run Windows tools? (Y/N) [default: Y]: " b
-    b=${b:-Y}
-    [[ "${b,,}" == "y" || "${b,,}" == "yes" ]] && windows_scripts
-
-    read -p "[#] Run Misc tools? (Y/N) [default: N]: " c
-    c=${c:-N}
-    [[ "${c,,}" == "y" || "${c,,}" == "yes" ]] && misc_tools
+prompt_yes_no() {
+    read -p "[#] $1 (Y/N) [default: N]: " reply
+    reply=${reply:-N}
+    echo "${reply,,}"
 }
 
-run_choice
+lint=$(prompt_yes_no "1. Download Linux Tools/Scripts? ----------")
+wint=$(prompt_yes_no "2. Downlaod Windows Binaries/Tools? -------")
+mist=$(prompt_yes_no "3. Download Misc Tools & Scripts? ---------")
+
+if [[ "$lint" == "y" ]]; then linux_scripts fi
+if [[ "$wint" == "y" ]]; then windows_scripts fi
+if [[ "$mist" == "y" ]]; then misc_tools fi
 
 cd "$DIR"
 echo "[###] All selected tools downloaded to: $DIR"

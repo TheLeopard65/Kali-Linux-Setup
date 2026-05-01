@@ -1,7 +1,7 @@
 #!/bin/bash
 #Author: TheLeopard65
 
-set -eo pipefail
+set -euo pipefail
 
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
