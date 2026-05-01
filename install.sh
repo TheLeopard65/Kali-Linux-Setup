@@ -72,8 +72,8 @@ apt-get -qq update && apt-get -qq upgrade -y
 info "[##] Installing Compulsory/Required Tools -------------------- [ TOOLS = 38 ]"
 apt-get -qq install -y wget curl whois openvpn wordlists seclists webshells exploitdb dpkg netcat-traditional ncat plocate git libffi-dev > /dev/null
 apt-get -qq install -y metasploit-framework powershell git-lfs build-essential firefox-esr docker.io docker-compose torbrowser-launcher > /dev/null
-apt-get -qq install -y coreutils uuid ntpsec-ntpdate axel xclip openssl flameshot dkms linux-headers-$(uname -r) screenfetch tor eog > /dev/null
-apt-get -qq install -y  snapd git-all libssl-dev net-tools mono-complete mono-devel linux-headers-virtual > /dev/null
+apt-get -qq install -y coreutils uuid ntpsec-ntpdate axel xclip openssl flameshot dkms linux-headers-amd64 screenfetch tor eog git-all > /dev/null
+apt-get -qq install -y snapd libssl-dev net-tools mono-complete mono-devel > /dev/null
 
 info "[##] Installing Service-Specific Tools ----------------------- [ TOOLS = 27 ]"
 apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat > /dev/null
