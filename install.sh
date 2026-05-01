@@ -1,37 +1,30 @@
 #!/bin/bash
 #Author: TheLeopard65
 
-# ------------------------------------- COLORS --------------------------------
-
 set -eo pipefail
+
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
 RED="\033[0;31m"
 BLUE="\033[0;34m"
 NC="\033[0m" # No Color
 
-# ------------------------------------- INFO LEVELS ---------------------------
-
 info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 error() { echo -e "${RED}[ERROR]${NC} $1"; }
 success() { echo -e "${GREEN}[ OK ]${NC} $1"; }
 
-# ------------------------------------- HEADER/TITLE --------------------------
-
 if ! command -v figlet &> /dev/null; then
-  apt-get -qq install -y figlet
+	apt-get update || true
+	apt-get -qq install -y figlet &>/dev/null
 fi
 
-clear
-echo -e "${GREEN}[###] STARTING THE PENTESTER'S KALI LINUX INSTALL SCRIPT [###]${NC}"
+echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
 figlet "PENTESTER'S KALI - LINUX" || echo -e "${YELLOW}(Install 'figlet' to see ASCII banners)${NC}"
-echo -e "${GREEN}[###] ------------------------------------------------------------------------ [###]${NC}"
+echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
 
 export DEBIAN_FRONTEND=noninteractive
 echo '* libraries/restart-without-asking boolean true' | debconf-set-selections
-
-# ------------------------------------- PRIVILEGE CHECK -----------------------
 
 if [[ "$(id -u)" -ne 0 ]]; then
     error "Please run this script using ROOT or SUDO. (For example: 'sudo $0')!"
@@ -41,8 +34,6 @@ fi
 TARGET_USER=${SUDO_USER:-$(whoami)}
 TARGET_HOME=$(eval echo "~$TARGET_USER")
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
-
-# ------------------------------------- USER PROMPTS --------------------------
 
 prompt_yes_no() {
     read -p "[#] $1 (Y/N) [default: N]: " reply
@@ -54,155 +45,130 @@ pipt=$(prompt_yes_no "1. Install pip3 & pipx tools? ----------")
 pyp2=$(prompt_yes_no "2. Install Python2 & pip2 tools? -------")
 penv=$(prompt_yes_no "3. Install Older Python3 Versions? -----")
 snpd=$(prompt_yes_no "4. Install Snapd & Snap packages? ------")
-narc=$(prompt_yes_no "5. Modify nanorc for easier usage? -----")
-udir=$(prompt_yes_no "6. Setup user Home Dir structure? ------")
-zshc=$(prompt_yes_no "7. Modify .zshrc for better UX? --------")
-barc=$(prompt_yes_no "8. Modify .bashrc for better UX? -------")
-gitx=$(prompt_yes_no "9. Add global Git configurations? ------")
-desk=$(prompt_yes_no "10. Customize User's XFCE4 Settings? ---")
-w32s=$(prompt_yes_no "11. Enable support for Wine32 (I386)? --")
-echo -e "${GREEN}[###] ------------------------------------------------------------------------ [###]${NC}"
+gitx=$(prompt_yes_no "5. Add global Git configurations? ------")
+w32s=$(prompt_yes_no "6. Enable support for Wine32 (I386)? ---")
+echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
 
-# ------------------------------------- SYSTEM UPDATES ------------------------
+apt-get update
+apt-get upgrade -y
+apt-get full-upgrade -y
 
-info "[###] Updating & upgrading system..."
-apt-get -qq update && apt-get -qq upgrade -y
+info "[##] Installing Compulsory/Required Tools ------------------------------------------------------------------ [ TOOLS = 38 ]"
+apt-get install -y wget curl whois openvpn wordlists seclists webshells exploitdb dpkg netcat-traditional ncat plocate git libffi-dev powershell eog \
+metasploit-framework git-lfs build-essential firefox-esr docker.io docker-compose torbrowser-launcher ntpsec-ntpdate net-tools coreutils uuid axel \
+xclip openssl flameshot dkms linux-headers-amd64 screenfetch tor git-all python3-setuptools snapd mono-devel libssl-dev mono-complete
 
-# ------------------------------------- TOOLS INSTALLATION --------------------
+info "[##] Installing Service-Specific Tools --------------------------------------------------------------------- [ TOOLS = 27 ]"
+apt-get install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat smbmap redis \
+sqlmap onesixtyone nbtscan snmp snmpcheck samba samba-common-bin rpcbind kubectl mdbtools mongodb-clients ansible smtp-user-enum xtightvncviewer
 
-info "[##] Installing Compulsory/Required Tools -------------------- [ TOOLS = 38 ]"
-apt-get -qq install -y wget curl whois openvpn wordlists seclists webshells exploitdb dpkg netcat-traditional ncat plocate git libffi-dev > /dev/null
-apt-get -qq install -y metasploit-framework powershell git-lfs build-essential firefox-esr docker.io docker-compose torbrowser-launcher > /dev/null
-apt-get -qq install -y coreutils uuid ntpsec-ntpdate axel xclip openssl flameshot dkms linux-headers-amd64 screenfetch tor eog git-all > /dev/null
-apt-get -qq install -y snapd libssl-dev net-tools mono-complete mono-devel python3-setuptools > /dev/null
+info "[##] Installing Miscellaneous Tools ------------------------------------------------------------------------ [ TOOLS = 27 ]"
+apt-get install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish xxd \
+autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils gemini-cli clamav-freshclam clamav jq xq gitleaks
 
-info "[##] Installing Service-Specific Tools ----------------------- [ TOOLS = 27 ]"
-apt-get -qq install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat > /dev/null
-apt-get -qq install -y sqlmap onesixtyone nbtscan snmp snmpcheck samba samba-common-bin rpcbind kubectl mdbtools mongodb-clients ansible > /dev/null
-apt-get -qq install -q smbmap redis smtp-user-enum xtightvncviewer > /dev/null
+info "[##] Installing Web Application Scanners ------------------------------------------------------------------- [ TOOLS = 22 ]"
+apt-get install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner greenbone-feed-sync davtest sslyze nikto \
+xsser burpsuite beef zaproxy shellfire evilginx2 cadaver wfuzz dirb
 
-info "[##] Installing Miscellaneous Tools -------------------------- [ TOOLS = 27 ]"
-apt-get -qq install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter > /dev/null
-apt-get -qq install -y autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils gemini-cli clamav-freshclam clamav jq xq > /dev/null
-apt-get -qq install -y gophish xxd gitleaks > /dev/null
+info "[##] Installing Active Directory Tools --------------------------------------------------------------------- [ TOOLS = 20 ]"
+apt-get install -y bloodhound bloodhound.py certipy-ad responder ldap-utils lapsdumper gpp-decrypt bloodyad bloodhound-ce-python rubeus nishang \
+krb5-user windows-binaries mimikatz powersploit laudanum netexec crackmapexec impacket-scripts peass
 
-info "[##] Installing Web Application Scanners --------------------- [ TOOLS = 22 ]"
-apt-get -qq install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner greenbone-feed-sync davtest > /dev/null
-apt-get -qq install -y xsser burpsuite beef zaproxy shellfire dirb evilginx2 cadaver wfuzz nikto sslyze > /dev/null
+info "[##] Installing Port & Network Scanners -------------------------------------------------------------------- [ TOOLS = 18 ]"
+apt-get install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe fping eyewitness elk-lapw wireshark tshark \
+sniffglue tcpdump
 
-info "[##] Installing Active Directory Tools ----------------------- [ TOOLS = 20 ]"
-apt-get -qq install -y bloodhound bloodhound.py certipy-ad responder ldap-utils lapsdumper gpp-decrypt bloodyad bloodhound-ce-python > /dev/null
-apt-get -qq install -y krb5-user windows-binaries mimikatz rubeus nishang powersploit laudanum peass netexec crackmapexec impacket-scripts > /dev/null
+info "[##] Installing Language & Support Tools ------------------------------------------------------------------- [ TOOLS = 17 ]"
+apt-get install -y python3 python3-dev python3-pip pipx npm nodejs postgresql libwine openjdk-11-jdk golang golang-go scapy php ruby rsync
 
-info "[##] Installing Port & Network Scanners ---------------------- [ TOOLS = 18 ]"
-apt-get -qq install -y nmap masscan unicornscan amass dnsenum dnsrecon netdiscover hping3 rizin sslh httprobe fping eyewitness elk-lapw > /dev/null
-apt-get -qq install -y wireshark tshark sniffglue tcpdump > /dev/null
+info "[##] Installing Binary Exploitation Tools ------------------------------------------------------------------ [ TOOLS = 14 ]"
+apt-get install -y checksec ghidra pwncat radare2 gdb ltrace strace ollydbg binutils libc-bin jadx apktool adb poppler-utils
 
-info "[##] Installing Language & Support Tools --------------------- [ TOOLS = 17 ]"
-apt-get -qq install -y python3 python3-dev python3-pip pipx npm nodejs postgresql libwine openjdk-11-jdk golang golang-go scapy php ruby > /dev/null
-apt-get -qq install -y php rsync bash-completion > /dev/null
+info "[##] Installing Password & Secrets Tools ------------------------------------------------------------------- [ TOOLS = 11 ]"
+apt-get install -y hashid john hashcat hydra medusa cewl cupp passwordsafe trufflehog trivy pacu
 
-info "[##] Installing Binary Exploitation Tools -------------------- [ TOOLS = 14 ]"
-apt-get -qq install -y checksec ghidra pwncat radare2 gdb ltrace strace ollydbg binutils libc-bin jadx apktool adb poppler-utils > /dev/null
+info "[##] Installing Pivoting & Tunneling Tools ------------------------------------------------------------------ [ TOOLS = 8 ]"
+apt-get install -y chisel ligolo-ng socat dnscat2 ptunnel sshuttle proxychains sshpass
 
-info "[##] Installing Password & Secrets Tools --------------------- [ TOOLS = 11 ]"
-apt-get -qq install -y hashid john hashcat hydra medusa cewl cupp passwordsafe trufflehog trivy pacu > /dev/null
+info "[##] Installing Reconnaissance & Wireless Pentest Tools ----------------------------------------------------- [ TOOLS = 8 ]"
+apt-get install -y recon-ng sherlock theharvester linkedin2username aircrack-ng reaver wifite kismet-core
 
-info "[##] Installing Pivoting & Tunneling Tools -------------------- [ TOOLS = 8 ]"
-apt-get -qq install -y chisel ligolo-ng socat dnscat2 ptunnel sshuttle proxychains sshpass > /dev/null
+echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
 
-info "[##] Installing Reconnaissance & Wireless Pentest Tools ------- [ TOOLS = 8 ]"
-apt-get -qq install -y recon-ng sherlock theharvester linkedin2username aircrack-ng reaver wifite kismet-core > /dev/null
+info "[##] Installing Web, App & API Python3 Libraries ----------------------------------------------------------- [ TOOLS = 12 ]"
+apt-get install -y python3-flask python3-flask-socketio python3-flask-restful python3-bs4 python3-lxml python3-yaml python3-requests python3-pynput \
+python3-pyqt5 python3-tk python3-pyautogui python3-selenium
 
-# ------------------------------------- PYTHON3 LIBRARIES ---------------------
+info "[##] Installing Networking Python3 Libraries --------------------------------------------------------------- [ TOOLS = 12 ]"
+apt-get install -y python3-paramiko python3-socketio python3-nmap python3-scapy python3-shodan python3-impacket python3-cryptography python3-requests \
+python3-pycryptodome python3-ldap python3-corepywrap python3-bcrypt
 
-echo -e "${GREEN}[###] ------------------------------------------------------------------------ [###]${NC}"
-info "[##] Installing Web, App & API Python3 Libraries ------------- [ TOOLS = 12 ]"
-apt-get -qq install -y python3-flask python3-flask-socketio python3-flask-restful python3-bs4 python3-lxml python3-yaml python3-requests > /dev/null
-apt-get -qq install -y python3-pyqt5 python3-tk python3-pynput python3-pyautogui python3-selenium > /dev/null
+info "[##] Installing Miscellaneous Python3 Libraries ------------------------------------------------------------- [ TOOLS = 8 ]"
+apt-get install -y python3-pwntools python3-ropgadget python3-geopy python3-colormap python3-termcolor python3-pil python3-pyftpdlib python3-capstone
 
-info "[##] Installing Networking Python3 Libraries ----------------- [ TOOLS = 12 ]"
-apt-get -qq install -y python3-paramiko python3-socketio python3-nmap python3-scapy python3-shodan python3-impacket python3-cryptography > /dev/null
-apt-get -qq install -y python3-pycryptodome python3-ldap python3-corepywrap python3-requests python3-bcrypt > /dev/null
-
-info "[##] Installing Miscellaneous Python3 Libraries --------------- [ TOOLS = 8 ]"
-apt-get -qq install -y python3-pwntools python3-ropgadget python3-geopy python3-colormap python3-termcolor python3-pil python3-pyftpdlib > /dev/null
-apt-get -qq install -y python3-capstone > /dev/null
-
-info "[##] Installing AI/ML Python3 Libraries ----------------------- [ TOOLS = 7 ]"
-apt-get -qq install -y python3-numpy python3-pandas python3-matplotlib python3-opencv python3-soundfile python3-pydantic python3-sqlalchemy > /dev/null
-
-# ------------------------------------- PIPX TOOLS ----------------------------
+info "[##] Installing AI/ML Python3 Libraries --------------------------------------------------------------------- [ TOOLS = 7 ]"
+apt-get install -y python3-numpy python3-pandas python3-matplotlib python3-opencv python3-soundfile python3-pydantic python3-sqlalchemy
 
 if [[ "$pipt" == "y" ]]; then
-	info "[##] Installing Important PIPX Tools ------------------------- [ TOOLS = 23 ]"
-	pipx install --quiet websocket-client pwnedpasswords geocoder ipython impacket tqdm pytesseract pytest pyinstaller ropgadget pypykatz > /dev/null
-	pipx install --quiet defaultcreds-cheat-sheet kerbrute pywhisker droopescan uploadserver wsgidav cheroot xsstrike wesng bloodhound > /dev/null
-	pipx install --quiet pwntools flask shell-gpt > /dev/null
-	pipx ensurepath > /dev/null
+	info "[##] Installing Important PIPX Tools ----------------------------------------------------------------------- [ TOOLS = 23 ]"
+	for pkg in websocket-client pwnedpasswords geocoder ipython impacket tqdm pytesseract pytest pyinstaller ropgadget pypykatz cheroot wesng defaultcreds-cheat-sheet kerbrute pywhisker droopescan uploadserver wsgidav xsstrike bloodhound pwntools flask shell-gpt; do
+		pipx install --quiet "$pkg"
+	done
+	pipx ensurepath
 fi
-
-# ------------------------------------- OLD PYTHON ----------------------------
 
 if [[ "$pyp2" == "y" ]]; then
-	info "[##] Installing Python2 & its Libraries ----------------------- [ TOOLS = 3 ]"
-	apt-get -qq install -y python2 python2-dev python2-minimal > /dev/null
-	curl -s https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip2.py && python2 get-pip2.py > /dev/null
+	info "[##] Installing Python2 & its Libraries --------------------------------------------------------------------- [ TOOLS = 3 ]"
+	apt-get install -y python2 python2-dev python2-minimal
+	curl -s https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip2.py && python2 get-pip2.py
 fi
 
-
 if [[ "$penv" == "y" ]]; then
-    info "[##] Installing Older versions of Python3 --------------------- [ TOOLS = 1 ]"
-    apt-get -qq install -y pyenv > /dev/null
-    TARGET_USER="${SUDO_USER:-$(logname)}"
-    TARGET_HOME=$(eval echo "~$TARGET_USER")
+    info "[##] Installing Older versions of Python3 ------------------------------------------------------------------- [ TOOLS = 1 ]"
+    apt-get install -y pyenv
+    PYENV_USER="${SUDO_USER:-$(logname)}"
+    PYENV_HOME=$(eval echo "~$PYENV_USER")
     PY_VERSIONS=( "3.11.11" "3.10.16" "3.8.20" )
-    info "[##] Installing pyenv python builds into ${TARGET_USER}'s home: ${TARGET_HOME}/.pyenv"
+    info "[##] Installing pyenv python builds into ${PYENV_USER}'s home: ${PYENV_HOME}/.pyenv"
     run_as_target() {
-        sudo -u "$TARGET_USER" -H bash -lc "export HOME='$TARGET_HOME'; export PYENV_ROOT=\"\$HOME/.pyenv\"; export PATH=\"\$PYENV_ROOT/bin:\$PATH\"; mkdir -p \"\$PYENV_ROOT\"; $*"
+        sudo -u "$PYENV_USER" -H bash -lc "export HOME='$PYENV_HOME'; export PYENV_ROOT=\"\$HOME/.pyenv\"; export PATH=\"\$PYENV_ROOT/bin:\$PATH\"; mkdir -p \"\$PYENV_ROOT\"; $*"
     }
-    mkdir -p "$TARGET_HOME/.pyenv"
-    chown -R "$TARGET_USER":"$TARGET_USER" "$TARGET_HOME/.pyenv" || true
+    mkdir -p "$PYENV_HOME/.pyenv"
+    chown -R "$PYENV_USER":"$PYENV_USER" "$PYENV_HOME/.pyenv" || true
     for ver in "${PY_VERSIONS[@]}"; do
-        info "[##] Checking for Python $ver for user $TARGET_USER ..."
+        info "[##] Checking for Python $ver for user $PYENV_USER ..."
         if run_as_target "pyenv versions --bare 2>/dev/null | grep -xqF '$ver'"; then
-            info "[##] pyenv: $ver already installed for $TARGET_USER — skipping."
+            info "[##] pyenv: $ver already installed for $PYENV_USER - skipping."
             continue
         fi
-        info "[##] pyenv: Installing $ver for $TARGET_USER ..."
+        info "[##] pyenv: Installing $ver for $PYENV_USER ..."
         if run_as_target "pyenv install -s '$ver'"; then
-            success "pyenv: $ver installed for $TARGET_USER."
+            success "pyenv: $ver installed for $PYENV_USER."
         else
-            warn "pyenv: installation of $ver for $TARGET_USER failed — continuing with next version."
+            warn "pyenv: installation of $ver for $PYENV_USER failed — continuing with next version."
         fi
-        chown -R "$TARGET_USER":"$TARGET_USER" "$TARGET_HOME/.pyenv" || true
+        chown -R "$PYENV_USER":"$PYENV_USER" "$PYENV_HOME/.pyenv" || true
     done
 fi
 
-# ------------------------------------- ENABLE SNAPD --------------------------
-
 if [[ "$snpd" == "y" ]]; then
-	info "[##] Installing Snapd & its packages -------------------------- [ TOOLS = 4 ]"
-	systemctl enable snapd > /dev/null
-	systemctl start snapd > /dev/null
-	snap install ngrok > /dev/null
-	snap install --classic code > /dev/null
-	snap install --edge bashfuscator > /dev/null
+	info "[##] Installing Snapd & its packages ------------------------------------------------------------------------ [ TOOLS = 4 ]"
+	systemctl enable --now snapd
 fi
 
-# ------------------------------------- DOCKER & WINE32 CONFIG ----------------
-
-usermod -aG docker "$TARGET_USER"
 if [[ "$w32s" == "y" ]]; then
+	info "[##] Enabling the 32-Bit Architecture -------------------------------------------------------------------------- [ MANUAL ]"
     dpkg --add-architecture i386
     apt-get update
-    apt-get install -y wine32
+    apt-get install -f -y
+    if ! apt-get install -y wine32; then
+        warn "[!!!] Wine32 failed due to repo mismatch."
+        warn "[!!!] Run: apt full-upgrade -y then retry."
+    fi
 fi
 
-# ------------------------------------- GLOBAL GIT CONFIG ---------------------
-
 if [[ "$gitx" == "y" ]]; then
-	info "[##] Configuring GIT Configurations ------------------------------ [ MANUAL ]"
+	info "[##] Configuring GIT Configurations ---------------------------------------------------------------------------- [ MANUAL ]"
 	read -p ">>>[#] Please Enter your GitHub/GitLab Username: " git_username
 	read -p ">>>[#] Please Enter your GitHub/GitLab Email: " git_email
     git config --global user.name "$git_username"
@@ -210,85 +176,31 @@ if [[ "$gitx" == "y" ]]; then
     git config --global color.ui auto
 fi
 
-# ------------------------------------- NANORC MODIFICATIONS ------------------
-
-if [[ "$narc" == "y" ]]; then
-    info "[##] Performing NANO Configurations ------------------------------ [ MANUAL ]"
-    if [[ -f ./resources/nanorc ]]; then
-        cp ./resources/nanorc /etc/nanorc
-    else
-        warn "[!!!] nanorc file not found, skipping copy."
-    fi
-    if [[ -x ./resources/nano-syntax.sh ]]; then
-        bash ./resources/nano-syntax.sh > /dev/null
-    else
-        warn "[!!!] nano-syntax.sh script missing or not executable, skipping."
-    fi
-fi
-
-# ------------------------------------- BASHRC CUSTOMIZATION ------------------
-
-if [[ "$barc" == "y" ]]; then
-    info "[##] Performing BASH Configurations ------------------------------ [ MANUAL ]"
-    if [[ -f ./resources/bashrc ]]; then
-	    cp "$SCRIPT_DIR/resources/bashrc" "$TARGET_HOME/.bashrc"
-        cp "$SCRIPT_DIR/resources/bashrc" "/root/.bashrc"
-        warn "[#] Manual action needed: Please run 'source ~/.bashrc' after this script."
-    else
-        warn "[!!!] bashrc file not found in current directory, skipping copy."
-    fi
-fi
-
-# ------------------------------------- ZSHRC CUSTOMIZATION -------------------
-
-if [[ "$zshc" == "y" ]]; then
-    info "[##] Performing ZSH Configurations ------------------------------- [ MANUAL ]"
-    if [[ -f ./resources/zshrc ]]; then
-	    cp "$SCRIPT_DIR/resources/zshrc" "$TARGET_HOME/.zshrc"
-        cp "$SCRIPT_DIR/resources/zshrc" "/root/.zshrc"
-        warn "[#] Manual action needed: Please run 'source ~/.zshrc' after this script."
-    else
-        warn "[!!!] zshrc file not found in current directory, skipping copy."
-    fi
-fi
-
-# ------------------------------------- PANEL & DIR CUSTOMIZATION -------------
-
-source ./resources/set-xfce4.sh
-
-# ------------------------------------- POST SETUP COMMANDS -------------------
-
-info "[###] Finalizing the PENTESTER'S KALI - LINUX Setup -------------- [ MANUAL ]"
+info "[###] Finalizing the PENTESTER'S KALI - LINUX Setup ------------------------------------------------------------ [ MANUAL ]"
 
 if [[ -f /usr/share/wordlists/rockyou.txt.gz ]]; then
     gzip -d /usr/share/wordlists/rockyou.txt.gz 2>/dev/null
 fi
 
-searchsploit -u > /dev/null
-nmap --script-updatedb > /dev/null
-apt-get -qq update
-apt-get -qq upgrade -y
-apt-get -qq full-upgrade -y
-apt-get -qq autoremove -y
+usermod -aG docker "$TARGET_USER"
+searchsploit -u
+nmap --script-updatedb
+apt-get update
+apt-get full-upgrade -y
+apt-get autoremove -y
 updatedb
 unset DEBIAN_FRONTEND
 
-info "[###] Deactivating the automatic Time Setup via Host-Time -------- [ MANUAL ]"
+info "[###] Deactivating the automatic Time Setup via Host-Time ------------------------------------------------------ [ MANUAL ]"
 
-/etc/init.d/virtualbox-guest-utils stop
-systemctl stop systemd-timesyncd
+systemctl stop virtualbox-guest-utils || true
+systemctl disable --now systemd-timesyncd
 
-# ------------------------------------- COMPLETION ----------------------------
-
-echo -e "${GREEN}[###] ------------------------------------------------------------------------ [###]${NC}"
-echo -e "${GREEN}[###] Kali-Linux Pentest environment setup is finally complete!${NC}"
-if [[ "$barc" == "y" ]]; then
-	echo -e "${YELLOW}[###] Restart your terminal or run 'source ~/.bashrc' to apply all changes.${NC}"
-fi
 if groups "$TARGET_USER" | grep -q '\bdocker\b'; then
     echo -e "${YELLOW}[###] You may need to LOG OUT and back in to apply DOCKER group membership.${NC}"
 fi
+
+echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
+echo -e "${GREEN}[###] Kali-Linux Pentester's Environment setup is finally complete!${NC}"
 echo -e "${RED}[###] Please Restart/Reboot your System for some of the changes to take Effect.!!!${NC}"
-echo -e "${GREEN}[###] ------------------------------------------------------------------------ [###]${NC}"
-screenfetch
-echo -e "${GREEN}[###] ------------------------------------------------------------------------ [###]${NC}"
+echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
