@@ -56,7 +56,7 @@ apt-get full-upgrade -y
 info "[##] Installing Compulsory/Required Tools ------------------------------------------------------------- [ TOOLS = 38 ]"
 apt-get install -y wget curl whois openvpn wordlists seclists webshells exploitdb dpkg netcat-traditional ncat plocate git libffi-dev powershell eog \
 metasploit-framework git-lfs build-essential firefox-esr docker.io docker-compose torbrowser-launcher ntpsec-ntpdate net-tools coreutils uuid axel \
-xclip openssl flameshot dkms linux-headers-amd64 screenfetch tor git-all python3-setuptools snapd mono-devel libssl-dev mono-complete
+xclip openssl flameshot dkms linux-headers-amd64 screenfetch tor git-all python3-setuptools snapd mono-devel libssl-dev mono-complete sed
 
 info "[##] Installing Service-Specific Tools ---------------------------------------------------------------- [ TOOLS = 27 ]"
 apt-get install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat smbmap redis \
@@ -64,7 +64,7 @@ sqlmap onesixtyone nbtscan snmp snmpcheck samba samba-common-bin rpcbind kubectl
 
 info "[##] Installing Miscellaneous Tools ------------------------------------------------------------------- [ TOOLS = 27 ]"
 apt-get install -y faketime binwalk steghide libimage-exiftool-perl zbar-tools pdf-parser foremost ffmpeg iptables cme pftools shellter gophish xxd \
-autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils gemini-cli clamav-freshclam clamav jq xq gitleaks
+autopsy powershell-empire ghostwriter pandoc dradis rlwrap liblnk-utils gemini-cli clamav-freshclam clamav jq xq gitleaks uuid-runtime
 
 info "[##] Installing Web Application Scanners -------------------------------------------------------------- [ TOOLS = 22 ]"
 apt-get install -y gobuster ffuf wafw00f dirbuster dirsearch sublist3r feroxbuster wpscan openvas-scanner greenbone-feed-sync davtest sslyze nikto \
@@ -183,6 +183,7 @@ if [[ -f /usr/share/wordlists/rockyou.txt.gz ]]; then
 fi
 
 usermod -aG docker "$TARGET_USER"
+newgrp -
 searchsploit -u
 nmap --script-updatedb
 apt-get update
@@ -195,10 +196,6 @@ info "[###] Deactivating the automatic Time Setup via Host-Time ----------------
 
 systemctl stop virtualbox-guest-utils || true
 systemctl disable --now systemd-timesyncd
-
-if groups "$TARGET_USER" | grep -q '\bdocker\b'; then
-    echo -e "${YELLOW}[###] You may need to LOG OUT and back in to apply DOCKER group membership.${NC}"
-fi
 
 echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
 echo -e "${GREEN}[###] Kali-Linux Pentester's Environment setup is finally complete!${NC}"

@@ -117,7 +117,7 @@ windows_scripts() (
 )
 
 misc_tools() (
-    echo "[###] DOWNLOADING MISC TOOLS ---------------------------------------------------------------------- ( Total Tools = 8 ) [###]"
+    echo "[###] DOWNLOADING MISC TOOLS ---------------------------------------------------------------------- ( Total Tools = 9 ) [###]"
     cd "$DIR"
 
     info "[1] Downloading BloodHound Docker Compose File" && wget -q https://raw.githubusercontent.com/SpecterOps/BloodHound/main/examples/docker-compose/docker-compose.yml -O docker-compose.yml
@@ -134,6 +134,99 @@ misc_tools() (
         wget -q https://raw.githubusercontent.com/nmap/nmap/refs/heads/master/nmap-protocols
         wget -q https://raw.githubusercontent.com/nmap/nmap/refs/heads/master/nmap-services
     cd ..
+
+	info "[9] Installing SysReptor on Kali Linux (fully automated)"
+	mkdir -p "$TARGET_HOME/misc" && cd "$TARGET_HOME/misc"
+
+		# Download and extract
+		curl -s -L --output sysreptor.tar.gz https://github.com/syslifters/sysreptor/releases/latest/download/setup.tar.gz
+		tar xzf sysreptor.tar.gz
+		cd sysreptor/deploy
+
+		# Create app.env with proper SECRET_KEY (replace, not append)
+		cp app.env.example app.env
+		SECRET_KEY=$(openssl rand -base64 64 | tr -d '\n=')
+		sed -i "s/^SECRET_KEY=.*/SECRET_KEY=\"$SECRET_KEY\"/" app.env
+
+		# Proper LanguageTool integration (using include:)
+		mkdir -p languagetool
+		cat > languagetool/docker-compose.yml << 'EOF'
+services:
+  languagetool:
+    image: erikvl87/languagetool:latest
+    restart: unless-stopped
+    environment:
+      - JavaXmx=512m
+    networks:
+      - sysreptor
+    volumes:
+      - languagetool-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8010/v2/languages"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+volumes:
+  languagetool-data:
+EOF
+
+		# Backup original compose file
+		cp docker-compose.yml docker-compose.yml.main
+
+		# Create new main compose file that includes both SysReptor and LanguageTool
+		cat > docker-compose.yml << 'EOF'
+name: sysreptor
+include:
+  - docker-compose.yml.main
+  - languagetool/docker-compose.yml
+EOF
+
+		# Create Docker volumes
+		docker volume create sysreptor-db-data &>/dev/null || true
+		docker volume create sysreptor-app-data &>/dev/null || true
+
+		# Start containers
+		docker compose up -d
+
+		# Wait for app to become ready (simple wait loop)
+		warn "Waiting for SysReptor app to be ready !!!"
+		sleep 10
+		for i in {1..30}; do
+		    if docker compose exec -T app python3 manage.py check &>/dev/null; then
+		        break
+		    fi
+		    sleep 2
+		done
+
+		# Create superuser non-interactively
+		USERNAME=reptor
+		ADMIN_PASS=$(openssl rand -base64 24)
+
+		docker compose exec -T app python3 -c "
+import os
+os.environ.setdefault('DJANGO_SUPERUSER_USERNAME', '$USERNAME')
+os.environ.setdefault('DJANGO_SUPERUSER_PASSWORD', '$ADMIN_PASS')
+os.environ.setdefault('DJANGO_SUPERUSER_EMAIL', 'admin@example.com')
+from django.core.management import call_command
+call_command('createsuperuser', noinput=True)
+" || error "Superuser creation failed (maybe already exists)"
+
+		# Save admin password
+		echo "$ADMIN_PASS" > "$TARGET_HOME/misc/sysreptor/admin_pass.txt"
+		success "Admin password saved to $TARGET_HOME/misc/sysreptor/admin_pass.txt"
+
+		# Import demo data
+		url="https://docs.sysreptor.com/assets/demo-projects.tar.gz"
+		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=project --add-member="$USERNAME"
+
+		url="https://docs.sysreptor.com/assets/demo-designs.tar.gz"
+		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=design
+
+		url="https://docs.sysreptor.com/assets/demo-templates.tar.gz"
+		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=template
+
+		success "SysReptor installed with LanguageTool (spell check) - access at http://127.0.0.1:8000/"
+	cd "$DIR"
 )
 
 prompt_yes_no() {
