@@ -70,8 +70,8 @@ Downloads ready-to-use scripts and binaries for Linux and Windows post‑exploit
 - **Misc**: BloodHound docker compose, DNSCat2, ptunnel-ng, GDB‑GEF, FuzzDicts, and a static Nmap binary.
 
 **Interactive prompts:**
-- Run Linux tools? (Y/N) – default Y
-- Run Windows tools? (Y/N) – default Y
+- Run Linux tools? (Y/N) – default N
+- Run Windows tools? (Y/N) – default N
 - Run Misc tools? (Y/N) – default N
 
 **Usage:**
@@ -80,6 +80,7 @@ sudo ./get-tools.sh
 ```
 
 > All downloaded files are owned by your non‑root user (the `SUDO_USER`).
+> It is advised to run the `install.sh` script before running `get-tools.sh`.
 
 ---
 

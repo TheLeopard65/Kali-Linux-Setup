@@ -125,7 +125,9 @@ misc_tools() (
     info "[3] Cloning pTunnel-ng Repository" && git clone --quiet https://github.com/utoni/ptunnel-ng.git
     info "[4] Cloning SocksOverRDP Repository" && git clone --quiet https://github.com/nccgroup/SocksOverRDP.git
     info "[5] Cloning Dehashed Repository" && git clone --quiet https://github.com/sm00v/Dehashed.git
-    info "[6] Downloading GDB-GEF Plugin" && bash -c "$(curl -fsSL https://gef.blah.cat/sh)" > /dev/null
+    info "[6] Downloading GDB-GEF Plugin"
+    	bash -c "$(curl -fsSL https://gef.blah.cat/sh)" > /dev/null
+    	sudo -u "$TARGET_USER" bash -c "$(curl -fsSL https://gef.blah.cat/sh)" > /dev/null
     info "[7] Cloning FuzzDicts Repository" && git clone --quiet https://github.com/TheKingOfDuck/fuzzDicts.git /usr/share/fuzzDicts
 
     info "[8] Downloading Nmap Binary"
@@ -135,49 +137,32 @@ misc_tools() (
         wget -q https://raw.githubusercontent.com/nmap/nmap/refs/heads/master/nmap-services
     cd ..
 
-	info "[9] Installing SysReptor on Kali Linux (fully automated)"
-	mkdir -p "$TARGET_HOME/misc" && cd "$TARGET_HOME/misc"
+	info "[9] Installing SysReptor App on Kali Linux"
+	cd "$DIR"
 
 		# Download and extract
 		curl -s -L --output sysreptor.tar.gz https://github.com/syslifters/sysreptor/releases/latest/download/setup.tar.gz
 		tar xzf sysreptor.tar.gz
 		cd sysreptor/deploy
 
-		# Create app.env with proper SECRET_KEY (replace, not append)
+		# Create app.env with proper SECRET_KEY and Spell Checker
 		cp app.env.example app.env
 		SECRET_KEY=$(openssl rand -base64 64 | tr -d '\n=')
-		sed -i "s/^SECRET_KEY=.*/SECRET_KEY=\"$SECRET_KEY\"/" app.env
-
-		# Proper LanguageTool integration (using include:)
-		mkdir -p languagetool
-		cat > languagetool/docker-compose.yml << 'EOF'
-services:
-  languagetool:
-    image: erikvl87/languagetool:latest
-    restart: unless-stopped
-    environment:
-      - JavaXmx=512m
-    networks:
-      - sysreptor
-    volumes:
-      - languagetool-data:/app/data
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8010/v2/languages"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-volumes:
-  languagetool-data:
-EOF
+		sed -i "s|^SECRET_KEY=.*|SECRET_KEY=\"$SECRET_KEY\"|" app.env
+		echo 'LANGUAGETOOL_URL=http://languagetool:8010/v2/check' >> .env
+		echo 'SPELLCHECK_URL=http://languagetool:8010/v2/check' >> app.env
 
 		# Backup original compose file
-		cp docker-compose.yml docker-compose.yml.main
+		if [ ! -f docker-compose.yml.main ]; then
+			cp docker-compose.yml docker-compose.yml.main
+		fi
 
 		# Create new main compose file that includes both SysReptor and LanguageTool
 		cat > docker-compose.yml << 'EOF'
 name: sysreptor
+
 include:
-  - docker-compose.yml.main
+  - sysreptor/docker-compose.yml
   - languagetool/docker-compose.yml
 EOF
 
@@ -202,18 +187,18 @@ EOF
 		USERNAME=reptor
 		ADMIN_PASS=$(openssl rand -base64 24)
 
-		docker compose exec -T app python3 -c "
-import os
-os.environ.setdefault('DJANGO_SUPERUSER_USERNAME', '$USERNAME')
-os.environ.setdefault('DJANGO_SUPERUSER_PASSWORD', '$ADMIN_PASS')
-os.environ.setdefault('DJANGO_SUPERUSER_EMAIL', 'admin@example.com')
-from django.core.management import call_command
-call_command('createsuperuser', noinput=True)
-" || error "Superuser creation failed (maybe already exists)"
+		# Create superuser non-interactively
+		docker compose exec -T -e DJANGO_SUPERUSER_PASSWORD="$ADMIN_PASS" \
+			app python3 manage.py createsuperuser --username "$USERNAME" --no-input \
+		    || error "Superuser creation failed (maybe already exists)"
 
-		# Save admin password
-		echo "$ADMIN_PASS" > "$TARGET_HOME/misc/sysreptor/admin_pass.txt"
-		success "Admin password saved to $TARGET_HOME/misc/sysreptor/admin_pass.txt"
+		# Save admin username and password
+		cat > "$TARGET_HOME/misc/sysreptor-credentials.txt" << EOF
+# Credentials for SysReptor App
+Username: $USERNAME
+Password: $ADMIN_PASS
+EOF
+		success "SysReptor Admin password saved to $TARGET_HOME/misc/sysreptor-credentials.txt"
 
 		# Import demo data
 		url="https://docs.sysreptor.com/assets/demo-projects.tar.gz"
@@ -225,7 +210,7 @@ call_command('createsuperuser', noinput=True)
 		url="https://docs.sysreptor.com/assets/demo-templates.tar.gz"
 		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=template
 
-		success "SysReptor installed with LanguageTool (spell check) - access at http://127.0.0.1:8000/"
+		success "SysReptor App installed with LanguageTool - access at http://127.0.0.1:8000/"
 	cd "$DIR"
 )
 
@@ -236,7 +221,7 @@ prompt_yes_no() {
 }
 
 lint=$(prompt_yes_no "1. Download Linux Tools/Scripts? ----------")
-wint=$(prompt_yes_no "2. Downlaod Windows Binaries/Tools? -------")
+wint=$(prompt_yes_no "2. Download Windows Binaries/Tools? -------")
 mist=$(prompt_yes_no "3. Download Misc Tools & Scripts? ---------")
 
 if [[ -d "$DIR" ]]; then
