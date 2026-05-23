@@ -204,11 +204,20 @@ EOF
 		url="https://docs.sysreptor.com/assets/demo-projects.tar.gz"
 		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=project --add-member="$USERNAME"
 
+		url="https://docs.sysreptor.com/assets/demo-templates.tar.gz"
+		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=template
+
 		url="https://docs.sysreptor.com/assets/demo-designs.tar.gz"
 		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=design
 
-		url="https://docs.sysreptor.com/assets/demo-templates.tar.gz"
-		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=template
+		url="https://docs.sysreptor.com/assets/htb-designs.tar.gz"
+		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=design
+
+		url="https://docs.sysreptor.com/assets/offsec-designs.tar.gz"
+		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=design
+
+		url="https://docs.sysreptor.com/assets/reports/Altered-Security-Report-Design.tar.gz"
+		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=design
 
 		success "SysReptor App installed with LanguageTool - access at http://127.0.0.1:8000/"
 	cd "$DIR"
