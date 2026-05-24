@@ -219,6 +219,9 @@ EOF
 		url="https://docs.sysreptor.com/assets/reports/Altered-Security-Report-Design.tar.gz"
 		curl -s "$url" | docker compose exec -T app python3 manage.py importdemodata --type=design
 
+		url="https://github.com/TheLeopard65/Pentest-Report-Design/raw/main/Leopard-Pentest-Report-Design.tar.gz"
+		curl -fsSL "$url" | docker compose exec -T app python3 manage.py importdemodata --type=design
+
 		success "SysReptor App installed with LanguageTool - access at http://127.0.0.1:8000/"
 	cd "$DIR"
 )
