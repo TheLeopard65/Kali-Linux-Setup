@@ -222,4 +222,4 @@ EOF
 }
 
 main "$@"
-sudo chown -R kali:kali $TOOLS_DIR
+sudo chown -R kali:kali $TOOLS_DIR $VENV_DIR
