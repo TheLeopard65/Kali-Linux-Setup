@@ -222,3 +222,4 @@ EOF
 }
 
 main "$@"
+sudo chown -R kali:kali $TOOLS_DIR
