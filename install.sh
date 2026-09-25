@@ -59,7 +59,7 @@ metasploit-framework git-lfs build-essential firefox-esr docker.io docker-compos
 xclip openssl flameshot dkms linux-headers-amd64 screenfetch tor git-all python3-setuptools snapd mono-devel libssl-dev mono-complete sed
 
 info "[##] Installing Service-Specific Tools ---------------------------------------------------------------- [ TOOLS = 27 ]"
-apt-get install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop remmina evil-winrm sqlite3 default-mysql-server sqsh odat smbmap redis \
+apt-get install -y smbclient enum4linux enum4linux-ng freerdp3-x11 rdesktop evil-winrm sqlite3 default-mysql-server sqsh odat smbmap redis \
 sqlmap onesixtyone nbtscan snmp snmpcheck samba samba-common-bin rpcbind kubectl mdbtools mongodb-clients ansible smtp-user-enum xtightvncviewer
 
 info "[##] Installing Miscellaneous Tools ------------------------------------------------------------------- [ TOOLS = 27 ]"
@@ -182,6 +182,7 @@ if [[ -f /usr/share/wordlists/rockyou.txt.gz ]]; then
     gzip -d /usr/share/wordlists/rockyou.txt.gz 2>/dev/null
 fi
 
+groupadd docker
 usermod -aG docker "$TARGET_USER"
 newgrp -
 searchsploit -u
