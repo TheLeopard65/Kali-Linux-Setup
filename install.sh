@@ -41,12 +41,12 @@ prompt_yes_no() {
     echo "${reply,,}"
 }
 
-pipt=$(prompt_yes_no "1. Install pip3 & pipx tools? ----------")
-pyp2=$(prompt_yes_no "2. Install Python2 & pip2 tools? -------")
-penv=$(prompt_yes_no "3. Install Older Python3 Versions? -----")
-snpd=$(prompt_yes_no "4. Install Snapd & Snap packages? ------")
-gitx=$(prompt_yes_no "5. Add global Git configurations? ------")
-w32s=$(prompt_yes_no "6. Enable support for Wine32 (I386)? ---")
+pipt=$(prompt_yes_no "1. Should KLS install pip3 & pipx tools? ----------")
+pyp2=$(prompt_yes_no "2. Should KLS install Python2 & pip2 tools? -------")
+penv=$(prompt_yes_no "3. Should KLS install Older Python3 Versions? -----")
+snpd=$(prompt_yes_no "4. Should KLS install Snapd & Snap packages? ------")
+gitx=$(prompt_yes_no "5. Should KLS add global Git configurations? ------")
+w32s=$(prompt_yes_no "6. Should KLS enable support for Wine32 (I386)? ---")
 echo -e "${GREEN}[###] ----------------------------------------------------------------------------------------------------------------- [###]${NC}"
 
 apt-get update
