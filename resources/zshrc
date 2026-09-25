@@ -101,7 +101,7 @@ configure_prompt() {
             #RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
             ;;
         oneline)
-        	PROMPT=$'[${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#..red)blue}%n%F{cyan}@%F{red}%m%b%F{reset}]:[%B%F{%(#.red.green)}%~%b%F{reset}]%(#.#.$) '
+            PROMPT=$'[%F{magenta}${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))%f-}%B%F{%(#..red)blue}%n%F{cyan}@%F{red}%m%b%F{reset}]:[%B%F{%(#.red.green)}%~%b%F{reset}]%(#.#.$) '
             RPROMPT=
             ;;
         backtrack)
@@ -122,7 +122,6 @@ NEWLINE_BEFORE_PROMPT=yes
 if [ "$color_prompt" = yes ]; then
     # override default virtualenv indicator in prompt
     VIRTUAL_ENV_DISABLE_PROMPT=1
-
     configure_prompt
 
     # enable syntax-highlighting
@@ -191,7 +190,8 @@ bindkey ^P toggle_oneline_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
-    TERM_TITLE=$'\e]0;${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%n@%m: %~\a'
+    #TERM_TITLE=$'\e]0;${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%n@%m: %~\a'
+    TERM_TITLE=$'\e]0;%n@%m ~ ${PWD##*/}\a'
     ;;
 *)
     ;;
@@ -240,7 +240,10 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -l'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias ll='ls -alh'
 alias la='ls -A'
 alias l='ls -CF'
 
